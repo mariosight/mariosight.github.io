@@ -45,18 +45,25 @@ languages:
           weight: 21
 
 params:
-  # 搜索
-  fuseOpts:
-    isCaseSensitive: false # 是否大小写敏感
-    shouldSort: true # 是否排序
-    location: 0
-    distance: 1000
-    threshold: 0.4
-    minMatchCharLength: 0
-    # limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
-    keys: ["title", "permalink", "summary", "content"]
-    includeMatches: true
-  
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  description: "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
+  author: "Mario"
+  copyright-year: "2024"
+  subtitle: The Best Widgets on Earth
+  defaultTheme: dark # 默认是暗色背景
+  ShowShareButtons: false # 关闭分享的按钮
+  ShowReadingTime: true # 展示预估的阅读时长
+  displayFullLangName: true # 展示全名
+  ShowPostNavLinks: true # 展示文章导航链接，就是下一页上一页的那个
+  ShowBreadCrumbs: false # 是否展示标题上方的面包屑
+  ShowCodeCopyButtons: true # 是否展示复制代码的按钮
+  ShowRssButtonInSectionTermList: true # RSS 相关
+  ShowAllPagesInArchive: true # 在归档页面展示所有的页面
+  ShowPageNums: true # 展示页面的页数
+  # ShowToc: true # 展示文章详情页的目录
+  comments: true # 评论
+  DateFormat: "2006-01-02" # 日期格式
+
   # 评论设置
   giscus:
     repo: "mariosight/mariosight.github.io"
@@ -72,6 +79,18 @@ params:
     darkTheme: "dark"
     lang: "zh-CN"
     crossorigin: "anonymous"
+
+  # 搜索
+  fuseOpts:
+    isCaseSensitive: false # 是否大小写敏感
+    shouldSort: true # 是否排序
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    # limit: 10 # refer: https://www.fusejs.io/api/methods.html#search
+    keys: ["title", "permalink", "summary", "content"]
+    includeMatches: true
 
 # 配置搜索页面
 # https://github.com/adityatelange/hugo-PaperMod/wiki/Features#search-page
