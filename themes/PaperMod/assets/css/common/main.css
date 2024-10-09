@@ -64,3 +64,33 @@ div.highlight:hover .copy-code,
 pre:hover .copy-code {
     display: block;
 }
+
+.page-header h1 {
+    font-size: 200%;
+    /* 使用百分比指定字体大小 */
+}
+
+.page-header h2 {
+    font-size: 180%;
+    /* 使用百分比指定字体大小 */
+}
+
+.page-header h3 {
+    font-size: 160%;
+    /* 使用百分比指定字体大小 */
+}
+
+.page-header h4 {
+    font-size: 140%;
+    /* 使用百分比指定字体大小 */
+}
+
+.page-header h5 {
+    font-size: 120%;
+    /* 使用百分比指定字体大小 */
+}
+
+.page-header h6 {
+    font-size: 105%;
+    /* 使用百分比指定字体大小 */
+}

@@ -46,6 +46,14 @@ languages:
           weight: 21
 
 params:
+  profileMode:
+    enabled: true
+    title: "Mario's Blog" # optional default will be site title
+    subtitle: "欢迎来到Mario的Blog👋🏻"
+    imageUrl: "" # optional
+    imageTitle: "<title of image as alt>" # optional
+    imageWidth: 120 # custom size
+    imageHeight: 120 # custom size
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   description: "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
   author: "Mario"
@@ -53,7 +61,7 @@ params:
   subtitle: The Best Widgets on Earth
   defaultTheme: dark # 默认是暗色背景
   ShowShareButtons: false # 关闭分享的按钮
-  ShowReadingTime: true # 展示预估的阅读时长
+  ShowWordCount: true # 展示文章总字数
   displayFullLangName: true # 展示全名
   ShowPostNavLinks: true # 展示文章导航链接，就是下一页上一页的那个
   ShowBreadCrumbs: false # 是否展示标题上方的面包屑
@@ -64,6 +72,7 @@ params:
   ShowToc: true # 展示文章详情页的目录
   comments: true # 评论
   DateFormat: "2006-01-02" # 日期格式
+
   # 首页的文章上方的一些信息
   homeInfoParams:
     # 首页的 profile 内容
