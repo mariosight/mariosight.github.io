@@ -14,9 +14,22 @@
     <loc>http://localhost:1313/posts/first-post/</loc>
     <lastmod>2024-10-02T20:42:42+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>http://localhost:1313/tags/blog/</loc>
+    <lastmod>2023-08-29T20:14:33+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/ecc/</loc>
+    <lastmod>2023-08-29T20:14:33+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/ecc%E6%A4%AD%E5%9C%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2023-08-29T20:14:33+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2023-08-29T20:14:33+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E7%90%86%E8%AE%BA%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2023-08-29T20:14:33+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/about/</loc>
   </url><url>

@@ -4,29 +4,39 @@
     <title>Posts on Mario&#39;s Blog</title>
     <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Mario&#39;s Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
-    <copyright>[©2024 Mario&#39;s Blog](https://mariosight.github.io)</copyright>
-    <lastBuildDate>Thu, 03 Oct 2024 17:34:12 +0800</lastBuildDate><atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
+    <lastBuildDate>Thu, 03 Oct 2024 17:34:12 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Second</title>
       <link>http://localhost:1313/posts/second/</link>
       <pubDate>Thu, 03 Oct 2024 17:34:12 +0800</pubDate>
-      
       <guid>http://localhost:1313/posts/second/</guid>
       <description>&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;新建文章&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>First Post</title>
       <link>http://localhost:1313/posts/first-post/</link>
       <pubDate>Wed, 02 Oct 2024 20:42:42 +0800</pubDate>
-      
       <guid>http://localhost:1313/posts/first-post/</guid>
       <description>&lt;h2 id=&#34;my-first-post&#34;&gt;My First Post&lt;/h2&gt;
 &lt;p&gt;这是第一篇文章&lt;/p&gt;</description>
     </item>
-    
+    <item>
+      <title>ECC（椭圆加密算法）</title>
+      <link>http://localhost:1313/posts/ecc%E6%A4%AD%E5%9C%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</link>
+      <pubDate>Tue, 29 Aug 2023 20:14:33 +0000</pubDate>
+      <guid>http://localhost:1313/posts/ecc%E6%A4%AD%E5%9C%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</guid>
+      <description>&lt;h4 id=&#34;参考网页&#34;&gt;参考网页：&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/101907402&#34;&gt;椭圆曲线加密算法（ECC） - 知乎 (zhihu.com)&lt;/a&gt;
+&lt;a href=&#34;https://zhuanlan.zhihu.com/p/42629724&#34;&gt;ECC椭圆曲线密码学的原理、公式推导、例子、Python实现和应用 - 知乎&lt;/a&gt;
+&lt;a href=&#34;https://www.bilibili.com/video/BV1BY411M74G/?spm_id_from=333.337.search-card.all.click&amp;vd_source=98eca55261e9be17be10ae0ef98a5176&#34;&gt;公钥加密技术ECC椭圆曲线加密算法原理_哔哩哔哩_bilibili&lt;/a&gt;
+&lt;a href=&#34;https://www.bilibili.com/video/BV1v44y1b7Fd&#34;&gt;【ECC加密算法】| ECC加密原理详解| 椭圆曲线加密| 密码学| 信息安全_哔哩哔哩_bilibili&lt;/a&gt;
+&lt;a href=&#34;https://www.cnblogs.com/Yumeka/p/7392505.html&#34;&gt;ECC椭圆曲线详解(有具体实例) - Yumeka - 博客园&lt;/a&gt;
+&lt;a href=&#34;https://www.cnblogs.com/arvin-blog/p/17277873.html&#34;&gt;9 - 椭圆曲线加密 - ArvinDu - 博客园&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
   </channel>
 </rss>

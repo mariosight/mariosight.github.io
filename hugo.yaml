@@ -13,6 +13,7 @@ enableEmoji: true # 允许 emoji
 pygmentsUseClasses: true
 defaultContentLanguage: zh # 顶部首先展示的语言界面
 defaultContentLanguageInSubdir: false # 是否要在地址栏加上默认的语言代码
+DateFormat: "2006-01-02" # 这个时间是作者自己写的，只能这样写
 
 # 导航栏设置
 languages:
@@ -60,10 +61,28 @@ params:
   ShowRssButtonInSectionTermList: true # RSS 相关
   ShowAllPagesInArchive: true # 在归档页面展示所有的页面
   ShowPageNums: true # 展示页面的页数
-  # ShowToc: true # 展示文章详情页的目录
+  ShowToc: true # 展示文章详情页的目录
   comments: true # 评论
   DateFormat: "2006-01-02" # 日期格式
-
+  # 首页的文章上方的一些信息
+  homeInfoParams:
+    # 首页的 profile 内容
+    Title: "欢迎来到我的Blog 🎉"
+    # 首页的 profile 内容
+    Content: >
+      你好啊 👋🏻，我是 Mario，一个喜欢胡乱研究的学生，喜欢写一些关于编程的文章，也记录一些关于生活的感悟。如果你对我写的文章感兴趣，可以在下方找到我的社交帐号。
+      </div>
+  # 社交帐号的按钮
+  socialIcons:
+    - name: github
+      title: Follow my Github
+      url: "https://github.com/mariosight"
+    - name: Bilibili
+      title: 关注我的 B 站帐号
+      url: "https://space.bilibili.com/12734120"
+    - name: qq
+      title: QQ
+      url: "tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1276879071"
   # 评论设置
   giscus:
     repo: "mariosight/mariosight.github.io"
@@ -99,3 +118,4 @@ outputs:
     - HTML # 生成的静态页面
     - RSS # 这个其实无所谓
     - JSON # necessary for search, 这里的配置修改好之后，一定要重新生成一下
+

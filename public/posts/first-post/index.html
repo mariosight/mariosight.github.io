@@ -11,9 +11,7 @@
 这是第一篇文章">
 <meta name="author" content="Mario">
 <link rel="canonical" href="http://localhost:1313/posts/first-post/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.6a98292fb8fa8cf0f3ba4042d4b75515c04267550f3ad49ff6271b5af9562443.css" integrity="sha256-apgpL7j6jPDzukBC1LdVFcBCZ1UPOtSf9icbWvlWJEM=" rel="preload stylesheet" as="style">
-<script defer crossorigin="anonymous" src="/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js" integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG&#43;9vmJ0cTS&#43;ovo0FeA="
-    onload="hljs.initHighlightingOnLoad();"></script>
+<link crossorigin="anonymous" href="/assets/css/stylesheet.aeccae438782ed8f1886611996907127a06fc0a21c77dec2aea3fbed4370f12b.css" integrity="sha256-rsyuQ4eC7Y8YhmEZlpBxJ6BvwKIcd97CrqP77UNw8Ss=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
@@ -132,8 +130,6 @@
                         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                     </svg>
                 </button>
-                <ul class="lang-switch"><li>|</li>
-                </ul>
             </div>
         </div>
         <ul id="menu">
@@ -175,13 +171,87 @@
 <article class="post-single">
   <header class="post-header">
     
-    <h1 class="post-title">
+    <h1 class="post-title entry-hint-parent">
       First Post
     </h1>
-    <div class="post-meta">&lt;span title=&#39;2024-10-02 20:42:42 &#43;0800 CST&#39;&gt;2024-10-02&lt;/span&gt;&amp;nbsp;·&amp;nbsp;1 分钟&amp;nbsp;·&amp;nbsp;Mario
+    <div class="post-meta"><span title='2024-10-02 20:42:42 +0800 CST'>2024-10-02</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Mario
 
 </div>
-  </header> 
+  </header> <aside id="toc-container" class="toc-container wide">
+        <div class="toc">
+            <details >
+                <summary accesskey="c" title="(Alt + C)">
+                    <span class="details">目录</span>
+                </summary>
+
+                <div class="inner"><ul>
+                        <li>
+                            <a href="#my-first-post" aria-label="My First Post">My First Post</a>
+                        </li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </aside>
+    <script>
+        let activeElement;
+        let elements;
+        window.addEventListener('DOMContentLoaded', function (event) {
+            checkTocPosition();
+
+            elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+            
+            activeElement = elements[0];
+            const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+            document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+        }, false);
+
+        window.addEventListener('resize', function (event) {
+            checkTocPosition();
+        }, false);
+
+        window.addEventListener('scroll', () => {
+            
+            activeElement = Array.from(elements).find((element) => {
+                if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                    (getOffsetTop(element) - window.pageYOffset) < window.innerHeight / 2) {
+                    return element;
+                }
+            }) || activeElement
+
+            elements.forEach(element => {
+                const id = encodeURI(element.getAttribute('id')).toLowerCase();
+                if (element === activeElement) {
+                    document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+                } else {
+                    document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+                }
+            })
+        }, false);
+
+        const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+        const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+        const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+        function checkTocPosition() {
+            const width = document.body.scrollWidth;
+
+            if (width - main - (toc * 2) - (gap * 4) > 0) {
+                document.getElementById("toc-container").classList.add("wide");
+            } else {
+                document.getElementById("toc-container").classList.remove("wide");
+            }
+        }
+
+        function getOffsetTop(element) {
+            if (!element.getClientRects().length) {
+                return 0;
+            }
+            let rect = element.getBoundingClientRect();
+            let win = element.ownerDocument.defaultView;
+            return rect.top + win.pageYOffset;
+        }
+    </script>
   <div class="post-content"><h2 id="my-first-post">My First Post<a hidden class="anchor" aria-hidden="true" href="#my-first-post">#</a></h2>
 <p>这是第一篇文章</p>
 
@@ -191,13 +261,6 @@
   <footer class="post-footer">
     <ul class="post-tags">
     </ul>
-<nav class="paginav">
-  <a class="prev" href="http://localhost:1313/posts/second/">
-    <span class="title">« 上一页</span>
-    <br>
-    <span>Second</span>
-  </a>
-</nav>
 
   </footer><div id="tw-comment"></div>
 <script>
@@ -252,7 +315,8 @@
     </main>
     
 <footer class="footer">
-    <span><a href="https://mariosight.github.io">©2024 Mario&rsquo;s Blog</a></span>
+        <span><a href="https://mariosight.github.io">©2024 Mario&rsquo;s Blog</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
