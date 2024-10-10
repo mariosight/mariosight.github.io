@@ -61,7 +61,7 @@ params:
   subtitle: The Best Widgets on Earth
   defaultTheme: dark # 默认是暗色背景
   ShowShareButtons: false # 关闭分享的按钮
-  ShowWordCount: true # 展示文章总字数
+  ShowReadingTime: true # 展示预估的阅读时长
   displayFullLangName: true # 展示全名
   ShowPostNavLinks: true # 展示文章导航链接，就是下一页上一页的那个
   ShowBreadCrumbs: false # 是否展示标题上方的面包屑

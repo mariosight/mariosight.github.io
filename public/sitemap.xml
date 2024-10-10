@@ -3,19 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://localhost:1313/</loc>
-    <lastmod>2024-10-09T17:11:31+08:00</lastmod>
+    <lastmod>2024-10-10T11:43:11+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/ndn/</loc>
+    <lastmod>2024-10-10T11:43:11+08:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2024-10-10T11:43:11+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/</loc>
-    <lastmod>2024-10-09T17:11:31+08:00</lastmod>
+    <lastmod>2024-10-10T11:43:11+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-10-09T17:11:31+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/test/</loc>
-    <lastmod>2024-10-09T17:11:31+08:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/posts/%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2024-10-09T17:11:31+08:00</lastmod>
+    <lastmod>2024-10-10T11:43:11+08:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/posts/first-post/</loc>
     <lastmod>2024-10-02T20:42:42+08:00</lastmod>

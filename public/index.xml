@@ -7,14 +7,24 @@
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
-    <lastBuildDate>Wed, 09 Oct 2024 17:11:31 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 10 Oct 2024 11:43:11 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>测试</title>
-      <link>http://localhost:1313/posts/%E6%B5%8B%E8%AF%95/</link>
-      <pubDate>Wed, 09 Oct 2024 17:11:31 +0800</pubDate>
-      <guid>http://localhost:1313/posts/%E6%B5%8B%E8%AF%95/</guid>
-      <description></description>
+      <title>ndnSIM仿真安装以及使用</title>
+      <link>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 10 Oct 2024 11:43:11 +0800</pubDate>
+      <guid>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h3 id=&#34;ndnsim搭建以及使用&#34;&gt;ndnSIM搭建以及使用&lt;/h3&gt;
+&lt;h5 id=&#34;安装准备&#34;&gt;安装准备&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install build-essential libsqlite3-dev libboost-all-dev libssl-dev git python-setuptools castxml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install python-dev python-pygraphviz python-kiwi python-gnome2 ipython libcairo2-dev python3-gilibgirepository1.0-dev python-gi python-gi-cairo gir1.2-gtk-3.0 gir1.2-goocanvas-2.0 python-pip
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip install pygraphviz pycairo PyGObject pygccxml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install graphviz libgraphviz-dev graphviz-dev pkg-config
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip install pygraphviz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;下载源码&#34;&gt;下载源码&lt;/h5&gt;
+&lt;p&gt;现在任意文件创建个ndnsim文件夹&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir ndnSIM2.7
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后进入该文件夹下，进行源码的下载&lt;/p&gt;</description>
     </item>
     <item>
       <title>First Post</title>
