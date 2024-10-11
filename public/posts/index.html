@@ -10,12 +10,12 @@
 <meta name="description" content="Posts - Mario&#39;s Blog">
 <meta name="author" content="Mario">
 <link rel="canonical" href="http://localhost:1313/posts/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.48ca9f1b200cfb36c39d962e8ea17d056301427850144a104e64457c5147ecaa.css" integrity="sha256-SMqfGyAM&#43;zbDnZYujqF9BWMBQnhQFEoQTmRFfFFH7Ko=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8fc8988106fd69230f6d9129f3fc6791dc24804629433aa7832a671b74c1b18b.css" integrity="sha256-j8iYgQb9aSMPbZEp8/xnkdwkgEYpQzqngypnG3TBsYs=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon-mario.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-mario.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-mario.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon-mario.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon-mario.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <link rel="alternate" type="application/rss+xml" href="http://localhost:1313/posts/index.xml">
@@ -28,7 +28,46 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="Posts" />
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/custom.css">
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style><meta property="og:title" content="Posts" />
 <meta property="og:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="http://localhost:1313/posts/" />
@@ -144,11 +183,11 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>ndnSIM搭建以及使用 安装准备 sudo apt install build-essential libsqlite3-dev libboost-all-dev libssl-dev git python-setuptools castxml sudo apt install python-dev python-pygraphviz python-kiwi python-gnome2 ipython libcairo2-dev python3-gilibgirepository1.0-dev python-gi python-gi-cairo gir1.2-gtk-3.0 gir1.2-goocanvas-2.0 python-pip pip install pygraphviz pycairo PyGObject pygccxml sudo apt-get install graphviz libgraphviz-dev graphviz-dev pkg-config pip install pygraphviz 下载源码 现在任意文件创建个ndnsim文件夹
-mkdir ndnSIM2.7 然后进入该文件夹下，进行源码的下载
+    <p>ndnSIM 搭建以及使用 安装准备 1 2 3 4 5 sudo apt install build-essential libsqlite3-dev libboost-all-dev libssl-dev git python-setuptools castxml sudo apt install python-dev python-pygraphviz python-kiwi python-gnome2 ipython libcairo2-dev python3-gilibgirepository1.0-dev python-gi python-gi-cairo gir1.2-gtk-3.0 gir1.2-goocanvas-2.0 python-pip pip install pygraphviz pycairo PyGObject pygccxml sudo apt-get install graphviz libgraphviz-dev graphviz-dev pkg-config pip install pygraphviz 下载源码 现在任意文件创建个 ndnsim 文件夹
+1 mkdir ndnSIM2.7 然后进入该文件夹下，进行源码的下载
 ...</p>
   </div>
-  <footer class="entry-footer"><span title='2024-10-10 11:43:11 +0800 CST'>2024-10-10</span>&nbsp;·&nbsp;2 分钟&nbsp;·&nbsp;Mario</footer>
+  <footer class="entry-footer"><span title='2024-10-10 11:43:11 +0800 CST'>2024-10-10</span>&nbsp;·&nbsp;736 字&nbsp;·&nbsp;Mario</footer>
   <a class="entry-link" aria-label="post link to ndnSIM仿真安装以及使用" href="http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/"></a>
 </article>
 
@@ -161,7 +200,7 @@ mkdir ndnSIM2.7 然后进入该文件夹下，进行源码的下载
     <p>My First Post 这是第一篇文章
 </p>
   </div>
-  <footer class="entry-footer"><span title='2024-10-02 20:42:42 +0800 CST'>2024-10-02</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;Mario</footer>
+  <footer class="entry-footer"><span title='2024-10-02 20:42:42 +0800 CST'>2024-10-02</span>&nbsp;·&nbsp;10 字&nbsp;·&nbsp;Mario</footer>
   <a class="entry-link" aria-label="post link to First Post" href="http://localhost:1313/posts/first-post/"></a>
 </article>
     </main>

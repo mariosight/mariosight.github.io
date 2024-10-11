@@ -50,8 +50,8 @@ params:
     enabled: true
     title: "Mario's Blog" # optional default will be site title
     subtitle: "欢迎来到Mario的Blog👋🏻"
-    imageUrl: "" # optional
-    imageTitle: "<title of image as alt>" # optional
+    imageUrl: "avatar-mario.png" # optional
+    imageTitle: "吃掉蘑菇🍄变大(bushi)" # optional
     imageWidth: 120 # custom size
     imageHeight: 120 # custom size
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
@@ -61,7 +61,8 @@ params:
   subtitle: The Best Widgets on Earth
   defaultTheme: dark # 默认是暗色背景
   ShowShareButtons: false # 关闭分享的按钮
-  ShowReadingTime: true # 展示预估的阅读时长
+  # ShowReadingTime: true # 展示预估的阅读时长
+  ShowWordCount: true # 展示字数
   displayFullLangName: true # 展示全名
   ShowPostNavLinks: true # 展示文章导航链接，就是下一页上一页的那个
   ShowBreadCrumbs: false # 是否展示标题上方的面包屑
@@ -70,8 +71,15 @@ params:
   ShowAllPagesInArchive: true # 在归档页面展示所有的页面
   ShowPageNums: true # 展示页面的页数
   ShowToc: true # 展示文章详情页的目录
+  TocOpen: true # 目录默认展开
   comments: true # 评论
   DateFormat: "2006-01-02" # 日期格式
+  assets:
+    favicon: "favicon-mario.png"
+    favicon16x16: "favicon-mario.png"
+    favicon32x32: "favicon-mario.png"
+    apple_touch_icon: "favicon-mario.png"
+    safari_pinned_tab: "favicon-mario.png"
 
   # 首页的文章上方的一些信息
   homeInfoParams:
@@ -87,11 +95,11 @@ params:
       title: Follow my Github
       url: "https://github.com/mariosight"
     - name: Bilibili
-      title: 关注我的 B 站帐号
+      title: Follow my BiliBili
       url: "https://space.bilibili.com/12734120"
     - name: qq
       title: QQ
-      url: "tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1276879071"
+      url: "https://qm.qq.com/cgi-bin/qm/qr?k=tByNW0iy_0ppNxV91L7PKAe1COdQHoI8&noverify=0"
   # 评论设置
   giscus:
     repo: "mariosight/mariosight.github.io"
@@ -128,3 +136,28 @@ outputs:
     - RSS # 这个其实无所谓
     - JSON # necessary for search, 这里的配置修改好之后，一定要重新生成一下
 
+taxonomies:
+    category: categories
+    tag: tags
+    series: series
+
+markup:
+    goldmark:
+        renderer:
+            unsafe: true # HUGO 默认转义 Markdown 文件中的 HTML 代码，如需开启的话
+    highlight:
+        # anchorLineNos: true
+        codeFences: true  
+        guessSyntax: true
+        lineNos: true
+        # noClasses: false
+        # style: monokai
+        style: darcula
+
+        # codeFences：代码围栏功能，这个功能一般都要设为 true 的，不然很难看，就是干巴巴的-代码文字，没有颜色。
+        # guessSyntax：猜测语法，这个功能建议设置为 true, 如果你没有设置要显示的语言则会自动匹配。
+        # hl_Lines：高亮的行号，一般这个不设置，因为每个代码块我们可能希望让高亮的地方不一样。
+        # lineNoStart：行号从编号几开始，一般从 1 开始。
+        # lineNos：是否显示行号，我比较喜欢显示，所以我设置的为 true.
+        # lineNumbersInTable：使用表来格式化行号和代码,而不是 标签。这个属性一般设置为 true.
+        # noClasses：使用 class 标签，而不是内嵌的内联样式
