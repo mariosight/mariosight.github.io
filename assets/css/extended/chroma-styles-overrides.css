@@ -12,7 +12,7 @@
 
 /* Other */
 .chroma .x {
-    color: #232222
+    color: #000
 }
 
 /* Error */
@@ -464,6 +464,7 @@
 }
 
 .dark {
+
     /* Background */
     .bg {
         color: #e6edf3;
@@ -934,5 +935,4 @@
     .chroma .w {
         color: #6e7681
     }
-
 }
