@@ -9,7 +9,7 @@ code {
     --article-width: 650px;
     --toc-width: 300px;
 }
-
+/* 调整目录 */
 .toc {
     margin: 0 2px 40px 2px;
     border: 1px solid var(--border);
@@ -90,4 +90,28 @@ code {
 
 .toc li a:hover {
     color: var(--secondary);
+}
+
+/* 背景图片设置 */
+.list {
+    background-color: rgba(131, 130, 130, 0.4);
+    background-image: url("../../background-light.jpg") !important;
+    /* 照片不重复出现 */
+    background-repeat: no-repeat;
+    /* 照片大小 */
+    background-size: 100% 100%;
+    /* 右侧滚动时照片固定大小 */
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+}
+
+.dark.list {
+    background-color: rgba(0, 0, 0, 0.7);
+            /* 设置半透明背景色，0.5表示50%透明 */
+    background-image: url("../../background-dark.png") !important;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+    /* 设置混合模式 */
 }

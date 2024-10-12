@@ -50,8 +50,8 @@ params:
     enabled: true
     title: "Mario's Blog" # optional default will be site title
     subtitle: "欢迎来到Mario的Blog👋🏻"
-    imageUrl: "avatar-mario.png" # optional
-    imageTitle: "吃掉蘑菇🍄变大(bushi)" # optional
+    imageUrl: "avatar-mario.jpg" # optional
+    imageTitle: "擅长捉弄的高木同学" # optional
     imageWidth: 120 # custom size
     imageHeight: 120 # custom size
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
