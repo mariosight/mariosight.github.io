@@ -1,8 +1,8 @@
 :root {
-    --gap: 24px;
-    --content-gap: 20px;
+    --gap: 22px;
+    --content-gap: 24px;
     --nav-width: 1024px;
-    --main-width: 720px;
+    --main-width: 780px;
     --header-height: 60px;
     --footer-height: 60px;
     --radius: 8px;
@@ -30,7 +30,7 @@
 }
 
 .list {
-    background: var(--code-bg);
+    background: var(--theme);
 }
 
 .dark.list {

@@ -20,6 +20,15 @@
     <loc>http://localhost:1313/posts/first-post/</loc>
     <lastmod>2024-10-02T20:42:42+08:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</loc>
+    <lastmod>2023-06-25T06:34:42+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</loc>
+    <lastmod>2023-06-25T06:34:42+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</loc>
+    <lastmod>2023-06-25T06:34:42+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/about/</loc>
   </url><url>
     <loc>http://localhost:1313/archives/</loc>

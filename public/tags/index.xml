@@ -16,5 +16,19 @@
       <guid>http://localhost:1313/tags/ndn/</guid>
       <description></description>
     </item>
+    <item>
+      <title>旅行日记</title>
+      <link>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>南京</title>
+      <link>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</link>
+      <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>

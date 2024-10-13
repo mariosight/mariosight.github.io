@@ -32,9 +32,6 @@ languages:
         - name: 归档
           pageRef: archives/
           weight: 5
-        - name: 分类
-          pageRef: categories/
-          weight: 10
         - name: 标签
           pageRef: tags/
           weight: 10

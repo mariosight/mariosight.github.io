@@ -913,7 +913,9 @@
 
     /* GenericStrong */
     .chroma .gs {
+        color: #bbdbfe;
         font-weight: bold
+
     }
 
     /* GenericSubheading */
