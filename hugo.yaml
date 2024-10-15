@@ -47,7 +47,7 @@ params:
     enabled: true
     title: "Mario's Blog" # optional default will be site title
     subtitle: "欢迎来到Mario的Blog👋🏻"
-    imageUrl: "avatar-mario.jpg" # optional
+    imageUrl: "imgs/avatar-mario.jpg" # optional
     imageTitle: "擅长捉弄的高木同学" # optional
     imageWidth: 120 # custom size
     imageHeight: 120 # custom size
@@ -68,6 +68,7 @@ params:
   ShowAllPagesInArchive: true # 在归档页面展示所有的页面
   ShowPageNums: true # 展示页面的页数
   ShowToc: true # 展示文章详情页的目录
+  ShowLastMod: true
   TocOpen: true # 目录默认展开
   comments: true # 评论
   DateFormat: "2006-01-02" # 日期格式

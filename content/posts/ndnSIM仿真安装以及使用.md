@@ -4,6 +4,7 @@ tags:
   - ndn
 date: 2024-10-10T11:43:11+08:00
 draft: false
+author: ["Mario"]
 ---
 
 ### ndnSIM 搭建以及使用
