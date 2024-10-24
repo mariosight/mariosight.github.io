@@ -7,9 +7,32 @@
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
+<<<<<<< HEAD
     <lastBuildDate>Wed, 02 Oct 2024 20:42:42 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+=======
+    <lastBuildDate>Thu, 10 Oct 2024 11:43:11 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ndnSIM仿真安装以及使用</title>
+      <link>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <pubDate>Thu, 10 Oct 2024 11:43:11 +0800</pubDate>
+      <guid>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <description>&lt;h3 id=&#34;ndnsim-搭建以及使用&#34;&gt;ndnSIM 搭建以及使用&lt;/h3&gt;
+&lt;h5 id=&#34;安装准备&#34;&gt;安装准备&lt;/h5&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install build-essential libsqlite3-dev libboost-all-dev libssl-dev git python-setuptools castxml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install python-dev python-pygraphviz python-kiwi python-gnome2 ipython libcairo2-dev python3-gilibgirepository1.0-dev python-gi python-gi-cairo gir1.2-gtk-3.0 gir1.2-goocanvas-2.0 python-pip
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;pip install pygraphviz pycairo PyGObject pygccxml
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install graphviz libgraphviz-dev graphviz-dev pkg-config
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;pip install pygraphviz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h5 id=&#34;下载源码&#34;&gt;下载源码&lt;/h5&gt;
+&lt;p&gt;现在任意文件创建个 ndnsim 文件夹&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;mkdir ndnSIM2.7
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后进入该文件夹下，进行源码的下载&lt;/p&gt;</description>
+    </item>
+    <item>
+>>>>>>> origin/main
       <title>First Post</title>
       <link>http://localhost:1313/posts/first-post/</link>
       <pubDate>Wed, 02 Oct 2024 20:42:42 +0800</pubDate>
@@ -18,6 +41,7 @@
 &lt;p&gt;这是第一篇文章&lt;/p&gt;</description>
     </item>
     <item>
+<<<<<<< HEAD
       <title>测试2</title>
       <link>http://localhost:1313/posts/%E6%B5%8B%E8%AF%952/</link>
       <pubDate>Wed, 02 Oct 2024 20:42:42 +0900</pubDate>
@@ -30,6 +54,16 @@
       <pubDate>Wed, 02 Oct 2024 20:42:42 +1000</pubDate>
       <guid>http://localhost:1313/posts/test/</guid>
       <description>&lt;h4 id=&#34;测试与-obsidian-进行联动&#34;&gt;测试与 Obsidian 进行联动&lt;/h4&gt;</description>
+=======
+      <title>南京之行</title>
+      <link>http://localhost:1313/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</link>
+      <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
+      <guid>http://localhost:1313/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</guid>
+      <description>&lt;h3 id=&#34;南京之行找小徐玩咯&#34;&gt;南京之行：找小徐玩咯&lt;/h3&gt;
+&lt;h4 id=&#34;2023-06-23&#34;&gt;2023-06-23&lt;/h4&gt;
+&lt;h5 id=&#34;南京大屠杀纪念馆铭记苦难向往和平&#34;&gt;南京大屠杀纪念馆（铭记苦难，向往和平）&lt;/h5&gt;
+&lt;p&gt;&lt;strong&gt;南京大屠杀纪念馆&lt;/strong&gt;，一直很想去看看的，看日本动漫听日本歌曲也不代表我们会忘记那段屈辱悲惨的过去，我们会永远记得，永远记得日本军国主义对我们的同胞惨无人道的屠戮，永远记得他们犯下的所有令人唾弃的罪行，永远记得落后就要挨打的历史教训，&lt;strong&gt;我们永远记得&lt;/strong&gt;&lt;/p&gt;</description>
+>>>>>>> origin/main
     </item>
   </channel>
 </rss>

@@ -7,6 +7,7 @@
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
+<<<<<<< HEAD
     <lastBuildDate>Wed, 02 Oct 2024 20:42:42 +0900</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -14,6 +15,29 @@
       <link>http://localhost:1313/tags/test/</link>
       <pubDate>Wed, 02 Oct 2024 20:42:42 +0900</pubDate>
       <guid>http://localhost:1313/tags/test/</guid>
+=======
+    <lastBuildDate>Thu, 10 Oct 2024 11:43:11 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ndn</title>
+      <link>http://localhost:1313/tags/ndn/</link>
+      <pubDate>Thu, 10 Oct 2024 11:43:11 +0800</pubDate>
+      <guid>http://localhost:1313/tags/ndn/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>旅行日记</title>
+      <link>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>南京</title>
+      <link>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</link>
+      <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
+      <guid>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</guid>
+>>>>>>> origin/main
       <description></description>
     </item>
     <item>
