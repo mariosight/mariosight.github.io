@@ -1,0 +1,247 @@
+.post-content pre,
+code {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+    line-height: 1.2;
+}
+:root {
+    --nav-width: 1380px;
+    --article-width: 650px;
+    --toc-width: 300px;
+}
+/* 调整目录 */
+.toc {
+    margin: 0 2px 40px 2px;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    border-radius: var(--radius);
+    padding: 0.4em;
+}
+
+.toc-container.wide {
+    position: absolute;
+    height: 100%;
+    border-right: 1px solid var(--border);
+    left: calc((var(--toc-width) + var(--gap)) * -1);
+    top: calc(var(--gap) * 2);
+    width: var(--toc-width);
+}
+
+.wide .toc {
+    position: sticky;
+    top: var(--gap);
+    border: unset;
+    background: unset;
+    border-radius: unset;
+    width: 100%;
+    margin: 0 10px 40px 2px;
+}
+
+.toc details summary {
+    cursor: zoom-in;
+    margin-inline-start: 20px;
+    padding: 12px 0;
+}
+
+.toc details[open] summary {
+    font-weight: 500;
+}
+
+.toc-container.wide .toc .inner {
+    margin: 0;
+}
+
+.active {
+    font-size: 110%;
+    font-weight: 600;
+}
+
+.toc ul {
+    list-style-type: circle;
+}
+
+.toc .inner {
+    margin: 0 0 0 20px;
+    padding: 0px 15px 15px 20px;
+    font-size: 16px;
+
+    /*目录显示高度*/
+    max-height: 83vh;
+    overflow-y: auto;
+}
+
+.toc .inner::-webkit-scrollbar-thumb {
+    /*滚动条*/
+    background: var(--border);
+    border: 7px solid var(--theme);
+    border-radius: var(--radius);
+}
+
+.toc li ul {
+    margin-inline-start: calc(var(--gap) * 0.5);
+    list-style-type: none;
+}
+
+.toc li {
+    list-style: none;
+    font-size: 0.95rem;
+    padding-bottom: 5px;
+}
+
+.toc li a:hover {
+    color: var(--secondary);
+}
+
+/* 背景图片设置 */
+body{
+    /* 设置半透明背景色，0.5表示50%透明 */
+    background-color: rgba(131, 130, 130, 0.3);
+    background-image: url("../../imgs/background-light.jpg") !important;
+    /* 照片不重复出现 */
+    background-repeat: no-repeat;
+    /* 照片大小 */
+    background-size: 100% 100%;
+    /* 右侧滚动时照片固定大小 */
+    background-attachment: fixed;
+    /* 设置背景图片混合模式 */
+    background-blend-mode: overlay;
+}
+.dark{
+    background-color: rgba(0, 0, 0, 0.7);
+    background-image: url("../../imgs/background-dark.png") !important;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+}
+
+.list {
+    /* 设置半透明背景色，0.5表示50%透明 */
+    background-color: rgba(131, 130, 130, 0.3);
+    background-image: url("../../imgs/background-light.jpg") !important;
+    /* 照片不重复出现 */
+    background-repeat: no-repeat;
+    /* 照片大小 */
+    background-size: 100% 100%;
+    /* 右侧滚动时照片固定大小 */
+    background-attachment: fixed;
+    /* 设置背景图片混合模式 */
+    background-blend-mode: overlay;
+}
+
+.dark.list {
+    background-color: rgba(0, 0, 0, 0.7);
+    background-image: url("../../imgs/background-dark.png") !important;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-blend-mode: overlay;
+}
+
+/* 调整文章宽度 */
+.post-content{
+    max-width: 1000px;
+    font-family: "PingFang SC", serif;
+} 
+
+/*标签*/
+.terms-tags {
+    text-align: center;
+}
+
+.terms-tags a:hover {
+    background: none;
+
+    /* webkit-transform: scale(1.2); */
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.3);
+}
+
+.terms-tags a {
+    border-radius: 30px;
+    background: none;
+    transition: transform 0.5s;
+}
+
+.dark .terms-tags a {
+    background: none;
+}
+
+.dark .terms-tags a:hover {
+    background: none;
+
+    /* webkit-transform: scale(1.2); */
+    -moz-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    transform: scale(1.3);
+}
+
+.terms-tags li {
+    margin: 5px;
+}
+
+/* 图片注释独特显示 */
+.post-content figure {
+    text-align: center;
+    /* 居中对齐 */
+    color: gray;
+    /* 字体颜色为灰色 */
+    font-size: 15px;
+    /* 字体大小为12px */
+}
+.post-content p{
+    font-size: 18px;
+    /* 字体大小为16px */
+    line-height: 1.8;
+    /* 行高为1.8 */
+    text-indent: 1em;
+}
+
+/* 加粗字体修改 */
+strong{
+    color: #0c2ab0;
+    /* 自定义加粗字体的颜色，例如橙色 */
+    font-weight: 700;
+    /* 设置字体粗细，可以用100到900的数字来定义 */
+    font-size: 1.15em;
+    /* 增加字体大小，1.1em表示比普通字体稍大 */
+}
+
+.dark strong{
+    color: #94e8ff;
+    /* 自定义加粗字体的颜色，例如橙色 */
+    font-weight: 700;
+    /* 设置字体粗细，可以用100到900的数字来定义 */
+    font-size: 1.15em;
+    /* 增加字体大小，1.1em表示比普通字体稍大 */
+}
+
+/* 链接样式 */
+.post-content a{
+    color: #0c2ab0;
+    /* 自定义链接颜色 */
+    font-weight: 500;
+    /* 设置字体粗细，可以用100到900的数字来定义 */
+    font-size: 1em;
+    /* 增加字体大小，1.1em表示比普通字体稍大 */
+}
+.post-content a:hover{
+    color: #888faa;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+}
+.dark .post-content a{
+    color: #6fdaf7;
+    font-weight: 500;
+    font-size: 1em;
+}
+.dark .post-content a:hover{
+    color: #f8f8f8;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+}

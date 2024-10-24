@@ -1,8 +1,8 @@
 :root {
-    --gap: 24px;
-    --content-gap: 20px;
+    --gap: 22px;
+    --content-gap: 24px;
     --nav-width: 1024px;
-    --main-width: 720px;
+    --main-width: 780px;
     --header-height: 60px;
     --footer-height: 60px;
     --radius: 8px;
@@ -12,7 +12,7 @@
     --secondary: rgb(108, 108, 108);
     --tertiary: rgb(214, 214, 214);
     --content: rgb(31, 31, 31);
-    --code-block-bg: rgb(28, 29, 33);
+    --code-block-bg: rgb(245, 245, 245);
     --code-bg: rgb(245, 245, 245);
     --border: rgb(238, 238, 238);
 }
@@ -30,7 +30,7 @@
 }
 
 .list {
-    background: var(--code-bg);
+    background: var(--theme);
 }
 
 .dark.list {

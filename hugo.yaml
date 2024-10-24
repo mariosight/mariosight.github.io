@@ -32,9 +32,6 @@ languages:
         - name: 归档
           pageRef: archives/
           weight: 5
-        - name: 分类
-          pageRef: categories/
-          weight: 10
         - name: 标签
           pageRef: tags/
           weight: 10
@@ -50,8 +47,8 @@ params:
     enabled: true
     title: "Mario's Blog" # optional default will be site title
     subtitle: "欢迎来到Mario的Blog👋🏻"
-    imageUrl: "" # optional
-    imageTitle: "<title of image as alt>" # optional
+    imageUrl: "imgs/avatar-mario.jpg" # optional
+    imageTitle: "擅长捉弄的高木同学" # optional
     imageWidth: 120 # custom size
     imageHeight: 120 # custom size
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
@@ -61,7 +58,8 @@ params:
   subtitle: The Best Widgets on Earth
   defaultTheme: dark # 默认是暗色背景
   ShowShareButtons: false # 关闭分享的按钮
-  ShowWordCount: true # 展示文章总字数
+  # ShowReadingTime: true # 展示预估的阅读时长
+  ShowWordCount: true # 展示字数
   displayFullLangName: true # 展示全名
   ShowPostNavLinks: true # 展示文章导航链接，就是下一页上一页的那个
   ShowBreadCrumbs: false # 是否展示标题上方的面包屑
@@ -70,8 +68,16 @@ params:
   ShowAllPagesInArchive: true # 在归档页面展示所有的页面
   ShowPageNums: true # 展示页面的页数
   ShowToc: true # 展示文章详情页的目录
+  ShowLastMod: true
+  TocOpen: true # 目录默认展开
   comments: true # 评论
   DateFormat: "2006-01-02" # 日期格式
+  assets:
+    favicon: "favicon-mario.png"
+    favicon16x16: "favicon-mario.png"
+    favicon32x32: "favicon-mario.png"
+    apple_touch_icon: "favicon-mario.png"
+    safari_pinned_tab: "favicon-mario.png"
 
   # 首页的文章上方的一些信息
   homeInfoParams:
@@ -87,11 +93,11 @@ params:
       title: Follow my Github
       url: "https://github.com/mariosight"
     - name: Bilibili
-      title: 关注我的 B 站帐号
+      title: Follow my BiliBili
       url: "https://space.bilibili.com/12734120"
     - name: qq
       title: QQ
-      url: "tencent://AddContact/?fromId=45&fromSubId=1&subcmd=all&uin=1276879071"
+      url: "https://qm.qq.com/cgi-bin/qm/qr?k=tByNW0iy_0ppNxV91L7PKAe1COdQHoI8&noverify=0"
   # 评论设置
   giscus:
     repo: "mariosight/mariosight.github.io"
@@ -128,3 +134,21 @@ outputs:
     - RSS # 这个其实无所谓
     - JSON # necessary for search, 这里的配置修改好之后，一定要重新生成一下
 
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true # 可以 unsafe，有些 html 标签和样式可能需要
+  highlight:
+    anchorLineNos: false # 不要给行号设置锚标
+    codeFences: true # 代码围栏
+    noClasses: false # TODO: 不知道干啥的，暂时没必要了解，不影响展示
+    lineNos: true # 代码行
+    lineNumbersInTable: false # 不要设置成 true，否则如果文章开头是代码的话，摘要会由一大堆数字(即代码行号)开头文章
+    # 这里设置 style 没用，得自己加 css
+    style: "github-dark"
+    # style: monokai
