@@ -2,27 +2,27 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Mario&#39;s Blog</title>
-    <link>https://mariosight.github.io/</link>
+    <link>http://localhost:1313/</link>
     <description>Recent content on Mario&#39;s Blog</description>
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Sun, 20 Oct 2024 16:20:05 +0000</lastBuildDate>
-    <atom:link href="https://mariosight.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go语言之构造一个Web框架</title>
-      <link>https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</link>
+      <link>http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</link>
       <pubDate>Sun, 20 Oct 2024 16:20:05 +0000</pubDate>
-      <guid>https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</guid>
+      <guid>http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</guid>
       <description>&lt;h4 id=&#34;参考文献&#34;&gt;参考文献&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://geektutu.com/post/gee-day2.html&#34;&gt;Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得&lt;/p&gt;</description>
     </item>
     <item>
       <title>ndnSIM仿真安装以及使用</title>
-      <link>https://mariosight.github.io/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <link>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Thu, 10 Oct 2024 11:43:11 +0800</pubDate>
-      <guid>https://mariosight.github.io/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <guid>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
       <description>&lt;h3 id=&#34;ndnsim-搭建以及使用&#34;&gt;ndnSIM 搭建以及使用&lt;/h3&gt;
 &lt;h5 id=&#34;安装准备&#34;&gt;安装准备&lt;/h5&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install build-essential libsqlite3-dev libboost-all-dev libssl-dev git python-setuptools castxml
@@ -37,17 +37,17 @@
     </item>
     <item>
       <title>First Post</title>
-      <link>https://mariosight.github.io/posts/first-post/</link>
+      <link>http://localhost:1313/posts/first-post/</link>
       <pubDate>Wed, 02 Oct 2024 20:42:42 +0800</pubDate>
-      <guid>https://mariosight.github.io/posts/first-post/</guid>
+      <guid>http://localhost:1313/posts/first-post/</guid>
       <description>&lt;h2 id=&#34;my-first-post&#34;&gt;My First Post&lt;/h2&gt;
 &lt;p&gt;这是第一篇文章&lt;/p&gt;</description>
     </item>
     <item>
       <title>Ubuntu22.04LTS 下Python3.7.9&#43;Charm-Crypto&#43;pypbc&#43;Jupyter环境搭建</title>
-      <link>https://mariosight.github.io/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <link>http://localhost:1313/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
       <pubDate>Sat, 30 Mar 2024 15:44:51 +0000</pubDate>
-      <guid>https://mariosight.github.io/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <guid>http://localhost:1313/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
       <description>&lt;h1 id=&#34;ubuntu2204lts-下python379charm-cryptopypbcjupyter环境搭建&#34;&gt;Ubuntu22.04LTS 下Python3.7.9+Charm-Crypto+pypbc+Jupyter环境搭建&lt;/h1&gt;
 &lt;h2 id=&#34;参考文献&#34;&gt;参考文献&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/qq_33976344/article/details/115383904&#34;&gt;Linux安装Charm-crypto环境详细流程_android使用charm-crypto-CSDN博客&lt;/a&gt;&lt;/p&gt;
@@ -64,9 +64,9 @@
     </item>
     <item>
       <title>南京之行</title>
-      <link>https://mariosight.github.io/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</link>
+      <link>http://localhost:1313/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</link>
       <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
-      <guid>https://mariosight.github.io/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</guid>
+      <guid>http://localhost:1313/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</guid>
       <description>&lt;h3 id=&#34;南京之行找小徐玩咯&#34;&gt;南京之行：找小徐玩咯&lt;/h3&gt;
 &lt;h4 id=&#34;2023-06-23&#34;&gt;2023-06-23&lt;/h4&gt;
 &lt;h5 id=&#34;南京大屠杀纪念馆铭记苦难向往和平&#34;&gt;南京大屠杀纪念馆（铭记苦难，向往和平）&lt;/h5&gt;
@@ -74,9 +74,9 @@
     </item>
     <item>
       <title>About</title>
-      <link>https://mariosight.github.io/about/</link>
+      <link>http://localhost:1313/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://mariosight.github.io/about/</guid>
+      <guid>http://localhost:1313/about/</guid>
       <description>about</description>
     </item>
   </channel>

@@ -22,14 +22,14 @@ jobs:
           extended: true
 
       - name: Build Web
-        run: hugo
+        run: hugo server -D
 
       - name: Deploy Web
         uses: peaceiris/actions-gh-pages@v4
         with:
-          PERSONAL_TOKEN: ${{ secrets.BLOG }}
+          PERSONAL_TOKEN: ${{ secrets.Blog }}
           EXTERNAL_REPOSITORY: mariosight/mariosight.github.io
-          PUBLISH_BRANCH: master
-          PUBLISH_DIR: ./public
+          branch: master
+          folder: public
           commit_message: auto deploy
-          cname: blog.mariosight.com
+          cname: blog.mariosight.zone

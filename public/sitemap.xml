@@ -2,51 +2,51 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mariosight.github.io/tags/golang/</loc>
+    <loc>http://localhost:1313/tags/golang/</loc>
     <lastmod>2024-10-20T16:20:05+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</loc>
+    <loc>http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</loc>
     <lastmod>2024-10-20T16:20:05+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/</loc>
+    <loc>http://localhost:1313/</loc>
     <lastmod>2024-10-20T16:20:05+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/posts/</loc>
+    <loc>http://localhost:1313/posts/</loc>
     <lastmod>2024-10-20T16:20:05+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/tags/</loc>
+    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2024-10-20T16:20:05+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/tags/ndn/</loc>
+    <loc>http://localhost:1313/tags/ndn/</loc>
     <lastmod>2024-10-10T11:43:11+08:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2024-10-10T11:43:11+08:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/posts/first-post/</loc>
+    <loc>http://localhost:1313/posts/first-post/</loc>
     <lastmod>2024-10-02T20:42:42+08:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
+    <loc>http://localhost:1313/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2024-03-30T15:44:51+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</loc>
+    <loc>http://localhost:1313/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</loc>
     <lastmod>2024-03-30T15:44:51+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</loc>
+    <loc>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</loc>
     <lastmod>2023-06-25T06:34:42+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/tags/%E5%8D%97%E4%BA%AC/</loc>
+    <loc>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</loc>
     <lastmod>2023-06-25T06:34:42+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</loc>
+    <loc>http://localhost:1313/posts/%E5%8D%97%E4%BA%AC%E4%B9%8B%E8%A1%8C/</loc>
     <lastmod>2023-06-25T06:34:42+00:00</lastmod>
   </url><url>
-    <loc>https://mariosight.github.io/about/</loc>
+    <loc>http://localhost:1313/about/</loc>
   </url><url>
-    <loc>https://mariosight.github.io/archives/</loc>
+    <loc>http://localhost:1313/archives/</loc>
   </url><url>
-    <loc>https://mariosight.github.io/categories/</loc>
+    <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>https://mariosight.github.io/search/</loc>
+    <loc>http://localhost:1313/search/</loc>
   </url>
 </urlset>
