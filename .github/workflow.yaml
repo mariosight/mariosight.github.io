@@ -18,7 +18,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "latest"
+          hugo-version: "0.135.0"
           extended: true
 
       - name: Build Web
@@ -29,6 +29,7 @@ jobs:
         with:
           PERSONAL_TOKEN: ${{ secrets.BLOG }}
           EXTERNAL_REPOSITORY: mariosight/mariosight.github.io
-          PUBLISH_BRANCH: main
+          PUBLISH_BRANCH: master
           PUBLISH_DIR: ./public
           commit_message: auto deploy
+          cname: blog.mariosight.com

@@ -2,46 +2,46 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Mario&#39;s Blog</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>https://mariosight.github.io/tags/</link>
     <description>Recent content in Tags on Mario&#39;s Blog</description>
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Sun, 20 Oct 2024 16:20:05 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mariosight.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golang</title>
-      <link>http://localhost:1313/tags/golang/</link>
+      <link>https://mariosight.github.io/tags/golang/</link>
       <pubDate>Sun, 20 Oct 2024 16:20:05 +0000</pubDate>
-      <guid>http://localhost:1313/tags/golang/</guid>
+      <guid>https://mariosight.github.io/tags/golang/</guid>
       <description></description>
     </item>
     <item>
       <title>Ndn</title>
-      <link>http://localhost:1313/tags/ndn/</link>
+      <link>https://mariosight.github.io/tags/ndn/</link>
       <pubDate>Thu, 10 Oct 2024 11:43:11 +0800</pubDate>
-      <guid>http://localhost:1313/tags/ndn/</guid>
+      <guid>https://mariosight.github.io/tags/ndn/</guid>
       <description></description>
     </item>
     <item>
       <title>密码库</title>
-      <link>http://localhost:1313/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</link>
+      <link>https://mariosight.github.io/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</link>
       <pubDate>Sat, 30 Mar 2024 15:44:51 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</guid>
+      <guid>https://mariosight.github.io/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</guid>
       <description></description>
     </item>
     <item>
       <title>旅行日记</title>
-      <link>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</link>
+      <link>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</link>
       <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</guid>
+      <guid>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</guid>
       <description></description>
     </item>
     <item>
       <title>南京</title>
-      <link>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</link>
+      <link>https://mariosight.github.io/tags/%E5%8D%97%E4%BA%AC/</link>
       <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
-      <guid>http://localhost:1313/tags/%E5%8D%97%E4%BA%AC/</guid>
+      <guid>https://mariosight.github.io/tags/%E5%8D%97%E4%BA%AC/</guid>
       <description></description>
     </item>
   </channel>
