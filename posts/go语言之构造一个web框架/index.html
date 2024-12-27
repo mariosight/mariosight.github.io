@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Go语言之构造一个Web框架 | Mario&#39;s Blog</title>
+<meta name="keywords" content="Golang">
+<meta name="description" content="参考文献
+Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔
+大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得">
+<meta name="author" content="Mario">
+<link rel="canonical" href="http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.6297107888e2445b4da011d7750b5c7d6746baaaebb1da604f1da3f9602a6799.css" integrity="sha256-YpcQeIjiRFtNoBHXdQtcfWdGuqrrsdpgTx2j&#43;WAqZ5k=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon-mario.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-mario.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-mario.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon-mario.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon-mario.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+<script type="text/javascript" async
+    src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\[\[', '\]\]']],
+                processEscapes: true,
+                processEnvironments: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+                TeX: {
+                    equationNumbers: { autoNumber: "AMS" },
+                    extensions: ["AMSmath.js", "AMSsymbols.js"]
+                }
+            }
+        });
+        MathJax.Hub.Queue(function () {
+            
+            
+            
+            var all = MathJax.Hub.getAllJax(), i;
+            for (i = 0; i < all.length; i += 1) {
+                all[i].SourceElement().parentNode.className += ' has-jax';
+            }
+        });
+    </script>
+
+<style>
+    code.has-jax {
+        font: inherit;
+        font-size: 100%;
+        background: inherit;
+        border: inherit;
+        color: #515151;
+    }
+</style><meta property="og:title" content="Go语言之构造一个Web框架" />
+<meta property="og:description" content="参考文献
+Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔
+大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-10-20T16:20:05+00:00" />
+<meta property="article:modified_time" content="2024-10-20T16:20:05+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go语言之构造一个Web框架"/>
+<meta name="twitter:description" content="参考文献
+Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔
+大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://localhost:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Go语言之构造一个Web框架",
+      "item": "http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Go语言之构造一个Web框架",
+  "name": "Go语言之构造一个Web框架",
+  "description": "参考文献 Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔\n大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得\n",
+  "keywords": [
+    "Golang"
+  ],
+  "articleBody": "参考文献 Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔\n大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得\n整体架构 简单介绍一下整体框架的设计思路以及对应需要实现的一些功能，框架的具体实现主要是根据极客兔兔的博客以及极客时间的教学视频进行的 Web框架主要是用于解决标准库中需要频繁处理的问题或者将处理起来较为麻烦的部分进行一定程度上的封装 根据HTTP基础部分整体的框架其实很清楚了，用户这边写的是路由和对应的处理方法，框架用HandlerFunc来接受对应的handler，与对应的路由通过map进行绑定，通过不同的请求可以映射到不同的处理方法 首先要有一个整体代表服务器的抽象，Server，提供生命周期控制、路由注册接口，作为http包到Web框架的桥梁，怎么接入http包？通过http包暴露的一个接口handler来作为Web框架与http包的连接点，其次是对于路由的处理，这也是Web框架的核心之一，通过动态路由将请求映射到函数，还有一些功能如上下文，分组控制，中间件等等。\n功能简介 动态路由：对于路由来说，最重要的当然是注册与匹配了。开发服务时，注册路由规则，映射handler；访问时，匹配路由规则，查找到对应的handler。因此，Trie树需要支持节点的插入与查询。插入功能很简单，递归查找每一层的节点，如果没有匹配到当前part的节点，则新建一个。 上下文：将Handler的参数变成Context，设计上下文(Context)，封装*http.Request和http.ResponseWriter的方法，简化相关接口的调用，提供对 JSON、HTML 等返回类型的支持。 分组控制：分组控制(Group Control)是 Web 框架应提供的基础功能之一。所谓分组，是指路由的分组。如果没有路由分组，我们需要针对每一个路由进行控制。但是真实的业务场景中，往往某一组路由需要相似的处理。\n以/post开头的路由匿名可访问。 以/admin开头的路由需要鉴权。 以/api开头的路由是 RESTful 接口，可以对接第三方平台，需要三方平台鉴权。 中间件：中间件(middlewares)，就是非业务的技术类组件。Web框架本身不可能去理解所有的业务，因而不可能实现所有的功能。因此，框架需要有一个插口，允许用户自己定义功能，嵌入到框架中，仿佛这个功能是框架原生支持的一样。\n插入点在哪？使用框架的人并不关心底层逻辑的具体实现，如果插入点太底层，中间件逻辑就会非常复杂。如果插入点离用户太近，那和用户直接定义一组函数，每次在 Handler 中手工调用没有多大的优势了。 中间件的输入是什么？中间件的输入，决定了扩展能力。暴露的参数太少，用户发挥空间有限。 HTML模板：HTML模板（template）部分主要是实现两个内容：\n实现静态资源服务(Static Resource) 支持HTML模板渲染 将静态文件放在/web，filepath的值即是该目录下文件的相对地址。映射到真实的文件后，将文件返回，静态服务器就实现了。 返回文件直接交给http.FileServer处理就好了 Go语言内置了html/template为 HTML 提供了较为完整的支持。包括普通变量渲染、列表渲染、对象渲染等。 错误处理：用户不正确的参数，可能会触发某些异常，例如数组越界，空指针等。如果因为这些原因导致系统宕机，必然是不可接受的，所以错误处理机制是非常必要的，将错误处理作为一个中间件添加到框架中，向用户返回 Internal Server Error，并且在日志中打印必要的错误信息，方便进行错误定位。\nHttp库下方法的使用 这一部分主要是介绍一下net/http库下的一些基础功能使用，Body的获取，URL的查询，Form表单的输出等等\nhttp.ResponseWriter: 这是一个接口，提供了对 HTTP 响应的返回方法。你可以使用它来写入 HTTP 响应的头信息和主体内容。 *http.Request: 这是一个指向 http.Request 的指针，表示 HTTP 请求。它包含了关于 HTTP 请求的所有信息，如请求方法、URL、头信息、表单数据等 Body和GetBody 1func home(w http.ResponseWriter, r *http.Request) { 2 //body 只能读取一次 3 body, err := io.ReadAll(r.Body) 4 if err != nil { 5 fmt.Println(w, \"读取请求体失败\") 6 return 7 } 8 fmt.Fprintln(w, \"第一次请求：\", string(body), \"长度为\", len(string(body))) 9 //尝试再次读取，不会报错，但是什么也没有读到 10 body, err = io.ReadAll(r.Body) 11 if err != nil { 12 fmt.Println(w, \"读取请求体失败\") 13 return 14 } 15 fmt.Fprintln(w, \"第二次请求：\", string(body), \"长度为\", len(string(body))) 16 if r.GetBody == nil { 17 fmt.Fprintln(w, \"GetBody为空\") 18 } else { 19 fmt.Fprintln(w, \"GetBody不为空\") 20 } 21} URL 1func query(w http.ResponseWriter, r *http.Request) { 2 //查询参数是一个map，type Values map[string][]string 3 values := r.URL.Query() 4 //url.Values类型是一个映射字符串到字符串切片的映射，通常用于处理URL查询参数 5 fmt.Fprintln(w, reflect.TypeOf(values)) 6 name := values.Get(\"name\") 7 fmt.Fprintln(w, \"查询对应的值为\", name) 8} 9 10func wholeUrl(w http.ResponseWriter, r *http.Request) { 11 data, _ := json.Marshal(r.URL) 12 fmt.Fprintln(w, string(data)) 13} Form 1func form(w http.ResponseWriter, r *http.Request) { 2 //直接输出表单,没有对应输出 3 fmt.Fprintln(w, r.Form) 4 //需要先解析表单，才会有对应输出 5 r.ParseForm() 6 fmt.Fprintln(w, r.Form) 7} Server实现 Httpserver 是HTTP服务器的封装，实现了Server接口，提供路由注册，生命周期控制以及作为与http包结合的桥梁 ServerHTTP是整个Web框架的核心入口，在其中将实现大部分功能，Context构建，路由匹配以及业务逻辑的执行 封装与抽象：将HTTP请求的处理、响应的生成、路由的注册等逻辑都通过封装类和接口进行抽象，Context封装了请求和响应对象，HandlerBaseOnMap封装了路由逻辑，sdkHttpserver封装了服务器的启动和路由配置。\n1// Server 定义一个服务器接口 2type Server interface { 3 Routable 4 Start(address string) error 5 GET(pattern string, handlerFunc func(c *Context)) 6 POST(pattern string, handlerFunc func(c *Context)) 7} 8type Httpserver struct { 9 Name string 10 handler *Router 11} 12 13func NewHttpServer(name string) Server { 14 return \u0026Httpserver{ 15 Name: name, 16 handler: NewRouter(), 17 } 18} 19func (s *Httpserver) Route(method string, pattern string, handlerFunc HandlerFunc) { 20 s.handler.Route(method, pattern, handlerFunc) 21} 22func (s *Httpserver) GET(pattern string, handlerFunc func(c *Context)) { 23 s.handler.Route(\"GET\", pattern, handlerFunc) 24} 25func (s *Httpserver) POST(pattern string, handlerFunc func(c *Context)) { 26 s.handler.Route(\"POST\", pattern, handlerFunc) 27} 28func (s *Httpserver) Start(address string) error { 29 //http.Handle(\"/\", s) 30 //net.Listen函数创建一个监听器，监听器监听的是TCP网络地址 31 //l, err := net.Listen(\"tcp\", address) 32 //if err != nil { // return err //} 33 //http.serve 启动的灵活性更强 34 //return http.Serve(l, s) 35 36 //ListenAndServe监听TCP网络地址addr，并为该网络地址的网络连接提供HTTP服务。 37 return http.ListenAndServe(address, s) 38} 39func (s *Httpserver) ServeHTTP(W http.ResponseWriter, R *http.Request) { 40 c := NewContext(W, R) 41 s.handler.handle(c) 42} 实现Handler接口 Go通过接口实现多态，Go的接口是隐式的，只要结构体上定义的“方法”在形式上（名称、参数、返回值）和 接口定义的“方法”一样，那么这个结构体就自动实现了这个接口，我们就可以使用这个接口变量来指向这个结构体对象，实际上也就是多态和继承。 Handler是一个接口，需要实现方法 ServeHTTP ，也就是说，只要传入任何实现了 ServerHTTP 接口的实例，所有的HTTP请求，都交给了该实例进行处理，ServeHTTP 方法的作用就是，解析请求的路径，查找路由映射表，如果查到，就执行注册的处理方法。 如何设计方法ServeHTTP，这个方法有2个参数，第二个参数是 Request ，该对象包含了该HTTP请求的所有的信息，比如请求地址、Header和Body等信息；第一个参数是 ResponseWriter ，利用 ResponseWriter 可以构造针对该请求的响应\n1// HandlerFunc 定义使用的请求处理程序 2type HandlerFunc func(c *Context) 3 4// 确保Httpserver实现了Server接口 5var _ Server = \u0026Httpserver{} 6 7// Server 定义一个服务器接口 8type Server interface { 9 AddRoute(method string, pattern string, handlerFunc HandlerFunc) 10 Start(address string) error 11 GET(pattern string, handlerFunc HandlerFunc) 12 POST(pattern string, handlerFunc HandlerFunc) 13 NewGroup(prefix string) *RouterGroup 14 Use(middlewares ...HandlerFunc) 15} 16 17type Httpserver struct { 18 Name string 19 handler *Router 20 *RouterGroup 21 Groups []*RouterGroup 22} 23 24func NewHttpServer(name string) Server { 25 server := \u0026Httpserver{ 26 Name: name, 27 handler: NewRouter(), 28 } 29 //初始化 RouterGroup，将其与server关联 30 server.RouterGroup = \u0026RouterGroup{server: server} 31 // 将该 RouterGroup 添加到 server 的 groups 列表中 32 server.Groups = []*RouterGroup{server.RouterGroup} 33 return server 34} 35 36func (s *Httpserver) ServeHTTP(W http.ResponseWriter, R *http.Request) { 37 //当我们接收到一个具体请求时，要判断该请求适用于哪些中间件，在这里我们简单通过URL的前缀来判断。得到中间件列表后，赋值给c.handlers 38 var middlewares []HandlerFunc 39 for _, group := range s.Groups { 40 if strings.HasPrefix(R.URL.Path, group.prefix) { 41 middlewares = append(middlewares, group.middlewares...) 42 } 43 } 44 c := NewContext(W, R) 45 c.handlers = middlewares 46 s.handler.handle(c) 47} 上下文定义 Context随着每一个请求的出现而产生，请求的结束而销毁，和当前请求强相关的信息都应由Context承载。因此，设计Context结构，扩展性和复杂性留在了内部，而对外简化了接口。路由的处理函数，以及将要实现的中间件，参数都统一使用Context实例，Context就像一次会话的百宝箱，可以找到任何东西 我大致明白对应的意思了，实际上就是不需要自己去写对应的读取请求解析请求，而是转交给对应的框架来实现，而这部分框架就是用Context来实现的，用来简化传输的部分\n1type Context struct { 2 R *http.Request 3 W http.ResponseWriter 4} 5 6// ReadJson 读取json数据 7func (c *Context) ReadJson(resp interface{}) error { 8 body, err := io.ReadAll(c.R.Body) 9 if err != nil { 10 return err 11 } 12 err = json.Unmarshal(body, resp) 13 if err != nil { 14 return err 15 } 16 return nil 17} 18 19// WriteJson 写入json数据 20func (c *Context) WriteJson(code int, resp interface{}) error { 21 c.W.WriteHeader(code) 22 data, err := json.Marshal(resp) 23 if err != nil { 24 return err 25 } 26 _, err = c.W.Write(data) 27 if err != nil { 28 return err 29 } 30 return nil 31} 32func (c *Context) OkJson(resp interface{}) error { 33 return c.WriteJson(http.StatusOK, resp) 34} 35func (c *Context) BadRequestJson(resp interface{}) error { 36 return c.WriteJson(http.StatusBadRequest, resp) 37} 路由实现 静态路由（Map实现） 使用map定义一个handler，用来实现路由功能，允许根据HTTP方法和URL路径将请求分发到相应的处理函数 使用map来存储对应的函数，key是method与pattern的组合，将所有方法存储在哈希表中，然后通过key去匹配\n1type Handler interface { 2 http.Handler 3 Routable 4} 5//http.Handler的实现，直接继承过来 6type Handler interface { 7 ServeHTTP(ResponseWriter, *Request) 8} 创建一个实例用来进行我们自己的处理逻辑\n1type HandlerBaseOnMap struct { 2 handlers map[string]func(c *Context) 3} 整体的Handler部分\n1type Routable interface { 2 Route(method string, pattern string, handlerFunc func(c *Context)) 3} 4 5// 基于map的路由 6type Handler interface { 7 http.Handler 8 Routable 9} 10type HandlerBaseOnMap struct { 11 handlers map[string]func(c *Context) 12} 13 14func (h *HandlerBaseOnMap) Route(method string, pattern string, handlerFunc func(c *Context)) { 15 key := h.key(method, pattern) 16 h.handlers[key] = handlerFunc 17} 18 19func (h *HandlerBaseOnMap) ServeHTTP(writer http.ResponseWriter, request *http.Request) { 20 key := h.key(request.Method, request.URL.Path) 21 if handler, ok := h.handlers[key]; ok { 22 handler(NewContext(writer, request)) 23 } else { 24 writer.WriteHeader(http.StatusNotFound) 25 } 26} 27 28func (h *HandlerBaseOnMap) key(method string, pattern string) string { 29 return method + \"#\" + pattern 30} 31func NewHandlerBasedOnMap() Handler { 32 return \u0026HandlerBaseOnMap{ 33 handlers: make(map[string]func(c *Context)), 34 } 35} 动态路由（Trie树实现） 之前用了一个非常简单的map结构存储了路由表，使用map存储键值对，索引非常高效，但是有一个弊端，键值对的存储的方式，只能用来索引静态路由。那如果我们想支持类似于/hello/:name这样的动态路由怎么办呢？所谓动态路由，即一条路由规则可以匹配某一类型而非某一条固定的路由。例如/hello/:name，可以匹配/hello/geektutu、hello/jack等。 实现的动态路由主要具备两个功能：\n参数匹配:。例如 /p/:lang/doc，可以匹配 /p/c/doc 和 /p/go/doc。 通配*。例如 /static/*filepath，可以匹配/static/fav.ico，也可以匹配/static/js/jQuery.js，这种模式常用于静态服务器，能够递归地匹配子路径 实现动态路由最常用的数据结构，被称为前缀树(Trie树)：每一个节点的所有的子节点都拥有相同的前缀。 介绍一下前缀树的概念： 前缀树本身是一个多叉树结构，树中的每个节点存储一个字符，它与普通树状数据结构最大的差异在于，存储数据的 key 不存放于单个节点中，而是由从根节点 root 出发直到来到目标节点target node之间的沿途路径组成. 基于这样的构造方式，导致拥有相同前缀的字符串可以复用公共的父节点，直到在首次出现不同字符的位置才出现节点分叉，最终形成多叉树状结构. 比如以下面search、see、seat为例，从根节点出发，先存储se，然后进行分叉，分出a和e，接着继续分叉分出r和t 当存储拥有公共前缀的内容时，可以在很大程度上节省空间提高节点利用率. 同时由于这种公共前缀的设计方式，也赋以了Trie树能够支持前缀频率统计以及前缀模糊匹配的功能 分组控制 这里实现的分组控制也是以前缀来区分，并且支持分组的嵌套。例如/post是一个分组，/post/a和/post/b可以是该分组下的子分组。作用在/post分组上的中间件(middleware)，也都会作用在子分组，子分组还可以应用自己特有的中间件。中间件可以给框架提供无限的扩展能力，应用在分组上，可以使得分组控制的收益更为明显，而不是共享相同的路由前缀这么简单。例如/admin的分组，可以应用鉴权中间件；/分组应用日志中间件。 首先是一开始结构体的定义\n1//server作为顶层的分层，要在server里添加RouterGroup 2type Httpserver struct { 3 Name string 4 handler *Router 5 *RouterGroup 6 Groups []*RouterGroup 7} 8 9//在Group中，保存一个指针，指向server 10type RouterGroup struct { 11 prefix string //所有该组中的路由都将共享这个前缀 12 middlewares []HandlerFunc //支持中间件 13 parent *RouterGroup //支持嵌套 14 server *Httpserver //所有组共享一个server实例 15} 16 17func NewHttpServer(name string) Server { 18 server := \u0026Httpserver{ 19 Name: name, 20 handler: NewRouter(), 21 } 22 //初始化 RouterGroup，将其与server关联 23 server.RouterGroup = \u0026RouterGroup{server: server} 24 // 将该 RouterGroup 添加到 server 的 groups 列表中 25 server.Groups = []*RouterGroup{server.RouterGroup} 26 return server 27} Group的构造函数，用来构造RouterGroup\n1// NewGroup 以创建新的 RouterGroup 2// 所有组共享同一个 server 实例 3func (g *RouterGroup) NewGroup(prefix string) *RouterGroup { 4 server := g.server 5 //创建一个新的Group 6 newGroup := \u0026RouterGroup{ 7 prefix: g.prefix + prefix, // 新组的前缀是父组前缀加上新前缀 8 parent: g, 9 server: server, //所有组共享同一个 server 实例 10 } 11 server.Groups = append(server.Groups, newGroup) 12 return newGroup 13} 后面就是将路由相关的函数都通过RouterGroup来实现\n1//将和路由有关的函数，都交给RouterGroup实现 2func (g *RouterGroup) AddRoute(method string, pattern string, handlerFunc HandlerFunc) { 3 //将路由组的前缀（g.prefix）和当前路由的模式（pattern）拼接在一起，形成完整的路由路径 4 pattern = g.prefix + pattern 5 //日志输出，非常直观 6 log.Printf(\"Route %4s - %s\", method, pattern) 7 g.server.handler.AddRoute(method, pattern, handlerFunc) 8} 9func (g *RouterGroup) GET(pattern string, handlerFunc HandlerFunc) { 10 g.AddRoute(http.MethodGet, pattern, handlerFunc) 11} 12 13func (g *RouterGroup) POST(pattern string, handlerFunc HandlerFunc) { 14 g.AddRoute(http.MethodPost, pattern, handlerFunc) 15} 然后是在主函数里面进行分组\n1 v1 := server.NewGroup(\"/v1\") 2 { 3 v1.GET(\"/hello\", Hello) 4 v1.GET(\"/signup\", Signup) 5 } 6 v2 := server.NewGroup(\"/v2\") 7 { 8 v2.GET(\"/hello/:name\", Param) 9 v2.POST(\"/login\", Login) 10 } 中间件 中间件的定义与路由映射的Handler一致，处理的输入是Context对象。插入点是框架接收到请求初始化Context对象后，允许用户使用自己定义的中间件做一些额外的处理，例如记录日志等，以及对Context进行二次加工。另外通过调用(*Context).Next()函数，中间件可等待用户自己定义的Handler处理结束后，再做一些额外的操作，例如计算本次处理所用时间等。即所实现的中间件支持用户在请求被处理的前后，做一些额外的操作。 之前的框架设计是这样的，当接收到请求后，匹配路由，该请求的所有信息都保存在Context中，中间件也不例外，接收到请求后，应查找所有应作用于该路由的中间件，保存在Context中，依次进行调用。\n1// Logger 当在中间件中调用Next方法时，控制权交给了下一个中间件，直到调用到最后一个中间件，然后再从后往前，调用每个中间件在Next方法之后定义的部分 2func Logger() HandlerFunc { 3\treturn func(c *Context) { 4\t// 开始计时 5\tt := time.Now() 6\t// 处理请求 7\tc.Next() 8\t// 计算处理时间 9\tlog.Printf(\"[%d] %s in %v\", c.StatusCode, c.Req.RequestURI, time.Since(t)) 10\t} 11} HTML模板渲染 处理静态文件\n1// createStaticHandler 静态文件的处理程序 2func (g *RouterGroup) createStaticHandler(relativePath string, fs http.FileSystem) HandlerFunc { 3 absolutePath := path.Join(g.prefix, relativePath) 4 fileServer := http.StripPrefix(absolutePath, http.FileServer(fs)) 5 return func(c *Context) { 6 file := c.Param(\"filepath\") 7 // 检查文件是否存在 8 if _, err := fs.Open(file); err != nil { 9 c.Status(http.StatusNotFound) 10 return 11 } 12 fileServer.ServeHTTP(c.W, c.R) 13 } 14} 15 16// Static 提供静态文件 17// 用户可以将磁盘上的某个文件夹root映射到路由relativePath 18func (g *RouterGroup) Static(relativePath string, root string) { 19 handler := g.createStaticHandler(relativePath, http.Dir(root)) 20 urlPattern := path.Join(relativePath, \"/*filepath\") 21 g.GET(urlPattern, handler) 22} HTML模板渲染\n1Engine struct { 2\t*RouterGroup 3\trouter *router 4\tgroups []*RouterGroup // store all groups 5\thtmlTemplates *template.Template // for html render 6\tfuncMap template.FuncMap // for html render 7} 8 9func (engine *Engine) SetFuncMap(funcMap template.FuncMap) { 10\tengine.funcMap = funcMap 11} 12 13func (s *Httpserver) LoadHTMLGlob(pattern string) { 14 //因为运行配置里写的工作目录是LearnGo，修改一下变成LearnGo\\web就可以了 15 s.htmlTemplates = template.Must(template.New(\"\").Funcs(s.funcMap).ParseGlob(pattern)) 16} 错误处理 使用error与panic用来进行错误处理，error一般用于表达可以被处理的错误，panic一般用于表达非常严重不能恢复的错误，遇事不决选error errors包下的方法：New创建一个新的error，Is判断是不是特定的某个error，As类型转换为特定的error，Unwrap解除包装，返回被包装的error\n1func ErrorsPkg() { 2 err := \u0026MyError{} 3 //返回的是一个包装好的error 4 wrappedErr := fmt.Errorf(\"this is an wrapped error %w\", err) 5 //再解出来 6 if errors.Is(err, errors.Unwrap(wrappedErr)) { 7 fmt.Println(\"unwrapped\") 8 } 9 //判断是否是包装好的error 10 if errors.Is(wrappedErr, err) { 11 fmt.Println(\"wrapped is err\") 12 } 13 copyErr := \u0026MyError{} 14 //尝试将wrappedErr转换成为MyError 15 if errors.As(wrappedErr, \u0026copyErr) { 16 fmt.Println(\"convert error\") 17 } 18} 延迟（defer）从下往上执行，先进后出，类似于栈\n1defer func() { 2 fmt.Println(\"aaa\") 3}() 4defer func() { 5 fmt.Println(\"bbb\") 6}() 7defer func() { 8 fmt.Println(\"ccc\") 9}() 错误处理也可以作为一个中间件，增强整体框架的能力\n1func Recovery() HandlerFunc { 2\treturn func(c *Context) { 3\tdefer func() { 4\tif err := recover(); err != nil { 5\tmessage := fmt.Sprintf(\"%s\", err) 6\tlog.Printf(\"%s\\n\\n\", trace(message)) 7\tc.String(http.StatusInternalServerError, \"Internal Server Error\") 8\t} 9\t}() 10 11\tc.Next() 12\t} 13} ",
+  "wordCount" : "6511",
+  "inLanguage": "zh",
+  "datePublished": "2024-10-20T16:20:05Z",
+  "dateModified": "2024-10-20T16:20:05Z",
+  "author":{
+    "@type": "Person",
+    "name": "Mario"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://localhost:1313/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Mario's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://localhost:1313/favicon-mario.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Mario&#39;s Blog (Alt + H)">Mario&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Go语言之构造一个Web框架
+    </h1>
+    <div class="post-meta"><span title='2024-10-20 16:20:05 +0000 UTC'>2024-10-20</span>&nbsp;·&nbsp;6511 字&nbsp;·&nbsp;Mario
+
+</div>
+  </header> <aside id="toc-container" class="toc-container wide">
+        <div class="toc">
+            <details  open>
+                <summary accesskey="c" title="(Alt + C)">
+                    <span class="details">目录</span>
+                </summary>
+
+                <div class="inner"><ul>
+                        <li>
+                            <a href="#%e5%8f%82%e8%80%83%e6%96%87%e7%8c%ae" aria-label="参考文献">参考文献</a></li>
+                        <li>
+                            <a href="#%e6%95%b4%e4%bd%93%e6%9e%b6%e6%9e%84" aria-label="整体架构">整体架构</a></li>
+                        <li>
+                            <a href="#%e5%8a%9f%e8%83%bd%e7%ae%80%e4%bb%8b" aria-label="功能简介">功能简介</a></li>
+                        <li>
+                            <a href="#http%e5%ba%93%e4%b8%8b%e6%96%b9%e6%b3%95%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="Http库下方法的使用">Http库下方法的使用</a><ul>
+                                    
+                        <li>
+                            <a href="#body%e5%92%8cgetbody" aria-label="Body和GetBody">Body和GetBody</a></li>
+                        <li>
+                            <a href="#url" aria-label="URL">URL</a></li>
+                        <li>
+                            <a href="#form" aria-label="Form">Form</a></li></ul>
+                        </li>
+                        <li>
+                            <a href="#server%e5%ae%9e%e7%8e%b0" aria-label="Server实现">Server实现</a></li>
+                        <li>
+                            <a href="#%e5%ae%9e%e7%8e%b0handler%e6%8e%a5%e5%8f%a3" aria-label="实现Handler接口">实现Handler接口</a></li>
+                        <li>
+                            <a href="#%e4%b8%8a%e4%b8%8b%e6%96%87%e5%ae%9a%e4%b9%89" aria-label="上下文定义">上下文定义</a></li>
+                        <li>
+                            <a href="#%e8%b7%af%e7%94%b1%e5%ae%9e%e7%8e%b0" aria-label="路由实现">路由实现</a><ul>
+                                    
+                        <li>
+                            <a href="#%e9%9d%99%e6%80%81%e8%b7%af%e7%94%b1map%e5%ae%9e%e7%8e%b0" aria-label="静态路由（Map实现）">静态路由（Map实现）</a></li>
+                        <li>
+                            <a href="#%e5%8a%a8%e6%80%81%e8%b7%af%e7%94%b1trie%e6%a0%91%e5%ae%9e%e7%8e%b0" aria-label="动态路由（Trie树实现）">动态路由（Trie树实现）</a></li></ul>
+                        </li>
+                        <li>
+                            <a href="#%e5%88%86%e7%bb%84%e6%8e%a7%e5%88%b6" aria-label="分组控制">分组控制</a></li>
+                        <li>
+                            <a href="#%e4%b8%ad%e9%97%b4%e4%bb%b6" aria-label="中间件">中间件</a></li>
+                        <li>
+                            <a href="#html%e6%a8%a1%e6%9d%bf%e6%b8%b2%e6%9f%93" aria-label="HTML模板渲染">HTML模板渲染</a></li>
+                        <li>
+                            <a href="#%e9%94%99%e8%af%af%e5%a4%84%e7%90%86" aria-label="错误处理">错误处理</a>
+                        </li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </aside>
+    <script>
+        let activeElement;
+        let elements;
+        window.addEventListener('DOMContentLoaded', function (event) {
+            checkTocPosition();
+
+            elements = document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]');
+            
+            activeElement = elements[0];
+            const id = encodeURI(activeElement.getAttribute('id')).toLowerCase();
+            document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+        }, false);
+
+        window.addEventListener('resize', function (event) {
+            checkTocPosition();
+        }, false);
+
+        window.addEventListener('scroll', () => {
+            
+            activeElement = Array.from(elements).find((element) => {
+                if ((getOffsetTop(element) - window.pageYOffset) > 0 &&
+                    (getOffsetTop(element) - window.pageYOffset) < window.innerHeight / 2) {
+                    return element;
+                }
+            }) || activeElement
+
+            elements.forEach(element => {
+                const id = encodeURI(element.getAttribute('id')).toLowerCase();
+                if (element === activeElement) {
+                    document.querySelector(`.inner ul li a[href="#${id}"]`).classList.add('active');
+                } else {
+                    document.querySelector(`.inner ul li a[href="#${id}"]`).classList.remove('active');
+                }
+            })
+        }, false);
+
+        const main = parseInt(getComputedStyle(document.body).getPropertyValue('--article-width'), 10);
+        const toc = parseInt(getComputedStyle(document.body).getPropertyValue('--toc-width'), 10);
+        const gap = parseInt(getComputedStyle(document.body).getPropertyValue('--gap'), 10);
+
+        function checkTocPosition() {
+            const width = document.body.scrollWidth;
+
+            if (width - main - (toc * 2) - (gap * 4) > 0) {
+                document.getElementById("toc-container").classList.add("wide");
+            } else {
+                document.getElementById("toc-container").classList.remove("wide");
+            }
+        }
+
+        function getOffsetTop(element) {
+            if (!element.getClientRects().length) {
+                return 0;
+            }
+            let rect = element.getBoundingClientRect();
+            let win = element.ownerDocument.defaultView;
+            return rect.top + win.pageYOffset;
+        }
+    </script>
+  <div class="post-content"><h4 id="参考文献">参考文献<a hidden class="anchor" aria-hidden="true" href="#参考文献">#</a></h4>
+<p><a href="https://geektutu.com/post/gee-day2.html">Go语言动手写Web框架 - Gee第二天 上下文Context | 极客兔兔</a></p>
+<p>大佬写的非常清晰易懂，跟着走下来对整个web框架的了解变得更加深入了，也整理了一些学习心得</p>
+<h4 id="整体架构">整体架构<a hidden class="anchor" aria-hidden="true" href="#整体架构">#</a></h4>
+<p>简单介绍一下整体框架的设计思路以及对应需要实现的一些功能，框架的具体实现主要是根据极客兔兔的博客以及极客时间的教学视频进行的
+Web框架主要是用于解决标准库中需要频繁处理的问题或者将处理起来较为麻烦的部分进行一定程度上的封装
+根据HTTP基础部分整体的框架其实很清楚了，用户这边写的是路由和对应的处理方法，框架用HandlerFunc来接受对应的handler，与对应的路由通过map进行绑定，通过不同的请求可以映射到不同的处理方法
+首先要有一个整体代表服务器的抽象，Server，提供生命周期控制、路由注册接口，作为http包到Web框架的桥梁，怎么接入http包？通过http包暴露的一个接口handler来作为Web框架与http包的连接点，其次是对于路由的处理，这也是Web框架的核心之一，通过动态路由将请求映射到函数，还有一些功能如上下文，分组控制，中间件等等。</p>
+<h4 id="功能简介">功能简介<a hidden class="anchor" aria-hidden="true" href="#功能简介">#</a></h4>
+<p><strong>动态路由</strong>：对于路由来说，最重要的当然是注册与匹配了。开发服务时，注册路由规则，映射handler；访问时，匹配路由规则，查找到对应的handler。因此，<code>Trie树</code>需要支持节点的插入与查询。插入功能很简单，递归查找每一层的节点，如果没有匹配到当前<code>part</code>的节点，则新建一个。
+<strong>上下文</strong>：将<code>Handler</code>的参数变成<code>Context</code>，设计<code>上下文(Context)</code>，封装<code>*http.Request</code>和<code>http.ResponseWriter</code>的方法，简化相关接口的调用，提供对 JSON、HTML 等返回类型的支持。
+<strong>分组控制</strong>：<code>分组控制(Group Control)</code>是 Web 框架应提供的基础功能之一。所谓分组，是指路由的分组。如果没有路由分组，我们需要针对每一个路由进行控制。但是真实的业务场景中，往往某一组路由需要相似的处理。</p>
+<ol>
+<li>以<code>/post</code>开头的路由匿名可访问。</li>
+<li>以<code>/admin</code>开头的路由需要鉴权。</li>
+<li>以<code>/api</code>开头的路由是 RESTful 接口，可以对接第三方平台，需要三方平台鉴权。</li>
+</ol>
+<p><strong>中间件</strong>：<code>中间件(middlewares)</code>，就是非业务的技术类组件。Web框架本身不可能去理解所有的业务，因而不可能实现所有的功能。因此，框架需要有一个插口，允许用户自己定义功能，嵌入到框架中，仿佛这个功能是框架原生支持的一样。</p>
+<ul>
+<li>插入点在哪？使用框架的人并不关心底层逻辑的具体实现，如果插入点太底层，中间件逻辑就会非常复杂。如果插入点离用户太近，那和用户直接定义一组函数，每次在 Handler 中手工调用没有多大的优势了。</li>
+<li>中间件的输入是什么？中间件的输入，决定了扩展能力。暴露的参数太少，用户发挥空间有限。</li>
+</ul>
+<p><strong>HTML模板</strong>：<code>HTML模板（template）</code>部分主要是实现两个内容：</p>
+<ul>
+<li>实现静态资源服务(Static Resource)</li>
+<li>支持HTML模板渲染
+将静态文件放在<code>/web</code>，<code>filepath</code>的值即是该目录下文件的相对地址。映射到真实的文件后，将文件返回，静态服务器就实现了。
+返回文件直接交给<code>http.FileServer</code>处理就好了
+Go语言内置了<code>html/template</code>为 HTML 提供了较为完整的支持。包括普通变量渲染、列表渲染、对象渲染等。</li>
+</ul>
+<p><strong>错误处理</strong>：用户不正确的参数，可能会触发某些异常，例如数组越界，空指针等。如果因为这些原因导致系统宕机，必然是不可接受的，所以错误处理机制是非常必要的，将错误处理作为一个中间件添加到框架中，向用户返回 <em>Internal Server Error</em>，并且在日志中打印必要的错误信息，方便进行错误定位。</p>
+<h4 id="http库下方法的使用">Http库下方法的使用<a hidden class="anchor" aria-hidden="true" href="#http库下方法的使用">#</a></h4>
+<p>这一部分主要是介绍一下net/http库下的一些基础功能使用，Body的获取，URL的查询，Form表单的输出等等</p>
+<ul>
+<li><code>http.ResponseWriter</code>: 这是一个接口，提供了对 HTTP 响应的返回方法。你可以使用它来写入 HTTP 响应的头信息和主体内容。</li>
+<li><code>*http.Request</code>: 这是一个指向 <code>http.Request</code> 的指针，表示 HTTP 请求。它包含了关于 HTTP 请求的所有信息，如请求方法、URL、头信息、表单数据等</li>
+</ul>
+<h5 id="body和getbody">Body和GetBody<a hidden class="anchor" aria-hidden="true" href="#body和getbody">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">home</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="c1">//body 只能读取一次  
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"></span>    <span class="nx">body</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;读取请求体失败&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">       <span class="k">return</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;第一次请求：&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">body</span><span class="p">),</span> <span class="s">&#34;长度为&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">body</span><span class="p">)))</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="c1">//尝试再次读取，不会报错，但是什么也没有读到  
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>    <span class="nx">body</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;读取请求体失败&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">       <span class="k">return</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;第二次请求：&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">body</span><span class="p">),</span> <span class="s">&#34;长度为&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">body</span><span class="p">)))</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="k">if</span> <span class="nx">r</span><span class="p">.</span><span class="nx">GetBody</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">17</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;GetBody为空&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">19</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;GetBody不为空&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="url">URL<a hidden class="anchor" aria-hidden="true" href="#url">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">query</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="c1">//查询参数是一个map，type Values map[string][]string  
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"></span>    <span class="nx">values</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nf">Query</span><span class="p">()</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="c1">//url.Values类型是一个映射字符串到字符串切片的映射，通常用于处理URL查询参数  
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">TypeOf</span><span class="p">(</span><span class="nx">values</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="nx">name</span> <span class="o">:=</span> <span class="nx">values</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;name&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;查询对应的值为&#34;</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="kd">func</span> <span class="nf">wholeUrl</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">data</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">data</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="form">Form<a hidden class="anchor" aria-hidden="true" href="#form">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-GO" data-lang="GO"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">func</span> <span class="nf">form</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="c1">//直接输出表单,没有对应输出  
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Form</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">4</span><span class="cl">    <span class="c1">//需要先解析表单，才会有对应输出  
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span>    <span class="nx">r</span><span class="p">.</span><span class="nf">ParseForm</span><span class="p">()</span>  
+</span></span><span class="line"><span class="ln">6</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintln</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Form</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="server实现">Server实现<a hidden class="anchor" aria-hidden="true" href="#server实现">#</a></h4>
+<p><code>Httpserver</code> 是HTTP服务器的封装，实现了<code>Server</code>接口，提供路由注册，生命周期控制以及作为与http包结合的桥梁
+<code>ServerHTTP</code>是整个Web框架的核心入口，在其中将实现大部分功能，Context构建，路由匹配以及业务逻辑的执行
+<strong>封装与抽象</strong>：将HTTP请求的处理、响应的生成、路由的注册等逻辑都通过封装类和接口进行抽象，<code>Context</code>封装了请求和响应对象，<code>HandlerBaseOnMap</code>封装了路由逻辑，<code>sdkHttpserver</code>封装了服务器的启动和路由配置。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// Server 定义一个服务器接口  
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Server</span> <span class="kd">interface</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="nx">Routable</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nf">Start</span><span class="p">(</span><span class="nx">address</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span>  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="nf">GET</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="nf">POST</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">type</span> <span class="nx">Httpserver</span> <span class="kd">struct</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="nx">Name</span>    <span class="kt">string</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">handler</span> <span class="o">*</span><span class="nx">Router</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">  
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="nf">NewHttpServer</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">Server</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">Httpserver</span><span class="p">{</span>  
+</span></span><span class="line"><span class="ln">15</span><span class="cl">       <span class="nx">Name</span><span class="p">:</span>    <span class="nx">name</span><span class="p">,</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl">       <span class="nx">handler</span><span class="p">:</span> <span class="nf">NewRouter</span><span class="p">(),</span>  
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">Route</span><span class="p">(</span><span class="nx">method</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nf">Route</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">handlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">GET</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nf">Route</span><span class="p">(</span><span class="s">&#34;GET&#34;</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">handlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">POST</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">26</span><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nf">Route</span><span class="p">(</span><span class="s">&#34;POST&#34;</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">handlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">Start</span><span class="p">(</span><span class="nx">address</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="c1">//http.Handle(&#34;/&#34;, s)  
+</span></span></span><span class="line"><span class="ln">30</span><span class="cl"><span class="c1"></span>    <span class="c1">//net.Listen函数创建一个监听器，监听器监听的是TCP网络地址  
+</span></span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="c1"></span>    <span class="c1">//l, err := net.Listen(&#34;tcp&#34;, address)  
+</span></span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="c1"></span>    <span class="c1">//if err != nil {    // return err    //}    
+</span></span></span><span class="line"><span class="ln">33</span><span class="cl"><span class="c1"></span>    <span class="c1">//http.serve 启动的灵活性更强
+</span></span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="c1"></span>    <span class="c1">//return http.Serve(l, s)    
+</span></span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="c1"></span>    
+</span></span><span class="line"><span class="ln">36</span><span class="cl">    <span class="c1">//ListenAndServe监听TCP网络地址addr，并为该网络地址的网络连接提供HTTP服务。  
+</span></span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="nx">address</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">39</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">W</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">R</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">40</span><span class="cl">    <span class="nx">c</span> <span class="o">:=</span> <span class="nf">NewContext</span><span class="p">(</span><span class="nx">W</span><span class="p">,</span> <span class="nx">R</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">41</span><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nf">handle</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">42</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="实现handler接口">实现Handler接口<a hidden class="anchor" aria-hidden="true" href="#实现handler接口">#</a></h4>
+<p>Go通过接口实现多态，Go的接口是隐式的，只要结构体上定义的“方法”在形式上（名称、参数、返回值）和 接口定义的“方法”一样，那么这个结构体就自动实现了这个接口，我们就可以使用这个接口变量来指向这个结构体对象，实际上也就是多态和继承。
+<code>Handler</code>是一个接口，需要实现方法 <em>ServeHTTP</em> ，也就是说，只要传入任何实现了 <em>ServerHTTP</em> 接口的实例，所有的HTTP请求，都交给了该实例进行处理，<em>ServeHTTP</em> 方法的作用就是，解析请求的路径，查找路由映射表，如果查到，就执行注册的处理方法。
+如何设计方法<code>ServeHTTP</code>，这个方法有2个参数，第二个参数是 <em>Request</em> ，该对象包含了该HTTP请求的所有的信息，比如请求地址、Header和Body等信息；第一个参数是 <em>ResponseWriter</em> ，利用 <em>ResponseWriter</em> 可以构造针对该请求的响应</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// HandlerFunc 定义使用的请求处理程序  
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">HandlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"> 
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1">// 确保Httpserver实现了Server接口  
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">_</span> <span class="nx">Server</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">Httpserver</span><span class="p">{}</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"> 
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1">// Server 定义一个服务器接口  
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Server</span> <span class="kd">interface</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">   <span class="nf">AddRoute</span><span class="p">(</span><span class="nx">method</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">   <span class="nf">Start</span><span class="p">(</span><span class="nx">address</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">error</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">   <span class="nf">GET</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">   <span class="nf">POST</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">   <span class="nf">NewGroup</span><span class="p">(</span><span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">RouterGroup</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl">   <span class="nf">Use</span><span class="p">(</span><span class="nx">middlewares</span> <span class="o">...</span><span class="nx">HandlerFunc</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl"> 
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="kd">type</span> <span class="nx">Httpserver</span> <span class="kd">struct</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">18</span><span class="cl">   <span class="nx">Name</span>    <span class="kt">string</span>  
+</span></span><span class="line"><span class="ln">19</span><span class="cl">   <span class="nx">handler</span> <span class="o">*</span><span class="nx">Router</span>  
+</span></span><span class="line"><span class="ln">20</span><span class="cl">   <span class="o">*</span><span class="nx">RouterGroup</span>  
+</span></span><span class="line"><span class="ln">21</span><span class="cl">   <span class="nx">Groups</span> <span class="p">[]</span><span class="o">*</span><span class="nx">RouterGroup</span>  
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">23</span><span class="cl">
+</span></span><span class="line"><span class="ln">24</span><span class="cl"><span class="kd">func</span> <span class="nf">NewHttpServer</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">Server</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">25</span><span class="cl">   <span class="nx">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Httpserver</span><span class="p">{</span>  
+</span></span><span class="line"><span class="ln">26</span><span class="cl">      <span class="nx">Name</span><span class="p">:</span>    <span class="nx">name</span><span class="p">,</span>  
+</span></span><span class="line"><span class="ln">27</span><span class="cl">      <span class="nx">handler</span><span class="p">:</span> <span class="nf">NewRouter</span><span class="p">(),</span>  
+</span></span><span class="line"><span class="ln">28</span><span class="cl">   <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">29</span><span class="cl">   <span class="c1">//初始化 RouterGroup，将其与server关联  
+</span></span></span><span class="line"><span class="ln">30</span><span class="cl"><span class="c1"></span>   <span class="nx">server</span><span class="p">.</span><span class="nx">RouterGroup</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">RouterGroup</span><span class="p">{</span><span class="nx">server</span><span class="p">:</span> <span class="nx">server</span><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">31</span><span class="cl">   <span class="c1">// 将该 RouterGroup 添加到 server 的 groups 列表中  
+</span></span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="c1"></span>   <span class="nx">server</span><span class="p">.</span><span class="nx">Groups</span> <span class="p">=</span> <span class="p">[]</span><span class="o">*</span><span class="nx">RouterGroup</span><span class="p">{</span><span class="nx">server</span><span class="p">.</span><span class="nx">RouterGroup</span><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">33</span><span class="cl">   <span class="k">return</span> <span class="nx">server</span>  
+</span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">35</span><span class="cl">
+</span></span><span class="line"><span class="ln">36</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">W</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">R</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">37</span><span class="cl">   <span class="c1">//当我们接收到一个具体请求时，要判断该请求适用于哪些中间件，在这里我们简单通过URL的前缀来判断。得到中间件列表后，赋值给c.handlers  
+</span></span></span><span class="line"><span class="ln">38</span><span class="cl"><span class="c1"></span>   <span class="kd">var</span> <span class="nx">middlewares</span> <span class="p">[]</span><span class="nx">HandlerFunc</span>  
+</span></span><span class="line"><span class="ln">39</span><span class="cl">   <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">group</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span><span class="p">.</span><span class="nx">Groups</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">40</span><span class="cl">      <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">R</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">prefix</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">41</span><span class="cl">         <span class="nx">middlewares</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">middlewares</span><span class="p">,</span> <span class="nx">group</span><span class="p">.</span><span class="nx">middlewares</span><span class="o">...</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">42</span><span class="cl">      <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">43</span><span class="cl">   <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">44</span><span class="cl">   <span class="nx">c</span> <span class="o">:=</span> <span class="nf">NewContext</span><span class="p">(</span><span class="nx">W</span><span class="p">,</span> <span class="nx">R</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">45</span><span class="cl">   <span class="nx">c</span><span class="p">.</span><span class="nx">handlers</span> <span class="p">=</span> <span class="nx">middlewares</span>  
+</span></span><span class="line"><span class="ln">46</span><span class="cl">   <span class="nx">s</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nf">handle</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">47</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="上下文定义">上下文定义<a hidden class="anchor" aria-hidden="true" href="#上下文定义">#</a></h4>
+<p>Context随着每一个请求的出现而产生，请求的结束而销毁，和当前请求强相关的信息都应由Context承载。因此，设计Context结构，扩展性和复杂性留在了内部，而对外简化了接口。路由的处理函数，以及将要实现的中间件，参数都统一使用Context实例，Context就像一次会话的百宝箱，可以找到任何东西
+我大致明白对应的意思了，实际上就是不需要自己去写对应的读取请求解析请求，而是转交给对应的框架来实现，而这部分框架就是用Context来实现的，用来简化传输的部分</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">type</span> <span class="nx">Context</span> <span class="kd">struct</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nx">R</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="nx">W</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1">// ReadJson 读取json数据  
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nf">ReadJson</span><span class="p">(</span><span class="nx">resp</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="nx">body</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">io</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">R</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">       <span class="k">return</span> <span class="nx">err</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="nx">err</span> <span class="p">=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Unmarshal</span><span class="p">(</span><span class="nx">body</span><span class="p">,</span> <span class="nx">resp</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl">       <span class="k">return</span> <span class="nx">err</span>  
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="k">return</span> <span class="kc">nil</span>  
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">18</span><span class="cl">  
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1">// WriteJson 写入json数据  
+</span></span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nf">WriteJson</span><span class="p">(</span><span class="nx">code</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">resp</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="nx">c</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">code</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="nx">data</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">24</span><span class="cl">       <span class="k">return</span> <span class="nx">err</span>  
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">26</span><span class="cl">    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">W</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">27</span><span class="cl">    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">28</span><span class="cl">       <span class="k">return</span> <span class="nx">err</span>  
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">30</span><span class="cl">    <span class="k">return</span> <span class="kc">nil</span>  
+</span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nf">OkJson</span><span class="p">(</span><span class="nx">resp</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">33</span><span class="cl">    <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nf">WriteJson</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span><span class="p">,</span> <span class="nx">resp</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">34</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="nf">BadRequestJson</span><span class="p">(</span><span class="nx">resp</span> <span class="kd">interface</span><span class="p">{})</span> <span class="kt">error</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">36</span><span class="cl">    <span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nf">WriteJson</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusBadRequest</span><span class="p">,</span> <span class="nx">resp</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">37</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="路由实现">路由实现<a hidden class="anchor" aria-hidden="true" href="#路由实现">#</a></h4>
+<h5 id="静态路由map实现">静态路由（Map实现）<a hidden class="anchor" aria-hidden="true" href="#静态路由map实现">#</a></h5>
+<p>使用map定义一个handler，用来实现<strong>路由功能</strong>，允许根据HTTP方法和URL路径将请求分发到相应的处理函数
+使用map来存储对应的函数，key是method与pattern的组合，将所有方法存储在哈希表中，然后通过key去匹配</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">type</span> <span class="nx">Handler</span> <span class="kd">interface</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>  
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="nx">Routable</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1">//http.Handler的实现，直接继承过来
+</span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Handler</span> <span class="kd">interface</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">7</span><span class="cl">    <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">Request</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>创建一个实例用来进行我们自己的处理逻辑</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">type</span> <span class="nx">HandlerBaseOnMap</span> <span class="kd">struct</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="nx">handlers</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="p">}</span>  
+</span></span></code></pre></div><p>整体的Handler部分</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">type</span> <span class="nx">Routable</span> <span class="kd">interface</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nf">Route</span><span class="p">(</span><span class="nx">method</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1">// 基于map的路由  
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Handler</span> <span class="kd">interface</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="nx">http</span><span class="p">.</span><span class="nx">Handler</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="nx">Routable</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="kd">type</span> <span class="nx">HandlerBaseOnMap</span> <span class="kd">struct</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">handlers</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">  
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">HandlerBaseOnMap</span><span class="p">)</span> <span class="nf">Route</span><span class="p">(</span><span class="nx">method</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">15</span><span class="cl">    <span class="nx">key</span> <span class="o">:=</span> <span class="nx">h</span><span class="p">.</span><span class="nf">key</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl">    <span class="nx">h</span><span class="p">.</span><span class="nx">handlers</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">handlerFunc</span>  
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">18</span><span class="cl">  
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">HandlerBaseOnMap</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="nx">key</span> <span class="o">:=</span> <span class="nx">h</span><span class="p">.</span><span class="nf">key</span><span class="p">(</span><span class="nx">request</span><span class="p">.</span><span class="nx">Method</span><span class="p">,</span> <span class="nx">request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="k">if</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">h</span><span class="p">.</span><span class="nx">handlers</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">22</span><span class="cl">       <span class="nf">handler</span><span class="p">(</span><span class="nf">NewContext</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span> <span class="nx">request</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln">23</span><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">24</span><span class="cl">       <span class="nx">writer</span><span class="p">.</span><span class="nf">WriteHeader</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">27</span><span class="cl">  
+</span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">HandlerBaseOnMap</span><span class="p">)</span> <span class="nf">key</span><span class="p">(</span><span class="nx">method</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">29</span><span class="cl">    <span class="k">return</span> <span class="nx">method</span> <span class="o">+</span> <span class="s">&#34;#&#34;</span> <span class="o">+</span> <span class="nx">pattern</span>  
+</span></span><span class="line"><span class="ln">30</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">31</span><span class="cl"><span class="kd">func</span> <span class="nf">NewHandlerBasedOnMap</span><span class="p">()</span> <span class="nx">Handler</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">32</span><span class="cl">    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">HandlerBaseOnMap</span><span class="p">{</span>  
+</span></span><span class="line"><span class="ln">33</span><span class="cl">       <span class="nx">handlers</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)),</span>  
+</span></span><span class="line"><span class="ln">34</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">35</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="动态路由trie树实现">动态路由（Trie树实现）<a hidden class="anchor" aria-hidden="true" href="#动态路由trie树实现">#</a></h5>
+<p>之前用了一个非常简单的<code>map</code>结构存储了路由表，使用<code>map</code>存储键值对，索引非常高效，但是有一个弊端，键值对的存储的方式，只能用来索引静态路由。那如果我们想支持类似于<code>/hello/:name</code>这样的动态路由怎么办呢？所谓动态路由，即一条路由规则可以匹配某一类型而非某一条固定的路由。例如<code>/hello/:name</code>，可以匹配<code>/hello/geektutu</code>、<code>hello/jack</code>等。
+实现的动态路由主要具备两个功能：</p>
+<ul>
+<li>参数匹配<code>:</code>。例如 <code>/p/:lang/doc</code>，可以匹配 <code>/p/c/doc</code> 和 <code>/p/go/doc</code>。</li>
+<li>通配<code>*</code>。例如 <code>/static/*filepath</code>，可以匹配<code>/static/fav.ico</code>，也可以匹配<code>/static/js/jQuery.js</code>，这种模式常用于静态服务器，能够递归地匹配子路径
+实现动态路由最常用的数据结构，被称为前缀树(Trie树)：每一个节点的所有的子节点都拥有相同的前缀。
+介绍一下前缀树的概念：
+<strong>前缀树</strong>本身是一个多叉树结构，树中的每个节点存储一个字符，它与普通树状数据结构最大的差异在于，存储数据的 key 不存放于单个节点中，而是由从根节点 root 出发直到来到目标节点target node之间的<strong>沿途路径组成</strong>. 基于这样的构造方式，导致拥有相同前缀的字符串可以复用公共的父节点，直到在首次出现不同字符的位置才出现节点分叉，最终形成多叉树状结构.
+比如以下面search、see、seat为例，从根节点出发，先存储se，然后进行分叉，分出a和e，接着继续分叉分出r和t
+当存储拥有公共前缀的内容时，可以在很大程度上节省空间提高节点利用率. 同时由于这种公共前缀的设计方式，也赋以了Trie树能够支持前缀频率统计以及前缀模糊匹配的功能</li>
+</ul>
+<h4 id="分组控制">分组控制<a hidden class="anchor" aria-hidden="true" href="#分组控制">#</a></h4>
+<p>这里实现的分组控制也是以前缀来区分，并且支持分组的嵌套。例如<code>/post</code>是一个分组，<code>/post/a</code>和<code>/post/b</code>可以是该分组下的子分组。作用在<code>/post</code>分组上的中间件(middleware)，也都会作用在子分组，子分组还可以应用自己特有的中间件。中间件可以给框架提供无限的扩展能力，应用在分组上，可以使得分组控制的收益更为明显，而不是共享相同的路由前缀这么简单。例如<code>/admin</code>的分组，可以应用鉴权中间件；<code>/</code>分组应用日志中间件。
+首先是一开始结构体的定义</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">//server作为顶层的分层，要在server里添加RouterGroup
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">Httpserver</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="nx">Name</span>    <span class="kt">string</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nx">handler</span> <span class="o">*</span><span class="nx">Router</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="o">*</span><span class="nx">RouterGroup</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="nx">Groups</span> <span class="p">[]</span><span class="o">*</span><span class="nx">RouterGroup</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1">//在Group中，保存一个指针，指向server
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">RouterGroup</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">prefix</span>      <span class="kt">string</span>        <span class="c1">//所有该组中的路由都将共享这个前缀
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span>    <span class="nx">middlewares</span> <span class="p">[]</span><span class="nx">HandlerFunc</span> <span class="c1">//支持中间件
+</span></span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="c1"></span>    <span class="nx">parent</span>      <span class="o">*</span><span class="nx">RouterGroup</span>  <span class="c1">//支持嵌套
+</span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span>    <span class="nx">server</span>      <span class="o">*</span><span class="nx">Httpserver</span>   <span class="c1">//所有组共享一个server实例
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl">
+</span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="kd">func</span> <span class="nf">NewHttpServer</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="nx">Server</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl">    <span class="nx">server</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Httpserver</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl">        <span class="nx">Name</span><span class="p">:</span>    <span class="nx">name</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">        <span class="nx">handler</span><span class="p">:</span> <span class="nf">NewRouter</span><span class="p">(),</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">    <span class="c1">//初始化 RouterGroup，将其与server关联
+</span></span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="c1"></span>    <span class="nx">server</span><span class="p">.</span><span class="nx">RouterGroup</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">RouterGroup</span><span class="p">{</span><span class="nx">server</span><span class="p">:</span> <span class="nx">server</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="c1">// 将该 RouterGroup 添加到 server 的 groups 列表中
+</span></span></span><span class="line"><span class="ln">25</span><span class="cl"><span class="c1"></span>    <span class="nx">server</span><span class="p">.</span><span class="nx">Groups</span> <span class="p">=</span> <span class="p">[]</span><span class="o">*</span><span class="nx">RouterGroup</span><span class="p">{</span><span class="nx">server</span><span class="p">.</span><span class="nx">RouterGroup</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">    <span class="k">return</span> <span class="nx">server</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Group的构造函数，用来构造RouterGroup</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// NewGroup 以创建新的 RouterGroup
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1">// 所有组共享同一个 server 实例
+</span></span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">NewGroup</span><span class="p">(</span><span class="nx">prefix</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">RouterGroup</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nx">server</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nx">server</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="c1">//创建一个新的Group
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>    <span class="nx">newGroup</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">RouterGroup</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">        <span class="nx">prefix</span><span class="p">:</span> <span class="nx">g</span><span class="p">.</span><span class="nx">prefix</span> <span class="o">+</span> <span class="nx">prefix</span><span class="p">,</span> <span class="c1">// 新组的前缀是父组前缀加上新前缀
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>        <span class="nx">parent</span><span class="p">:</span> <span class="nx">g</span><span class="p">,</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">        <span class="nx">server</span><span class="p">:</span> <span class="nx">server</span><span class="p">,</span> <span class="c1">//所有组共享同一个 server 实例
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>    <span class="p">}</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">    <span class="nx">server</span><span class="p">.</span><span class="nx">Groups</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">server</span><span class="p">.</span><span class="nx">Groups</span><span class="p">,</span> <span class="nx">newGroup</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="k">return</span> <span class="nx">newGroup</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>后面就是将路由相关的函数都通过RouterGroup来实现</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">//将和路由有关的函数，都交给RouterGroup实现
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">AddRoute</span><span class="p">(</span><span class="nx">method</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="c1">//将路由组的前缀（g.prefix）和当前路由的模式（pattern）拼接在一起，形成完整的路由路径
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>    <span class="nx">pattern</span> <span class="p">=</span> <span class="nx">g</span><span class="p">.</span><span class="nx">prefix</span> <span class="o">+</span> <span class="nx">pattern</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="c1">//日志输出，非常直观
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>    <span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Route %4s - %s&#34;</span><span class="p">,</span> <span class="nx">method</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="nx">g</span><span class="p">.</span><span class="nx">server</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nf">AddRoute</span><span class="p">(</span><span class="nx">method</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">handlerFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">GET</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="nx">g</span><span class="p">.</span><span class="nf">AddRoute</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">MethodGet</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">handlerFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">POST</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">handlerFunc</span> <span class="nx">HandlerFunc</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="nx">g</span><span class="p">.</span><span class="nf">AddRoute</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">MethodPost</span><span class="p">,</span> <span class="nx">pattern</span><span class="p">,</span> <span class="nx">handlerFunc</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>然后是在主函数里面进行分组</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl">    <span class="nx">v1</span> <span class="o">:=</span> <span class="nx">server</span><span class="p">.</span><span class="nf">NewGroup</span><span class="p">(</span><span class="s">&#34;/v1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">        <span class="nx">v1</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/hello&#34;</span><span class="p">,</span> <span class="nx">Hello</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">        <span class="nx">v1</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/signup&#34;</span><span class="p">,</span> <span class="nx">Signup</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="nx">v2</span> <span class="o">:=</span> <span class="nx">server</span><span class="p">.</span><span class="nf">NewGroup</span><span class="p">(</span><span class="s">&#34;/v2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">        <span class="nx">v2</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="s">&#34;/hello/:name&#34;</span><span class="p">,</span> <span class="nx">Param</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">        <span class="nx">v2</span><span class="p">.</span><span class="nf">POST</span><span class="p">(</span><span class="s">&#34;/login&#34;</span><span class="p">,</span> <span class="nx">Login</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h4 id="中间件">中间件<a hidden class="anchor" aria-hidden="true" href="#中间件">#</a></h4>
+<p>中间件的定义与路由映射的<code>Handler</code>一致，处理的输入是<code>Context</code>对象。<strong>插入点</strong>是框架接收到请求初始化<code>Context</code>对象后，允许用户使用自己定义的中间件做一些额外的处理，例如记录日志等，以及对<code>Context</code>进行二次加工。另外通过调用<code>(*Context).Next()</code>函数，中间件可等待用户自己定义的<code>Handler</code>处理结束后，再做一些额外的操作，例如计算本次处理所用时间等。即所实现的中间件支持用户在请求被处理的前后，做一些额外的操作。
+之前的框架设计是这样的，当接收到请求后，匹配路由，该请求的所有信息都保存在<code>Context</code>中，中间件也不例外，接收到请求后，应查找所有应作用于该路由的中间件，保存在<code>Context</code>中，依次进行调用。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// Logger 当在中间件中调用Next方法时，控制权交给了下一个中间件，直到调用到最后一个中间件，然后再从后往前，调用每个中间件在Next方法之后定义的部分
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">Logger</span><span class="p">()</span> <span class="nx">HandlerFunc</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">		<span class="c1">// 开始计时
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span>		<span class="nx">t</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">()</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">		<span class="c1">// 处理请求
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span>		<span class="nx">c</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">		<span class="c1">// 计算处理时间 
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span>		<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;[%d] %s in %v&#34;</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">StatusCode</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">Req</span><span class="p">.</span><span class="nx">RequestURI</span><span class="p">,</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Since</span><span class="p">(</span><span class="nx">t</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="p">}</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="html模板渲染">HTML模板渲染<a hidden class="anchor" aria-hidden="true" href="#html模板渲染">#</a></h4>
+<p>处理静态文件</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// createStaticHandler 静态文件的处理程序  
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">createStaticHandler</span><span class="p">(</span><span class="nx">relativePath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">fs</span> <span class="nx">http</span><span class="p">.</span><span class="nx">FileSystem</span><span class="p">)</span> <span class="nx">HandlerFunc</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="nx">absolutePath</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">prefix</span><span class="p">,</span> <span class="nx">relativePath</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nx">fileServer</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">StripPrefix</span><span class="p">(</span><span class="nx">absolutePath</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">FileServer</span><span class="p">(</span><span class="nx">fs</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">       <span class="nx">file</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nf">Param</span><span class="p">(</span><span class="s">&#34;filepath&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">       <span class="c1">// 检查文件是否存在  
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>       <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">fs</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">file</span><span class="p">);</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">          <span class="nx">c</span><span class="p">.</span><span class="nf">Status</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">          <span class="k">return</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">       <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">       <span class="nx">fileServer</span><span class="p">.</span><span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">W</span><span class="p">,</span> <span class="nx">c</span><span class="p">.</span><span class="nx">R</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">15</span><span class="cl">  
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1">// Static 提供静态文件  
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1">// 用户可以将磁盘上的某个文件夹root映射到路由relativePath  
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">RouterGroup</span><span class="p">)</span> <span class="nf">Static</span><span class="p">(</span><span class="nx">relativePath</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">root</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">19</span><span class="cl">    <span class="nx">handler</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nf">createStaticHandler</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Dir</span><span class="p">(</span><span class="nx">root</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="nx">urlPattern</span> <span class="o">:=</span> <span class="nx">path</span><span class="p">.</span><span class="nf">Join</span><span class="p">(</span><span class="nx">relativePath</span><span class="p">,</span> <span class="s">&#34;/*filepath&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">21</span><span class="cl">    <span class="nx">g</span><span class="p">.</span><span class="nf">GET</span><span class="p">(</span><span class="nx">urlPattern</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">22</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>HTML模板渲染</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="nx">Engine</span> <span class="kd">struct</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="o">*</span><span class="nx">RouterGroup</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="nx">router</span>        <span class="o">*</span><span class="nx">router</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">	<span class="nx">groups</span>        <span class="p">[]</span><span class="o">*</span><span class="nx">RouterGroup</span>     <span class="c1">// store all groups  
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span>	<span class="nx">htmlTemplates</span> <span class="o">*</span><span class="nx">template</span><span class="p">.</span><span class="nx">Template</span> <span class="c1">// for html render  
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>	<span class="nx">funcMap</span>       <span class="nx">template</span><span class="p">.</span><span class="nx">FuncMap</span>   <span class="c1">// for html render  
+</span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span><span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">engine</span> <span class="o">*</span><span class="nx">Engine</span><span class="p">)</span> <span class="nf">SetFuncMap</span><span class="p">(</span><span class="nx">funcMap</span> <span class="nx">template</span><span class="p">.</span><span class="nx">FuncMap</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="nx">engine</span><span class="p">.</span><span class="nx">funcMap</span> <span class="p">=</span> <span class="nx">funcMap</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">  
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">Httpserver</span><span class="p">)</span> <span class="nf">LoadHTMLGlob</span><span class="p">(</span><span class="nx">pattern</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="c1">//因为运行配置里写的工作目录是LearnGo，修改一下变成LearnGo\web就可以了  
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="c1"></span>    <span class="nx">s</span><span class="p">.</span><span class="nx">htmlTemplates</span> <span class="p">=</span> <span class="nx">template</span><span class="p">.</span><span class="nf">Must</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">).</span><span class="nf">Funcs</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">funcMap</span><span class="p">).</span><span class="nf">ParseGlob</span><span class="p">(</span><span class="nx">pattern</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="错误处理">错误处理<a hidden class="anchor" aria-hidden="true" href="#错误处理">#</a></h4>
+<p>使用error与panic用来进行错误处理，<strong>error</strong>一般用于表达可以被处理的错误，<strong>panic</strong>一般用于表达非常严重不能恢复的错误，遇事不决选error
+errors包下的方法：<strong>New</strong>创建一个新的error，<strong>Is</strong>判断是不是特定的某个error，<strong>As</strong>类型转换为特定的error，<strong>Unwrap</strong>解除包装，返回被包装的error</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">ErrorsPkg</span><span class="p">()</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nx">err</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">MyError</span><span class="p">{}</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="c1">//返回的是一个包装好的error  
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>    <span class="nx">wrappedErr</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;this is an wrapped error %w&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">    <span class="c1">//再解出来  
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Is</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Unwrap</span><span class="p">(</span><span class="nx">wrappedErr</span><span class="p">))</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;unwrapped&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">    <span class="c1">//判断是否是包装好的error  
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">Is</span><span class="p">(</span><span class="nx">wrappedErr</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;wrapped is err&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="nx">copyErr</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">MyError</span><span class="p">{}</span>  
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="c1">//尝试将wrappedErr转换成为MyError  
+</span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">As</span><span class="p">(</span><span class="nx">wrappedErr</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">copyErr</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">16</span><span class="cl">       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;convert error&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="p">}</span>  
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>延迟（defer）从下往上执行，先进后出，类似于栈</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;aaa&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="p">}()</span>  
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;bbb&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">}()</span>  
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln">8</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;ccc&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="p">}()</span>
+</span></span></code></pre></div><p>错误处理也可以作为一个中间件，增强整体框架的能力</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">Recovery</span><span class="p">()</span> <span class="nx">HandlerFunc</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">		<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">			<span class="k">if</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>  
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">				<span class="nx">message</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">				<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s\n\n&#34;</span><span class="p">,</span> <span class="nf">trace</span><span class="p">(</span><span class="nx">message</span><span class="p">))</span>  
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">				<span class="nx">c</span><span class="p">.</span><span class="nf">String</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">,</span> <span class="s">&#34;Internal Server Error&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">			<span class="p">}</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">		<span class="p">}()</span>  
+</span></span><span class="line"><span class="ln">10</span><span class="cl">  
+</span></span><span class="line"><span class="ln">11</span><span class="cl">		<span class="nx">c</span><span class="p">.</span><span class="nf">Next</span><span class="p">()</span>  
+</span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="p">}</span>  
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/golang/">Golang</a></li>
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/">
+    <span class="title">下一页 »</span>
+    <br>
+    <span>ndnSIM仿真安装以及使用</span>
+  </a>
+</nav>
+
+  </footer><div id="tw-comment"></div>
+<script>
+    
+    const getStoredTheme = () => localStorage.getItem("pref-theme") === "light" ? "light" : "dark";
+    const setGiscusTheme = () => {
+        const sendMessage = (message) => {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (iframe) {
+                iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+            }
+        }
+        sendMessage({ setConfig: { theme: getStoredTheme() } })
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const giscusAttributes = {
+            "src": "https://giscus.app/client.js",
+            "data-repo": "mariosight\/mariosight.github.io",
+            "data-repo-id": "R_kgDOM6YERg",
+            "data-category": "Announcements",
+            "data-category-id": "DIC_kwDOM6YERs4CjA-3",
+            "data-mapping": "pathname",
+            "data-strict": "0",
+            "data-reactions-enabled": "1",
+            "data-emit-metadata": "0",
+            "data-input-position": "bottom",
+            "data-theme": getStoredTheme(),
+            "data-lang": "zh-CN",
+            "data-loading": "lazy",
+            "crossorigin": "anonymous",
+        };
+
+        
+        const giscusScript = document.createElement("script");
+        Object.entries(giscusAttributes).forEach(
+            ([key, value]) => giscusScript.setAttribute(key, value));
+        document.querySelector("#tw-comment").appendChild(giscusScript);
+
+        
+        const themeSwitcher = document.querySelector("#theme-toggle");
+        if (themeSwitcher) {
+            themeSwitcher.addEventListener("click", setGiscusTheme);
+        }
+        const themeFloatSwitcher = document.querySelector("#theme-toggle-float");
+        if (themeFloatSwitcher) {
+            themeFloatSwitcher.addEventListener("click", setGiscusTheme);
+        }
+    });
+</script>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://mariosight.github.io">©2024 Mario&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = '复制';
+
+        function copyingDone() {
+            copybutton.innerHTML = '已复制！';
+            setTimeout(() => {
+                copybutton.innerHTML = '复制';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
