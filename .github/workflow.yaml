@@ -22,10 +22,7 @@ jobs:
           extended: true
 
       - name: Build Web
-        run: |
-          hugo -F --cleanDestinationDir  # 生成静态文件
-          mkdir -p public  # 确保public文件夹存在
-          cp -r public/* ./  # 复制生成的静态文件到仓库根目录
+        run: hugo
 
       - name: Deploy Web
         uses: peaceiris/actions-gh-pages@v4
@@ -33,5 +30,5 @@ jobs:
           PERSONAL_TOKEN: ${{ secrets.BLOG }}
           EXTERNAL_REPOSITORY: mariosight/mariosight.github.io
           PUBLISH_BRANCH: main
-          PUBLISH_DIR: ./
+          PUBLISH_DIR: ./public
           commit_message: auto deploy
