@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>密码库 on Mario&#39;s Blog</title>
-    <link>http://localhost:1313/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</link>
+    <link>https://mariosight.github.io/tags/%E5%AF%86%E7%A0%81%E5%BA%93/</link>
     <description>Recent content in 密码库 on Mario&#39;s Blog</description>
-    <generator>Hugo -- 0.135.0</generator>
+    <generator>Hugo -- 0.140.1</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Sat, 30 Mar 2024 15:44:51 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/%E5%AF%86%E7%A0%81%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mariosight.github.io/tags/%E5%AF%86%E7%A0%81%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Ubuntu22.04LTS 下Python3.7.9&#43;Charm-Crypto&#43;pypbc&#43;Jupyter环境搭建</title>
-      <link>http://localhost:1313/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <link>https://mariosight.github.io/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
       <pubDate>Sat, 30 Mar 2024 15:44:51 +0000</pubDate>
-      <guid>http://localhost:1313/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <guid>https://mariosight.github.io/posts/ubuntu22.04%E4%B8%8Bcharm%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
       <description>&lt;h1 id=&#34;ubuntu2204lts-下python379charm-cryptopypbcjupyter环境搭建&#34;&gt;Ubuntu22.04LTS 下Python3.7.9+Charm-Crypto+pypbc+Jupyter环境搭建&lt;/h1&gt;
 &lt;h2 id=&#34;参考文献&#34;&gt;参考文献&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&#34;https://blog.csdn.net/qq_33976344/article/details/115383904&#34;&gt;Linux安装Charm-crypto环境详细流程_android使用charm-crypto-CSDN博客&lt;/a&gt;&lt;/p&gt;

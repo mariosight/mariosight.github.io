@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Ndn on Mario&#39;s Blog</title>
-    <link>http://localhost:1313/tags/ndn/</link>
+    <link>https://mariosight.github.io/tags/ndn/</link>
     <description>Recent content in Ndn on Mario&#39;s Blog</description>
-    <generator>Hugo -- 0.135.0</generator>
+    <generator>Hugo -- 0.140.1</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Thu, 10 Oct 2024 11:43:11 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/ndn/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mariosight.github.io/tags/ndn/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ndnSIM仿真安装以及使用</title>
-      <link>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
+      <link>https://mariosight.github.io/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</link>
       <pubDate>Thu, 10 Oct 2024 11:43:11 +0800</pubDate>
-      <guid>http://localhost:1313/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
+      <guid>https://mariosight.github.io/posts/ndnsim%E4%BB%BF%E7%9C%9F%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E4%BD%BF%E7%94%A8/</guid>
       <description>&lt;h3 id=&#34;ndnsim-搭建以及使用&#34;&gt;ndnSIM 搭建以及使用&lt;/h3&gt;
 &lt;h5 id=&#34;安装准备&#34;&gt;安装准备&lt;/h5&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;ln&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install build-essential libsqlite3-dev libboost-all-dev libssl-dev git python-setuptools castxml
