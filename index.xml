@@ -4,7 +4,7 @@
     <title>Mario&#39;s Blog</title>
     <link>https://mariosight.github.io/</link>
     <description>Recent content on Mario&#39;s Blog</description>
-    <generator>Hugo -- 0.140.1</generator>
+    <generator>Hugo -- 0.145.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Sun, 20 Oct 2024 16:20:05 +0000</lastBuildDate>
@@ -36,12 +36,34 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后进入该文件夹下，进行源码的下载&lt;/p&gt;</description>
     </item>
     <item>
-      <title>First Post</title>
-      <link>https://mariosight.github.io/posts/first-post/</link>
-      <pubDate>Wed, 02 Oct 2024 20:42:42 +0800</pubDate>
-      <guid>https://mariosight.github.io/posts/first-post/</guid>
-      <description>&lt;h2 id=&#34;my-first-post&#34;&gt;My First Post&lt;/h2&gt;
-&lt;p&gt;这是第一篇文章&lt;/p&gt;</description>
+      <title>Go语言基础学习</title>
+      <link>https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Wed, 12 Jun 2024 16:57:34 +0000</pubDate>
+      <guid>https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/</guid>
+      <description>&lt;h3 id=&#34;介绍&#34;&gt;介绍&lt;/h3&gt;
+&lt;p&gt;Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!note] 编译型vs解释型&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;编译型语言&lt;br&gt;
+&lt;strong&gt;优点&lt;/strong&gt;：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。&lt;br&gt;
+&lt;strong&gt;缺点&lt;/strong&gt;：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。&lt;/li&gt;
+&lt;li&gt;解释型语言&lt;br&gt;
+&lt;strong&gt;优点&lt;/strong&gt;：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。
+&lt;strong&gt;缺点&lt;/strong&gt;：每次运行的时候都要解释一遍，性能上不如编译型语言。&lt;/li&gt;
+&lt;li&gt;混合型语言
+既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。&lt;/li&gt;
+&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;源码文件&#34;&gt;源码文件&lt;/h3&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/mariosight/image/picture/20241230114315057.png&#34; alt=&#34;image.png&#34;  /&gt;
+
+&lt;strong&gt;1、命令源码文件：&lt;/strong&gt;
+声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。
+&lt;strong&gt;2、库源码文件&lt;/strong&gt;
+库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。
+库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。
+&lt;strong&gt;3、测试源码文件&lt;/strong&gt;
+名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。&lt;/p&gt;</description>
     </item>
     <item>
       <title>Ubuntu22.04LTS 下Python3.7.9&#43;Charm-Crypto&#43;pypbc&#43;Jupyter环境搭建</title>
