@@ -8,38 +8,20 @@
 <title>Go语言基础学习 | Mario&#39;s Blog</title>
 <meta name="keywords" content="Golang">
 <meta name="description" content="介绍
-Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种
+Go 语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于 C 系语言的一种
+编译型 vs 解释型
 
-[!note] 编译型vs解释型
 
 编译型语言
-优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。
-缺点：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。
-解释型语言
-优点：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。
-缺点：每次运行的时候都要解释一遍，性能上不如编译型语言。
-混合型语言
-既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。
-
-
-源码文件
-
-
-1、命令源码文件：
-声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。
-2、库源码文件
-库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。
-库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。
-3、测试源码文件
-名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。">
+优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。">
 <meta name="author" content="Mario">
 <link rel="canonical" href="https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.f30f3898c112503bdb0d7b0f23ebf6d565ba747c01ec177e32d2b7fa74664fb3.css" integrity="sha256-8w84mMESUDvbDXsPI&#43;v21WW6dHwB7Bd&#43;MtK3&#43;nRmT7M=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mariosight.github.io/favicon-mario.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mariosight.github.io/favicon-mario.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mariosight.github.io/favicon-mario.png">
-<link rel="apple-touch-icon" href="https://mariosight.github.io/favicon-mario.png">
-<link rel="mask-icon" href="https://mariosight.github.io/favicon-mario.png">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.cd1b28f89eec982f8a8daca6bf7308be2580aea2bcb5f7164271ab3b81459f21.css" integrity="sha256-zRso&#43;J7smC&#43;Kjaymv3MIviWArqK8tfcWQnGrO4FFnyE=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://mariosight.github.io/imgs/favicon-mario.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://mariosight.github.io/imgs/favicon-mario.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://mariosight.github.io/imgs/favicon-mario.png">
+<link rel="apple-touch-icon" href="https://mariosight.github.io/imgs/favicon-mario.png">
+<link rel="mask-icon" href="https://mariosight.github.io/imgs/favicon-mario.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
 <link rel="alternate" hreflang="zh" href="https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/">
@@ -91,30 +73,12 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
     }
 </style><meta property="og:title" content="Go语言基础学习" />
 <meta property="og:description" content="介绍
-Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种
+Go 语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于 C 系语言的一种
+编译型 vs 解释型
 
-[!note] 编译型vs解释型
 
 编译型语言
-优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。
-缺点：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。
-解释型语言
-优点：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。
-缺点：每次运行的时候都要解释一遍，性能上不如编译型语言。
-混合型语言
-既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。
-
-
-源码文件
-
-
-1、命令源码文件：
-声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。
-2、库源码文件
-库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。
-库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。
-3、测试源码文件
-名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。" />
+优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-06-12T16:57:34+00:00" />
@@ -123,30 +87,12 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go语言基础学习"/>
 <meta name="twitter:description" content="介绍
-Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种
+Go 语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于 C 系语言的一种
+编译型 vs 解释型
 
-[!note] 编译型vs解释型
 
 编译型语言
-优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。
-缺点：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。
-解释型语言
-优点：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。
-缺点：每次运行的时候都要解释一遍，性能上不如编译型语言。
-混合型语言
-既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。
-
-
-源码文件
-
-
-1、命令源码文件：
-声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。
-2、库源码文件
-库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。
-库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。
-3、测试源码文件
-名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。"/>
+优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。"/>
 
 
 <script type="application/ld+json">
@@ -175,12 +121,12 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
   "@type": "BlogPosting",
   "headline": "Go语言基础学习",
   "name": "Go语言基础学习",
-  "description": "介绍 Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种\n[!note] 编译型vs解释型\n编译型语言\n优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。\n缺点：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。 解释型语言\n优点：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。 缺点：每次运行的时候都要解释一遍，性能上不如编译型语言。 混合型语言 既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。 源码文件 1、命令源码文件： 声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。 2、库源码文件 库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。 库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。 3、测试源码文件 名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。\n",
+  "description": "介绍 Go 语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于 C 系语言的一种 编译型 vs 解释型\n编译型语言\n优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。\n",
   "keywords": [
     "Golang"
   ],
-  "articleBody": "介绍 Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种\n[!note] 编译型vs解释型\n编译型语言\n优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。\n缺点：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。 解释型语言\n优点：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。 缺点：每次运行的时候都要解释一遍，性能上不如编译型语言。 混合型语言 既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。 源码文件 1、命令源码文件： 声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。 2、库源码文件 库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。 库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。 3、测试源码文件 名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。\n输入输出 fmt中输入函数Scanln\n1. 使用\"\u0026\"获取变量的内存地址(即取变量内存地址的运算符)，通过键盘输入为变量指向的内存地址赋初值。 2. fmt.Scanln是一个阻塞的函数，如果它获取不到数据就会一直阻塞哟。 3. fmt.Scanln可以接收多个参数，用户输入参数默认使用空格或者回车换行符分割输入设备传入的参数，直到接收所有的参数为止 fmt中的输出函数Println（ln表示自动换行）\n1. Println格式使用其操作数的默认格式，并写入标准输出。 2. 始终在操作数之间添加空格，并追加换行符。 3. 它返回写入的字节数和遇到的任何写入错误。 注意，如果需要输出如%s,%T这种类型，则需要使用Printf，这个跟C是类似的\n1fmt.Printf(\"type: %T\",str) 数据结构 数据类型 数类型 uint8 无符号 8位整型 (0 到 255) uint16 无符号 16位整型 (0 到 65535) uint32 无符号 32位整型 (0 到 4294967295) uint64 无符号 64位整型 (0 到 18446744073709551615) int8 有符号 8位整型 (-128 到 127) int16 有符号 16位整型 (-32768 到 32767) int32 有符号 32位整型 (-2147483648 到 2147483647) int64 有符号 64位整型 (-9223372036854775808 到 9223372036854775807) float32和float64 范围分别为3.4e38和1.8e308\ncomplex64和complex128\n字符类型 uint8类型，或者叫 byte 型，代表一个ASCII码字符。\nrune类型，代表一个 UTF-8字符。 rune 类型是 int32 的别名，用于表示一个Unicode码点（Unicode code point）。每个rune对应一个Unicode字符，可以表示任何语言的字符（包括中文、表情符号等） Go的字符串默认以UTF-8编码存储。当遍历字符串时，若用 for range，会自动按 rune 为单位迭代，而非字节：\n1s := \"Hello 世界\" 2for _, r := range s { 3// r 的类型是 rune 4fmt.Printf(\"%c \", r) 5} 6// 输出: H e l l o 世 界 这里是对于range的解释：golang中使用for range 遍历字符串时常遇到的bug，byte和rune类型，源码分析 - Harven - 博客园\n数组和切片 数组（Array）和切片（Slice）的区别其实是数组在定义的时候已经规定好了长度，而切片并没有规定长度 数组是需要指定初始化长度（或者叫做容量）的序列，在定义时可以直接设置初始值，如果不设置，初始值为默认值 切片是一个拥有相同类型元素的可变长度的序列，可以通过append函数添加元素\n两者的对比 ![[Pasted image 20240809083724.png]] 代码书写 切片可以用内置函数 make 来创建，这也是你创建动态数组的方式。 make 函数会分配一个元素为零值的数组并返回一个引用了它的切片： 1a := make([]int, 5) // len(a)=5 要指定它的容量，需向 make 传入第三个参数\n1arr := [5]int{0, 1, 2, 3, 4} //创建一个数组 2s1 := arr[0:3] //创建一个子切片,[0:3)左闭右开 3s2 := make([]int, 3, 4) //创建一个切片，长度为3，初始元素为0，容量为4 4s1 = append(s1, 8) //追加一个元素 5s2 = append(s2, 1) //追加一个元素 6//切片比较好的创建方式为make([]int,0,cap) 子切片 通过[start:end]来获得子切片，arr[start:end]获取的是[start,end)之间的元素，左闭右开 arr[:end]获得[0,end)之间的元素 arr[start:]获得[start,len(arr))之间的元素 子切片与原切片共享底层数组 理解slice 实际上是Go中特殊的ArrayList，但是没有插入和删除的操作，只有append操作，下面稍微写了一下对于slice的insert和delete，在这其中使用了copy函数：当我们在Go语言中需要将一个切片的内容复制到另一个切片时，可以使用内置的copy()函数，copy()函数用于将源切片中的元素复制到目标切片中。 slice的零值是nil，通过[]int这种方式来创建切片时首先会创建一个对应的底层数组 1//实现指定位置插入元素 2func insert(slice []int,value int,index int) []int { 3slice = append(slice, 0) //扩展一个空间 4copy(slice[index+1:],slice[index:]) //向后移动 5slice[index] = value //插入元素 6return slice 7} 8//实现指定位置删除元素 9func delete(slice []int,index int) []int { 10copy(slice[index:],slice[index+1:]) //向前移动 11return slice[:len(slice)-1] //删除最后一个元素 12} 练习切片的一个小程序，通过灰度图展示公式\n1package main 2 3import \"golang.org/x/tour/pic\" 4 5func Pic(dx, dy int) [][]uint8 { 6\tans := make([][]uint,dy) 7\tfor y:=0;y\u003cdy;y++{ 8\trow := make([]uint8,dx) 9\tfor x:=0;x\u003cdx;x++{ 10\trow[x] = uint8(x%(y+1)) 11\t} 12\tans[y]=row 13\t} 14\treturn ans 15} 16 17func main() { 18\tpic.Show(Pic) 19} 字符串 字符串用\"abc\"表示，单个字符用'a'表示 字符串可以通过索引访问字符\n1s:=\"abcde\" 2print(s[0]) 字符串可以通过切片访问连续字符\n1s:=\"abcde\" 2print(s[0:3]) 统计字符串的个数要用特殊的方法\n1s:=\"abcde\" 2print(utf8.RuneCountInString(s))} 将字符编码转换为字符\n1s:=\"abcde\" 2print(string(s[1])) 遍历字符串的每一个字符\n1s:=\"我爱你中国\" 2cs:=[]rune(s) 3for_,ch:=range cs{ 4\tfmt.Println(string(ch)) 5} 使用buffer累加字符串\n1var bf bytes.Buffer 2for i:=0;i\u003c10;i++{ 3\tfmt.Fprintf(\u0026bf,\"a%d\",i) 4} 5s:=bf.String() 6fmt.Println(s) 指针 \u0026符号会【生成】一个指向其作用对象的指针。 *符号表示指针指向的【底层的值】 1package main 2import \"fmt\" 3func main() { 4\ti, j := 42, 2701 5\tp := \u0026i // p为i的指针 6\tfmt.Println(*p) // 通过指针显示的是i的值 7\t*p = 21 // 通过指针修改的是i的值 8\tfmt.Println(i) 9\tp = \u0026j // 将p改为j的指针 10\t*p = *p / 37 // 通过指针操作的是j的值，除以37的结果重新通过指针赋给j 11\tfmt.Println(j) 12} 结构体定义 定义类型 定义类型的不同方式，使用也不相同\n1// BigServer type A=B 2type BigServer = server 3// SmellServer type A B 4type SmellServer server 5 6service1 := SmellServer{} 7service2 := BigServer{} 8server(service1).open() 9service2.open() 初始化 Go没有构造函数，所以new直接分配内存然后把内存都置0\n1man1 := Person{name: \"李四\"} 2man1.Walk(man1.name) 3man2 := new(Person) 4man2.name = \"王五\" 5man2.Walk(man2.name) 方法接收器 用于定义结构体对应的方法（也可以为非结构体类型声明方法） 只能为在同一个包中定义的接收者类型声明方法，而不能为其它别的包中定义的类型（包括 int 之类的内置类型）声明方法\n1// 结构体接收器 2func (p Person) ChangeName(newName string) { 3 p.name = newName 4} 5// 指针接收器 6func (p *Person) ChangeAge(newAge int) { 7 p.age = newAge 8} 9// 结构体接收器，内容不会改变 10man1.ChangeName(\"赵六\") 11// 指针接收器，内容会改变，我直接遇事不决用指针 12man1.ChangeAge(30) 13fmt.Println(man1) 链表 哈希表 [[哈希表（Hash-Table）]] ![[哈希表（Hash-Table）#Go中如何使用HashTable]]\nGo之旅中的一个练习，用的是比较简单的map，实现 WordCount。它应当返回一个映射，其中包含字符串 s 中每个“单词”的个数。 函数 wc.Test 会为此函数执行一系列测试用例，并输出成功还是失败\n1package main 2 3import ( 4\t\"golang.org/x/tour/wc\" 5\t\"strings\" 6) 7func WordCount(s string) map[string]int { 8\tv := strings.Fields(s) //Field函数直接分割 9\tn := len(v) 10\tx := make(map[string]int) 11\tfor i:=0;i\u003cn;i++ { 12\tx[v[i]]++ 13\t} 14\treturn x 15} 16 17func main() { 18\twc.Test(WordCount) 19} 控制结构 for 类似 while 的无限循环 fori 一般的按照下标循环 forr 最为特殊的 range 遍历，可以用于map遍历\n1for i := 0; i \u003c len(arr); i++ { 2fmt.Printf(\" index = %d,number = %d \\n\", i, arr[i]) 3} 4for index, value := range arr{ 5fmt.Printf(\" index = %d,number = %d \\n\", index, value) 6} if-else：没什么可以记录的，跟其他的语言一样的\n函数调用 Go 语言选择了传值的方式，无论是传递基本类型、结构体还是指针，都会对传递的参数进行拷贝\n无需声明原型 支持不定变参 支持多返回值 支持命名返回参数 函数也是一种类型，一个函数可以复制给变量；可以作为参数传递给其他函数 不支持嵌套（一个包不能有重名的函数） 不支持重载 不支持默认参数 整数与数组类型 如下所示的函数 myFunction 接收了两个参数，整型变量 i 和数组 arr，这个函数会将传入的两个参数的地址打印出来，在最外层的主函数也会在 myFunction 函数调用前后分别打印两个参数的地址，最后的结果main函数中的参数地址与myFunction中的地址完全不同，所以能够证明Go 语言的整型和数组类型都是值传递的\n1func myFunction1(i int, arr [2]int) { 2\tfmt.Printf(\"in my_funciton - i=(%d, %p) arr=(%v, %p)\\n\", i, \u0026i, arr, \u0026arr) 3} 4 5func main() { 6\ti := 30 7\tarr := [2]int{66, 77} 8\tfmt.Printf(\"before calling - i=(%d, %p) arr=(%v, %p)\\n\", i, \u0026i, arr, \u0026arr) 9\tmyFunction1(i, arr) 10\tfmt.Printf(\"after calling - i=(%d, %p) arr=(%v, %p)\\n\", i, \u0026i, arr, \u0026arr) 11} 结构体与指针类型 传递结构体时：会拷贝结构体中的全部内容 传递结构体指针时：会拷贝结构体指针 1func myFunction2(a MyStruct, b *MyStruct) { 2 a.i = 31 3 b.i = 41 4 fmt.Printf(\"in my_function - a=(%d, %p) b=(%v, %p)\\n\", a, \u0026a, b, \u0026b) 5} 6func main() { 7a := MyStruct{i: 30} 8b := \u0026MyStruct{i: 40} 9fmt.Printf(\"before calling - a=(%d, %p) b=(%v, %p)\\n\", a, \u0026a, b, \u0026b) 10myFunction2(a, b) 11fmt.Printf(\"after calling - a=(%d, %p) b=(%v, %p)\\n\", a, \u0026a, b, \u0026b) 12} 方法与函数 方法 (func (c *Context) String)： 方法的第一个参数是一个接收者（receiver），即 c *Context，表示该方法属于 Context 类型。 方法的调用方式是通过类型的实例来调用，例如 context.String(...)，其中 context 是 Context 类型的一个实例。 表达的是 String 操作是 Context 类型的一部分，是 Context 对象的一个行为。 更适合表示“某种类型的实例应该具备的行为”。 函数 (func String(c *Context))： 一个普通的函数，它的参数是 c *Context，表示函数接收一个 *Context 类型的参数。 函数的调用方式是直接调用，并传入参数，例如 String(context, ...)，参数列表名称在前，类型在后，可以有多返回值，返回值也可以有名称 是独立于 Context 类型的一个函数，只是恰好接受一个 Context 类型的参数。 更适合表示“一般性的操作或工具函数”，而不是某种类型的固有行为。 方法与指针重定向 1func (v *Vertex) Scale(f float64) { 2\tv.X = v.X * f 3\tv.Y = v.Y * f 4} 5 6func ScaleFunc(v *Vertex, f float64) { 7\tv.X = v.X * f 8\tv.Y = v.Y * f 9} 比较前两个程序，你大概会注意到带指针参数的函数必须接受一个指针：\n1var v Vertex 2ScaleFunc(v, 5) // 编译错误！ 3ScaleFunc(\u0026v, 5) // OK 而接收者为指针的的方法被调用时，接收者既能是值又能是指针：\n1var v Vertex 2p := \u0026Vertex{4, 3} 3p.Scale(3) //OK 4(*p).Scale(8) //OK 对于语句 v.Scale(5) 来说，即便 v 是一个值而非指针，带指针接收者的方法也能被直接调用。 也就是说，由于 Scale 方法有一个指针接收者，为方便起见，Go 会将语句 v.Scale(5) 解释为 (\u0026v).Scale(5)。 反之同理，接受一个值作为参数的函数必须接受一个指定类型的值，而以值为接收者的方法被调用时，接收者既能为值又能为指针，这种情况下，方法调用 p.Abs() 会被解释为 (*p).Abs()，其实就是遇到不同情况自动转换。\n接口 接口是计算机系统中多个组件共享的边界，不同的组件能够在边界上交换信息。如下图所示，接口的本质是引入一个新的中间层，调用方可以通过接口与具体实现分离，解除上下游的耦合，上层的模块不再需要依赖下层的具体模块，只需要依赖一个约定好的接口。 在 Java 中：实现接口需要显式地声明接口并实现所有方法，在接口中不仅可以定义方法签名，还可以定义变量，这些定义的变量可以直接在实现接口的类中使用\n1public interface MyInterface { 2 public String hello = \"Hello\"; 3 public void sayHello(); 4} 5 6public class MyInterfaceImpl implements MyInterface { 7 public void sayHello() { 8 System.out.println(MyInterface.hello); 9 } 10} 在 Go 中：实现接口的所有方法就隐式地实现了接口，但是在接口中我们只能定义方法签名，不能包含成员变量\n1type error interface { 2\tError() string 3} 4type RPCError struct { 5\tCode int64 6\tMessage string 7} 8func (e *RPCError) Error() string { 9\treturn fmt.Sprintf(\"%s, code=%d\", e.Message, e.Code) 10} Java中的类必须显式地声明实现的接口，与Java不同的是Go语言中接口的实现都是隐式的，我们只需要实现 Error() string 方法就实现了 error 接口\n接口方法 接口就是规定了一个需要实现的方法列表，在 Go 语言中一个类型只要实现了接口中规定的所有方法，那么我们就称它实现了这个接口 我们定义的 Singer 接口类型，它包含一个 Sing 方法。\n1type Singer interface { 2\tSing() 3} 然后有一个 Bird 结构体\n1type Bird struct {} 因为 Singer 接口只包含一个 Sing 方法，所以只需要给 Bird 结构体添加一个 Sing 方法就可以满足 Singer 接口的要求。\n1// Sing Bird类型的Sing方法 2func (b Bird) Sing() { 3\tfmt.Println(\"汪汪汪\") 4} 为什么要用接口呢，因为有时不止一个类型需要实现这个方法，可能有多个结构体需要 Sing() 这个方法，这时就可以使用接口类型，把所有会叫的动物当成 Singer 类型来处理\n1package main 2 3import \"fmt\" 4 5type Sayer interface { 6 Say() 7} 8type Cat struct { 9} 10 11type Dog struct{} 12 13func (c *Cat) Say() { 14 fmt.Println(\"cat miao\") 15} 16func (d *Dog) Say() { 17 fmt.Println(\"dog woof\") 18} 19func Hungry(s Sayer) { 20 s.Say() 21} 22 23func main() { 24 var c Cat 25 var d Dog 26 Hungry(\u0026c) 27 Hungry(\u0026d) 28} Stringer是 fmt 包中定义的 Stringer 是最普遍的接口之一，是一个可以用字符串描述自己的类型，任何实现了 String() string 方法的类型都隐式满足该接口。fmt 包（还有很多包）都通过此接口来打印值，可以规范化对应值的输出\n1package main 2 3import \"fmt\" 4 5type IPAddr [4]byte 6 7// TODO: 为 IPAddr 添加一个 \"String() string\" 方法。 8func (I IPAddr) String() string{ 9\treturn fmt.Sprintf(\"%v.%v.%v.%v\",I[0],I[1],I[2],I[3]) 10} 11func main() { 12\thosts := map[string]IPAddr{ 13\t\"loopback\": {127, 0, 0, 1}, 14\t\"googleDNS\": {8, 8, 8, 8}, 15\t} 16\tfor name, ip := range hosts { 17\tfmt.Printf(\"%v: %v\\n\", name, ip) 18\t} 19} 与 fmt.Stringer 类似，error 类型是一个内建接口\n1type error interface { 2 Error() string 3} 类似的还有，sort接口，json序列化，io读写，以及http的请求处理 rot13Reader的实现，一个接口组合的实现\n1package main 2 3import ( 4\t\"io\" 5\t\"os\" 6\t\"strings\" 7) 8 9type rot13Reader struct { 10\tr io.Reader 11} 12 13func rot13(c byte) byte { 14\tswitch { 15\tcase c \u003e= 'A' \u0026\u0026 c \u003c= 'Z': 16\treturn 'A' + (c-'A'+13)%26 17\tcase c \u003e= 'a' \u0026\u0026 c \u003c= 'z': 18\treturn 'a' + (c-'a'+13)%26 19\tdefault: 20\treturn c 21\t} 22} 23 24func (r *rot13Reader) Read(b []byte) (n int, err error) { 25\t// 要调用底层的Read 26 n, err = r.r.Read(b) 27 for i := 0; i \u003c n; i++ { 28 b[i] = rot13(b[i]) 29 } 30 return n, err 31} 32 33func main() { 34\ts := strings.NewReader(\"Lbh penpxrq gur pbqr!\") 35\tr := rot13Reader{s} 36\tio.Copy(os.Stdout, \u0026r) 37} 图像生成器\n1package main 2 3import ( 4\t\"fmt\" 5\t\"golang.org/x/tour/pic\" 6\t\"image\" 7\t\"image/color\" 8) 9 10type Image struct{ 11\tWidth int 12\tHeight int 13} 14// Bounds image.Rectangle 15func (img Image)Bounds() image.Rectangle{ 16\treturn image.Rect(0,0,img.Width,img.Height) 17} 18 19// Color color.RGBModel 20func (img Image) ColorModel() color.Model{ 21\treturn color.RGBAModel 22} 23// At color.Color 24func (img Image) At(x,y int) color.Color{ 25\tv := uint8(x^y) 26\treturn color.RGBA{v,v,255,255} 27} 28 29func main() { 30\tm := Image{256,256} 31\tpic.ShowImage(m) 32} 错误（error） Go 程序使用 error 值来表示错误状态。通常函数会返回一个 error 值，调用它的代码应当判断这个错误是否等于 nil 来进行错误处理。\n1package main 2 3import ( 4\t\"fmt\" 5\t\"math\" 6) 7type ErrNegativeSqrt struct{ 8\tValue float64\t9} 10 11func Sqrt(x float64) (float64, error) { 12\tif x\u003c0 { 13\treturn x , ErrNegativeSqrt{Value: x} 14\t}else { 15\treturn math.Sqrt(x),nil 16\t} 17} 18// 重写Error方法，输出更多错误提示信息 19func (e ErrNegativeSqrt) Error() string{ 20\treturn fmt.Sprintf(\"cannot Sqrt negative number: %v\",float64(e)) 21} 22 23func main() { 24\tfmt.Println(Sqrt(2)) 25\tfmt.Println(Sqrt(-2)) 26} 接口值 接口类型的值可以是任意一个实现了该接口的类型值，所以接口值除了需要记录具体值之外，还需要记录这个值属于的类型。也就是说接口值由“类型”和“值”组成。 接口值（Interface Value） 本质上是一个动态容器，它可以持有任意具体类型的值，并在运行时记录类型信息，隐式接口从接口的实现中解耦了定义，这样接口的实现可以出现在任何包中，无需提前准备\nnil 接口值既不保存值也不保存类型，为 nil 接口调用方法会产生运行时错误，因为接口的元组内并未包含能够指明该调用哪个具体方法的类型 指定了零个方法的接口值被称为空接口，空接口可保存任何类型的值，空接口被用来处理未知类型的值\n类型断言 类型断言是一种可以从接口值中提取其动态类型具体值的方法，给一个什么值，他就变成对应的类型 该语句断言接口值 i 保存了具体类型 Type，并将其底层类型为 Type 的值赋予变量 t，如果未保存，那么该语句就会触发panic\n1\tt := i.(T) 为了 判断 一个接口值是否保存了一个特定的类型，类型断言可返回两个值：其底层值以及一个报告断言是否成功的布尔值。\n1\tt, ok := i.(T) 若 i 保存了一个 T，那么 t 将会是其底层值，而 ok 为 true 否则，ok 将为 false 而 t 将为 T 类型的零值，程序并不会产生 panic\n类型选择 类型选择 是一种按顺序从几个类型断言中选择分支的结构，它们针对给定接口值所存储的值的类型进行比较\n1func Describe(s Shape) { 2 switch v := s.(type) { 3 case Circle: 4 fmt.Printf(\"圆形，半径: %v\\n\", v.Radius) 5 case Rectangle: 6 fmt.Printf(\"矩形，长: %v, 宽: %v\\n\", v.Width, v.Height) 7 default: 8 fmt.Println(\"未知形状\") 9 } 10} 11 12func main() { 13 Describe(Circle{Radius: 3}) // 输出：圆形，半径: 3 14 Describe(Rectangle{4, 5}) // 输出：矩形，长: 4, 宽: 5 15} 闭包（closure） 闭包（closure）是指一个函数可以捕获并引用其外部作用域中的变量，即使在这些变量的作用域已经结束之后，换句话说，该函数被“绑定”到了这些变量。闭包的实现依赖于函数本身以及它所引用的环境\n1i := 13 2a := func() { 3 fmt.Println(\"i = \", i) 4} 5a() 延迟绑定：闭包捕获的是变量的引用，而不是它在循环中每次迭代的值\n1func Delay() { 2 fns := make([]func(), 0, 10) 3 for i := 0; i \u003c 10; i++ { 4 fns = append(fns, func() { 5 fmt.Println(\"i = \", i) 6 }) 7 } 8 //执行的时候i = 10，因为闭包捕获的是变量i的引用,而不是值 9 //因此在循环中使用闭包时需要小心处理 10 //？？为什么我这里是i从0-9，好诡异啊 11 for _, fn := range fns { 12 fn() 13 } 14} 杂项记录 查看对应变量的类型 1//使用%T 2fmt.Printf(\"type: %T\", value) 3 4//使用reflect下的Typeof，要引入reflect包 5fmt.Println(reflect.Typeof(value)) 输出其命令行参数 1package main 2 3import ( 4\"fmt\" 5\"os\" 6) 7 8func main() { 9fmt.Println(\"Hello, World!\") 10var s, sep string 11for _, arg := range os.Args[0:] { //输出目标文件命令的名字 12s += sep + arg 13sep = \" \" 14} 15//for i := 1; i \u003c len(os.Args); i++ { 16// s += sep + os.Args[i] 17// sep = \" \" 18//} 19fmt.Println(s) 20} OK的使用 在 Go 语言中，ok 通常与 map 结合使用，用于判断某个键（key）是否存在于 map 中，是 Go 中一种常见的“安全读取”模式。 通过第二个返回值 ok（布尔类型）可以判断键是否存在：\n1 m := map[string]int{\"apple\": 5, \"banana\": 3} 2 3 // 检查键是否存在 4 value, ok := m[\"apple\"] 5 if ok { 6 fmt.Println(\"apple 存在，值是\", value) 7 } else { 8 fmt.Println(\"apple 不存在\") 9 } 在练习LeetCode的时候也看到有高级的语句记录了下来，对于ok在if中的使用含义，经常在map中使用：\n1func learnErrorHandling() { 2// \", ok\"用来判断有没有正常工作 3m := map[int]string{3: \"three\", 4: \"four\"} 4if x, ok := m[1]; !ok { // ok 为false，因为m中没有1 5fmt.Println(\"no one there\") 6} else { 7fmt.Print(x) // 如果x在map中的话，x就是那个值喽。 8} 9} [!note] 上述代码中，在if语句中，ok这个bool变量的含义是，如果其中有1这个key，那么其value赋值给x然后令ok为true，如果没有则令ok为false\n引用包时出错 包在之后的代码中并未引用，可以通过在包名前加_进行匿名引用\n定义变量 var后面定义有默认类型，如果不想按照默认类型来的话，就需要自己写 go是强类型语言，不做任何类型转换 或者直接:=进行赋值\n1var a = 13 // 默认为int 2var b uint =15 3a := 13 求string的长度 len()函数求出来的是字节的长度，而不是字符长度 应该用utf8.RuneCountInString(\"你好\")进行求解\n对二维数组进行排序 这里的 slices.SortFunc 通过传入一个比较函数（func(p, q []int) int）来实现对 intervals 进行排序 比较函数：func(p, q []int) int。它对两个元素 p 和 q 进行比较。\n如果返回值 \u003c 0，表示 p 应排在 q 之前。 如果返回值 \u003e 0，表示 q 应排在 p 之前。 如果返回值 = 0，表示 p 和 q 的顺序无所谓。 1slices.SortFunc(intervals, func(p, q []int) int { return p[0] - q[0] }) ",
-  "wordCount" : "7522",
+  "articleBody": "介绍 Go 语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于 C 系语言的一种 编译型 vs 解释型\n编译型语言\n优点：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。\n缺点：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。\n解释型语言\n优点：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。\n缺点：每次运行的时候都要解释一遍，性能上不如编译型语言。\n混合型语言\n既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如 C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET 平台提供了中间语言运行库运行中间码，中间语言运行库类似于 Java 虚拟机。.net 在编译成 IL 代码后，保存在 dll 中，首次运行时由 JIT 在编译成机器码缓存在内存中，下次直接执行。\n源码文件 1、命令源码文件：\n声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。\n2、库源码文件\n库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。 库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。\n3、测试源码文件\n名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。\n输入输出 fmt 中输入函数 Scanln\n1. 使用\"\u0026\"获取变量的内存地址(即取变量内存地址的运算符)，通过键盘输入为变量指向的内存地址赋初值。 2. fmt.Scanln是一个阻塞的函数，如果它获取不到数据就会一直阻塞哟。 3. fmt.Scanln可以接收多个参数，用户输入参数默认使用空格或者回车换行符分割输入设备传入的参数，直到接收所有的参数为止 fmt 中的输出函数 Println（ln 表示自动换行）\n1. Println格式使用其操作数的默认格式，并写入标准输出。 2. 始终在操作数之间添加空格，并追加换行符。 3. 它返回写入的字节数和遇到的任何写入错误。 注意，如果需要输出如%s,%T 这种类型，则需要使用 Printf，这个跟 C 是类似的\n1fmt.Printf(\"type: %T\",str) 数据结构 数据类型 数类型\nuint8 无符号 8 位整型 (0 到 255)\nuint16 无符号 16 位整型 (0 到 65535)\nuint32 无符号 32 位整型 (0 到 4294967295)\nuint64 无符号 64 位整型 (0 到 18446744073709551615)\nint8 有符号 8 位整型 (-128 到 127)\nint16 有符号 16 位整型 (-32768 到 32767)\nint32 有符号 32 位整型 (-2147483648 到 2147483647)\nint64 有符号 64 位整型 (-9223372036854775808 到 9223372036854775807)\nfloat32 和 float64 范围分别为 3.4e38 和 1.8e308\ncomplex64 和 complex128\n字符类型\nuint8 类型，或者叫 byte 型，代表一个 ASCII 码字符。\nrune 类型，代表一个 UTF-8 字符。\nrune 类型是 int32 的别名，用于表示一个 Unicode 码点（Unicode code point）。每个rune对应一个 Unicode 字符，可以表示任何语言的字符（包括中文、表情符号等） Go 的字符串默认以 UTF-8 编码存储。当遍历字符串时，若用 for range，会自动按 rune 为单位迭代，而非字节：\n1s := \"Hello 世界\" 2for _, r := range s { 3// r 的类型是 rune 4fmt.Printf(\"%c \", r) 5} 6// 输出: H e l l o 世 界 这里是对于 range 的解释：golang 中使用 for range 遍历字符串时常遇到的 bug，byte 和 rune 类型，源码分析 - Harven - 博客园\n数组和切片 数组（Array）和切片（Slice）的区别其实是数组在定义的时候已经规定好了长度，而切片并没有规定长度 数组是需要指定初始化长度（或者叫做容量）的序列，在定义时可以直接设置初始值，如果不设置，初始值为默认值 切片是一个拥有相同类型元素的可变长度的序列，可以通过 append 函数添加元素\n代码书写\n切片可以用内置函数 make 来创建，这也是你创建动态数组的方式。 make 函数会分配一个元素为零值的数组并返回一个引用了它的切片：\n1a := make([]int, 5) // len(a)=5 要指定它的容量，需向 make 传入第三个参数\n1arr := [5]int{0, 1, 2, 3, 4} //创建一个数组 2s1 := arr[0:3] //创建一个子切片,[0:3)左闭右开 3s2 := make([]int, 3, 4) //创建一个切片，长度为3，初始元素为0，容量为4 4s1 = append(s1, 8) //追加一个元素 5s2 = append(s2, 1) //追加一个元素 6//切片比较好的创建方式为make([]int,0,cap) 子切片\n通过[start:end]来获得子切片，arr[start:end]获取的是[start,end)之间的元素，左闭右开 arr[:end]获得[0,end)之间的元素 arr[start:]获得[start,len(arr))之间的元素 子切片与原切片共享底层数组\n理解 slice\n实际上是 Go 中特殊的 ArrayList，但是没有插入和删除的操作，只有 append 操作，下面稍微写了一下对于 slice 的 insert 和 delete，在这其中使用了 copy 函数：当我们在 Go 语言中需要将一个切片的内容复制到另一个切片时，可以使用内置的 copy()函数，copy()函数用于将源切片中的元素复制到目标切片中。 slice 的零值是 nil，通过[]int 这种方式来创建切片时首先会创建一个对应的底层数组\n1//实现指定位置插入元素 2func insert(slice []int,value int,index int) []int { 3\tslice = append(slice, 0) //扩展一个空间 4\tcopy(slice[index+1:],slice[index:]) //向后移动 5\tslice[index] = value //插入元素 6\treturn slice 7} 8//实现指定位置删除元素 9func delete(slice []int,index int) []int { 10\tcopy(slice[index:],slice[index+1:]) //向前移动 11\treturn slice[:len(slice)-1] //删除最后一个元素 12} 练习切片的一个小程序，通过灰度图展示公式\n1package main 2 3import \"golang.org/x/tour/pic\" 4 5func Pic(dx, dy int) [][]uint8 { 6\tans := make([][]uint,dy) 7\tfor y:=0;y\u003cdy;y++{ 8\trow := make([]uint8,dx) 9\tfor x:=0;x\u003cdx;x++{ 10\trow[x] = uint8(x%(y+1)) 11\t} 12\tans[y]=row 13\t} 14\treturn ans 15} 16 17func main() { 18\tpic.Show(Pic) 19} 字符串 字符串用\"abc\"表示，单个字符用'a'表示 字符串可以通过索引访问字符\n1s:=\"abcde\" 2print(s[0]) 字符串可以通过切片访问连续字符\n1s:=\"abcde\" 2print(s[0:3]) 统计字符串的个数要用特殊的方法\n1s:=\"abcde\" 2print(utf8.RuneCountInString(s))} 将字符编码转换为字符\n1s:=\"abcde\" 2print(string(s[1])) 遍历字符串的每一个字符\n1s:=\"我爱你中国\" 2cs:=[]rune(s) 3for_,ch:=range cs{ 4\tfmt.Println(string(ch)) 5} 使用 buffer 累加字符串\n1var bf bytes.Buffer 2for i:=0;i\u003c10;i++{ 3\tfmt.Fprintf(\u0026bf,\"a%d\",i) 4} 5s:=bf.String() 6fmt.Println(s) 指针 \u0026符号会【生成】一个指向其作用对象的指针。 *符号表示指针指向的【底层的值】 1package main 2import \"fmt\" 3func main() { 4\ti, j := 42, 2701 5\tp := \u0026i // p为i的指针 6\tfmt.Println(*p) // 通过指针显示的是i的值 7\t*p = 21 // 通过指针修改的是i的值 8\tfmt.Println(i) 9\tp = \u0026j // 将p改为j的指针 10\t*p = *p / 37 // 通过指针操作的是j的值，除以37的结果重新通过指针赋给j 11\tfmt.Println(j) 12} 结构体定义 定义类型 定义类型的不同方式，使用也不相同\n1// BigServer type A=B 2type BigServer = server 3// SmellServer type A B 4type SmellServer server 5 6service1 := SmellServer{} 7service2 := BigServer{} 8server(service1).open() 9service2.open() 初始化 Go 没有构造函数，所以 new 直接分配内存然后把内存都置 0\n1man1 := Person{name: \"李四\"} 2man1.Walk(man1.name) 3man2 := new(Person) 4man2.name = \"王五\" 5man2.Walk(man2.name) 方法接收器 用于定义结构体对应的方法（也可以为非结构体类型声明方法） 只能为在同一个包中定义的接收者类型声明方法，而不能为其它别的包中定义的类型（包括 int 之类的内置类型）声明方法\n1// 结构体接收器 2func (p Person) ChangeName(newName string) { 3 p.name = newName 4} 5// 指针接收器 6func (p *Person) ChangeAge(newAge int) { 7 p.age = newAge 8} 9// 结构体接收器，内容不会改变 10man1.ChangeName(\"赵六\") 11// 指针接收器，内容会改变，我直接遇事不决用指针 12man1.ChangeAge(30) 13fmt.Println(man1) 哈希表 Go 之旅中的一个练习，用的是比较简单的 map，实现 WordCount。它应当返回一个映射，其中包含字符串 s 中每个“单词”的个数。 函数 wc.Test 会为此函数执行一系列测试用例，并输出成功还是失败\n1package main 2 3import ( 4\t\"golang.org/x/tour/wc\" 5\t\"strings\" 6) 7func WordCount(s string) map[string]int { 8\tv := strings.Fields(s) //Field函数直接分割 9\tn := len(v) 10\tx := make(map[string]int) 11\tfor i:=0;i\u003cn;i++ { 12\tx[v[i]]++ 13\t} 14\treturn x 15} 16 17func main() { 18\twc.Test(WordCount) 19} 控制结构 for 类似 while 的无限循环 fori 一般的按照下标循环 forr 最为特殊的 range 遍历，可以用于 map 遍历\n1for i := 0; i \u003c len(arr); i++ { 2fmt.Printf(\" index = %d,number = %d \\n\", i, arr[i]) 3} 4for index, value := range arr{ 5fmt.Printf(\" index = %d,number = %d \\n\", index, value) 6} if-else：没什么可以记录的，跟其他的语言一样的\n函数调用 Go 语言选择了传值的方式，无论是传递基本类型、结构体还是指针，都会对传递的参数进行拷贝\n无需声明原型 支持不定变参 支持多返回值 支持命名返回参数 函数也是一种类型，一个函数可以复制给变量；可以作为参数传递给其他函数 不支持嵌套（一个包不能有重名的函数） 不支持重载 不支持默认参数 整数与数组类型 如下所示的函数 myFunction 接收了两个参数，整型变量 i 和数组 arr，这个函数会将传入的两个参数的地址打印出来，在最外层的主函数也会在 myFunction 函数调用前后分别打印两个参数的地址，最后的结果 main 函数中的参数地址与 myFunction 中的地址完全不同，所以能够证明Go 语言的整型和数组类型都是值传递的\n1func myFunction1(i int, arr [2]int) { 2\tfmt.Printf(\"in my_funciton - i=(%d, %p) arr=(%v, %p)\\n\", i, \u0026i, arr, \u0026arr) 3} 4 5func main() { 6\ti := 30 7\tarr := [2]int{66, 77} 8\tfmt.Printf(\"before calling - i=(%d, %p) arr=(%v, %p)\\n\", i, \u0026i, arr, \u0026arr) 9\tmyFunction1(i, arr) 10\tfmt.Printf(\"after calling - i=(%d, %p) arr=(%v, %p)\\n\", i, \u0026i, arr, \u0026arr) 11} 结构体与指针类型 传递结构体时：会拷贝结构体中的全部内容 传递结构体指针时：会拷贝结构体指针 1func myFunction2(a MyStruct, b *MyStruct) { 2 a.i = 31 3 b.i = 41 4 fmt.Printf(\"in my_function - a=(%d, %p) b=(%v, %p)\\n\", a, \u0026a, b, \u0026b) 5} 6func main() { 7\ta := MyStruct{i: 30} 8\tb := \u0026MyStruct{i: 40} 9\tfmt.Printf(\"before calling - a=(%d, %p) b=(%v, %p)\\n\", a, \u0026a, b, \u0026b) 10\tmyFunction2(a, b) 11\tfmt.Printf(\"after calling - a=(%d, %p) b=(%v, %p)\\n\", a, \u0026a, b, \u0026b) 12} 方法与函数 方法 (func (c *Context) String)： 方法的第一个参数是一个接收者（receiver），即 c *Context，表示该方法属于 Context 类型。 方法的调用方式是通过类型的实例来调用，例如 context.String(...)，其中 context 是 Context 类型的一个实例。 表达的是 String 操作是 Context 类型的一部分，是 Context 对象的一个行为。 更适合表示“某种类型的实例应该具备的行为”。 函数 (func String(c *Context))： 一个普通的函数，它的参数是 c *Context，表示函数接收一个 *Context 类型的参数。 函数的调用方式是直接调用，并传入参数，例如 String(context, ...)，参数列表名称在前，类型在后，可以有多返回值，返回值也可以有名称 是独立于 Context 类型的一个函数，只是恰好接受一个 Context 类型的参数。 更适合表示“一般性的操作或工具函数”，而不是某种类型的固有行为。 方法与指针重定向 1func (v *Vertex) Scale(f float64) { 2\tv.X = v.X * f 3\tv.Y = v.Y * f 4} 5 6func ScaleFunc(v *Vertex, f float64) { 7\tv.X = v.X * f 8\tv.Y = v.Y * f 9} 比较前两个程序，你大概会注意到带指针参数的函数必须接受一个指针：\n1var v Vertex 2ScaleFunc(v, 5) // 编译错误！ 3ScaleFunc(\u0026v, 5) // OK 而接收者为指针的的方法被调用时，接收者既能是值又能是指针：\n1var v Vertex 2p := \u0026Vertex{4, 3} 3p.Scale(3) //OK 4(*p).Scale(8) //OK 对于语句 v.Scale(5) 来说，即便 v 是一个值而非指针，带指针接收者的方法也能被直接调用。 也就是说，由于 Scale 方法有一个指针接收者，为方便起见，Go 会将语句 v.Scale(5) 解释为 (\u0026v).Scale(5)。 反之同理，接受一个值作为参数的函数必须接受一个指定类型的值，而以值为接收者的方法被调用时，接收者既能为值又能为指针，这种情况下，方法调用 p.Abs() 会被解释为 (*p).Abs()，其实就是遇到不同情况自动转换。\n接口 接口是计算机系统中多个组件共享的边界，不同的组件能够在边界上交换信息。如下图所示，接口的本质是引入一个新的中间层，调用方可以通过接口与具体实现分离，解除上下游的耦合，上层的模块不再需要依赖下层的具体模块，只需要依赖一个约定好的接口。 在 Java 中：实现接口需要显式地声明接口并实现所有方法，在接口中不仅可以定义方法签名，还可以定义变量，这些定义的变量可以直接在实现接口的类中使用\n1public interface MyInterface { 2 public String hello = \"Hello\"; 3 public void sayHello(); 4} 5 6public class MyInterfaceImpl implements MyInterface { 7 public void sayHello() { 8 System.out.println(MyInterface.hello); 9 } 10} 在 Go 中：实现接口的所有方法就隐式地实现了接口，但是在接口中我们只能定义方法签名，不能包含成员变量\n1type error interface { 2\tError() string 3} 4type RPCError struct { 5\tCode int64 6\tMessage string 7} 8func (e *RPCError) Error() string { 9\treturn fmt.Sprintf(\"%s, code=%d\", e.Message, e.Code) 10} Java 中的类必须显式地声明实现的接口，与 Java 不同的是 Go 语言中接口的实现都是隐式的，我们只需要实现 Error() string 方法就实现了 error 接口\n接口方法 接口就是规定了一个需要实现的方法列表，在 Go 语言中一个类型只要实现了接口中规定的所有方法，那么我们就称它实现了这个接口 我们定义的 Singer 接口类型，它包含一个 Sing 方法。\n1type Singer interface { 2\tSing() 3} 然后有一个 Bird 结构体\n1type Bird struct {} 因为 Singer 接口只包含一个 Sing 方法，所以只需要给 Bird 结构体添加一个 Sing 方法就可以满足 Singer 接口的要求。\n1// Sing Bird类型的Sing方法 2func (b Bird) Sing() { 3\tfmt.Println(\"汪汪汪\") 4} 为什么要用接口呢，因为有时不止一个类型需要实现这个方法，可能有多个结构体需要 Sing() 这个方法，这时就可以使用接口类型，把所有会叫的动物当成 Singer 类型来处理\n1package main 2 3import \"fmt\" 4 5type Sayer interface { 6 Say() 7} 8type Cat struct { 9} 10 11type Dog struct{} 12 13func (c *Cat) Say() { 14 fmt.Println(\"cat miao\") 15} 16func (d *Dog) Say() { 17 fmt.Println(\"dog woof\") 18} 19func Hungry(s Sayer) { 20 s.Say() 21} 22 23func main() { 24 var c Cat 25 var d Dog 26 Hungry(\u0026c) 27 Hungry(\u0026d) 28} Stringer 是 fmt 包中定义的 Stringer 是最普遍的接口之一，是一个可以用字符串描述自己的类型，任何实现了 String() string 方法的类型都隐式满足该接口。fmt 包（还有很多包）都通过此接口来打印值，可以规范化对应值的输出\n1package main 2 3import \"fmt\" 4 5type IPAddr [4]byte 6 7// TODO: 为 IPAddr 添加一个 \"String() string\" 方法。 8func (I IPAddr) String() string{ 9\treturn fmt.Sprintf(\"%v.%v.%v.%v\",I[0],I[1],I[2],I[3]) 10} 11func main() { 12\thosts := map[string]IPAddr{ 13\t\"loopback\": {127, 0, 0, 1}, 14\t\"googleDNS\": {8, 8, 8, 8}, 15\t} 16\tfor name, ip := range hosts { 17\tfmt.Printf(\"%v: %v\\n\", name, ip) 18\t} 19} 与 fmt.Stringer 类似，error 类型是一个内建接口\n1type error interface { 2 Error() string 3} 类似的还有，sort 接口，json 序列化，io 读写，以及 http 的请求处理 rot13Reader 的实现，一个接口组合的实现\n1package main 2 3import ( 4\t\"io\" 5\t\"os\" 6\t\"strings\" 7) 8 9type rot13Reader struct { 10\tr io.Reader 11} 12 13func rot13(c byte) byte { 14\tswitch { 15\tcase c \u003e= 'A' \u0026\u0026 c \u003c= 'Z': 16\treturn 'A' + (c-'A'+13)%26 17\tcase c \u003e= 'a' \u0026\u0026 c \u003c= 'z': 18\treturn 'a' + (c-'a'+13)%26 19\tdefault: 20\treturn c 21\t} 22} 23 24func (r *rot13Reader) Read(b []byte) (n int, err error) { 25\t// 要调用底层的Read 26 n, err = r.r.Read(b) 27 for i := 0; i \u003c n; i++ { 28 b[i] = rot13(b[i]) 29 } 30 return n, err 31} 32 33func main() { 34\ts := strings.NewReader(\"Lbh penpxrq gur pbqr!\") 35\tr := rot13Reader{s} 36\tio.Copy(os.Stdout, \u0026r) 37} 图像生成器\n1package main 2 3import ( 4\t\"fmt\" 5\t\"golang.org/x/tour/pic\" 6\t\"image\" 7\t\"image/color\" 8) 9 10type Image struct{ 11\tWidth int 12\tHeight int 13} 14// Bounds image.Rectangle 15func (img Image)Bounds() image.Rectangle{ 16\treturn image.Rect(0,0,img.Width,img.Height) 17} 18 19// Color color.RGBModel 20func (img Image) ColorModel() color.Model{ 21\treturn color.RGBAModel 22} 23// At color.Color 24func (img Image) At(x,y int) color.Color{ 25\tv := uint8(x^y) 26\treturn color.RGBA{v,v,255,255} 27} 28 29func main() { 30\tm := Image{256,256} 31\tpic.ShowImage(m) 32} 错误（error） Go 程序使用 error 值来表示错误状态。通常函数会返回一个 error 值，调用它的代码应当判断这个错误是否等于 nil 来进行错误处理。\n1package main 2 3import ( 4\t\"fmt\" 5\t\"math\" 6) 7type ErrNegativeSqrt struct{ 8\tValue float64 9} 10 11func Sqrt(x float64) (float64, error) { 12\tif x\u003c0 { 13\treturn x , ErrNegativeSqrt{Value: x} 14\t}else { 15\treturn math.Sqrt(x),nil 16\t} 17} 18// 重写Error方法，输出更多错误提示信息 19func (e ErrNegativeSqrt) Error() string{ 20\treturn fmt.Sprintf(\"cannot Sqrt negative number: %v\",float64(e)) 21} 22 23func main() { 24\tfmt.Println(Sqrt(2)) 25\tfmt.Println(Sqrt(-2)) 26} 接口值 接口类型的值可以是任意一个实现了该接口的类型值，所以接口值除了需要记录具体值之外，还需要记录这个值属于的类型。也就是说接口值由“类型”和“值”组成。 接口值（Interface Value） 本质上是一个动态容器，它可以持有任意具体类型的值，并在运行时记录类型信息，隐式接口从接口的实现中解耦了定义，这样接口的实现可以出现在任何包中，无需提前准备\nnil 接口值既不保存值也不保存类型，为 nil 接口调用方法会产生运行时错误，因为接口的元组内并未包含能够指明该调用哪个具体方法的类型 指定了零个方法的接口值被称为空接口，空接口可保存任何类型的值，空接口被用来处理未知类型的值\n类型断言 类型断言是一种可以从接口值中提取其动态类型具体值的方法，给一个什么值，他就变成对应的类型 该语句断言接口值 i 保存了具体类型 Type，并将其底层类型为 Type 的值赋予变量 t，如果未保存，那么该语句就会触发 panic\n1\tt := i.(T) 为了 判断 一个接口值是否保存了一个特定的类型，类型断言可返回两个值：其底层值以及一个报告断言是否成功的布尔值。\n1\tt, ok := i.(T) 若 i 保存了一个 T，那么 t 将会是其底层值，而 ok 为 true 否则，ok 将为 false 而 t 将为 T 类型的零值，程序并不会产生 panic\n类型选择 类型选择 是一种按顺序从几个类型断言中选择分支的结构，它们针对给定接口值所存储的值的类型进行比较\n1func Describe(s Shape) { 2 switch v := s.(type) { 3 case Circle: 4 fmt.Printf(\"圆形，半径: %v\\n\", v.Radius) 5 case Rectangle: 6 fmt.Printf(\"矩形，长: %v, 宽: %v\\n\", v.Width, v.Height) 7 default: 8 fmt.Println(\"未知形状\") 9 } 10} 11 12func main() { 13 Describe(Circle{Radius: 3}) // 输出：圆形，半径: 3 14 Describe(Rectangle{4, 5}) // 输出：矩形，长: 4, 宽: 5 15} 闭包（closure） 闭包（closure）是指一个函数可以捕获并引用其外部作用域中的变量，即使在这些变量的作用域已经结束之后，换句话说，该函数被“绑定”到了这些变量。闭包的实现依赖于函数本身以及它所引用的环境\n1i := 13 2a := func() { 3 fmt.Println(\"i = \", i) 4} 5a() 延迟绑定：闭包捕获的是变量的引用，而不是它在循环中每次迭代的值\n1func Delay() { 2 fns := make([]func(), 0, 10) 3 for i := 0; i \u003c 10; i++ { 4 fns = append(fns, func() { 5 fmt.Println(\"i = \", i) 6 }) 7 } 8 //执行的时候i = 10，因为闭包捕获的是变量i的引用,而不是值 9 //因此在循环中使用闭包时需要小心处理 10 //？？为什么我这里是i从0-9，好诡异啊 11 for _, fn := range fns { 12 fn() 13 } 14} 杂项记录 查看对应变量的类型 1//使用%T 2fmt.Printf(\"type: %T\", value) 3 4//使用reflect下的Typeof，要引入reflect包 5fmt.Println(reflect.Typeof(value)) 输出其命令行参数 1package main 2 3import ( 4\"fmt\" 5\"os\" 6) 7 8func main() { 9fmt.Println(\"Hello, World!\") 10var s, sep string 11for _, arg := range os.Args[0:] { //输出目标文件命令的名字 12s += sep + arg 13sep = \" \" 14} 15//for i := 1; i \u003c len(os.Args); i++ { 16// s += sep + os.Args[i] 17// sep = \" \" 18//} 19fmt.Println(s) 20} OK 的使用 在 Go 语言中，ok 通常与 map 结合使用，用于判断某个键（key）是否存在于 map 中，是 Go 中一种常见的“安全读取”模式。 通过第二个返回值 ok（布尔类型）可以判断键是否存在：\n1 m := map[string]int{\"apple\": 5, \"banana\": 3} 2 3 // 检查键是否存在 4 value, ok := m[\"apple\"] 5 if ok { 6 fmt.Println(\"apple 存在，值是\", value) 7 } else { 8 fmt.Println(\"apple 不存在\") 9 } 在练习 LeetCode 的时候也看到有高级的语句记录了下来，对于 ok 在 if 中的使用含义，经常在 map 中使用：\n1func learnErrorHandling() { 2// \", ok\"用来判断有没有正常工作 3m := map[int]string{3: \"three\", 4: \"four\"} 4if x, ok := m[1]; !ok { // ok 为false，因为m中没有1 5fmt.Println(\"no one there\") 6} else { 7fmt.Print(x) // 如果x在map中的话，x就是那个值喽。 8} 9} 上述代码中，在 if 语句中，ok这个 bool 变量的含义是，如果其中有1这个 key，那么其 value 赋值给x然后令 ok 为 true，如果没有则令 ok 为 false\n引用包时出错 包在之后的代码中并未引用，可以通过在包名前加_进行匿名引用\n定义变量 var 后面定义有默认类型，如果不想按照默认类型来的话，就需要自己写 go 是强类型语言，不做任何类型转换 或者直接:=进行赋值\n1var a = 13 // 默认为int 2var b uint =15 3a := 13 求 string 的长度 len()函数求出来的是字节的长度，而不是字符长度 应该用utf8.RuneCountInString(\"你好\")进行求解\n对二维数组进行排序 这里的 slices.SortFunc 通过传入一个比较函数（func(p, q []int) int）来实现对 intervals 进行排序 比较函数：func(p, q []int) int。它对两个元素 p 和 q 进行比较。\n如果返回值 \u003c 0，表示 p 应排在 q 之前。 如果返回值 \u003e 0，表示 q 应排在 p 之前。 如果返回值 = 0，表示 p 和 q 的顺序无所谓。 1slices.SortFunc(intervals, func(p, q []int) int { return p[0] - q[0] }) ",
+  "wordCount" : "7239",
   "inLanguage": "zh",
   "datePublished": "2024-06-12T16:57:34Z",
   "dateModified": "2024-06-12T16:57:34Z",
@@ -197,7 +143,7 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
     "name": "Mario's Blog",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://mariosight.github.io/favicon-mario.png"
+      "url": "https://mariosight.github.io/imgs/favicon-mario.png"
     }
   }
 }
@@ -276,7 +222,7 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
     <h1 class="post-title entry-hint-parent">
       Go语言基础学习
     </h1>
-    <div class="post-meta"><span title='2024-06-12 16:57:34 +0000 UTC'>2024-06-12</span>&nbsp;·&nbsp;7522 字&nbsp;·&nbsp;Mario
+    <div class="post-meta"><span title='2024-06-12 16:57:34 +0000 UTC'>2024-06-12</span>&nbsp;·&nbsp;7239 字&nbsp;·&nbsp;Mario
 
 </div>
   </header> <aside id="toc-container" class="toc-container wide">
@@ -301,9 +247,11 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
                         <li>
                             <a href="#%e6%95%b0%e7%bb%84%e5%92%8c%e5%88%87%e7%89%87" aria-label="数组和切片">数组和切片</a></li>
                         <li>
-                            <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2" aria-label="字符串">字符串</a></li>
+                            <a href="#%e5%ad%97%e7%ac%a6%e4%b8%b2" aria-label="字符串">字符串</a></li></ul>
+                        </li>
                         <li>
-                            <a href="#%e6%8c%87%e9%92%88" aria-label="指针">指针</a></li>
+                            <a href="#%e6%8c%87%e9%92%88" aria-label="指针">指针</a><ul>
+                                    
                         <li>
                             <a href="#%e7%bb%93%e6%9e%84%e4%bd%93%e5%ae%9a%e4%b9%89" aria-label="结构体定义">结构体定义</a><ul>
                                     
@@ -314,8 +262,6 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
                         <li>
                             <a href="#%e6%96%b9%e6%b3%95%e6%8e%a5%e6%94%b6%e5%99%a8" aria-label="方法接收器">方法接收器</a></li></ul>
                         </li>
-                        <li>
-                            <a href="#%e9%93%be%e8%a1%a8" aria-label="链表">链表</a></li>
                         <li>
                             <a href="#%e5%93%88%e5%b8%8c%e8%a1%a8" aria-label="哈希表">哈希表</a></li>
                         <li>
@@ -344,13 +290,11 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
                             <a href="#%e9%94%99%e8%af%aferror" aria-label="错误（error）">错误（error）</a><ul>
                                     
                         <li>
-                            <a href="#%e6%8e%a5%e5%8f%a3%e5%80%bc" aria-label="接口值">接口值</a><ul>
-                                    
+                            <a href="#%e6%8e%a5%e5%8f%a3%e5%80%bc" aria-label="接口值">接口值</a></li>
                         <li>
                             <a href="#%e7%b1%bb%e5%9e%8b%e6%96%ad%e8%a8%80" aria-label="类型断言">类型断言</a></li>
                         <li>
                             <a href="#%e7%b1%bb%e5%9e%8b%e9%80%89%e6%8b%a9" aria-label="类型选择">类型选择</a></li></ul>
-                        </li></ul>
                         </li>
                         <li>
                             <a href="#%e9%97%ad%e5%8c%85closure" aria-label="闭包（closure）">闭包（closure）</a></li></ul>
@@ -363,13 +307,13 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
                         <li>
                             <a href="#%e8%be%93%e5%87%ba%e5%85%b6%e5%91%bd%e4%bb%a4%e8%a1%8c%e5%8f%82%e6%95%b0" aria-label="输出其命令行参数">输出其命令行参数</a></li>
                         <li>
-                            <a href="#ok%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="OK的使用">OK的使用</a></li>
+                            <a href="#ok-%e7%9a%84%e4%bd%bf%e7%94%a8" aria-label="OK 的使用">OK 的使用</a></li>
                         <li>
                             <a href="#%e5%bc%95%e7%94%a8%e5%8c%85%e6%97%b6%e5%87%ba%e9%94%99" aria-label="引用包时出错">引用包时出错</a></li>
                         <li>
                             <a href="#%e5%ae%9a%e4%b9%89%e5%8f%98%e9%87%8f" aria-label="定义变量">定义变量</a></li>
                         <li>
-                            <a href="#%e6%b1%82string%e7%9a%84%e9%95%bf%e5%ba%a6" aria-label="求string的长度">求string的长度</a></li>
+                            <a href="#%e6%b1%82-string-%e7%9a%84%e9%95%bf%e5%ba%a6" aria-label="求 string 的长度">求 string 的长度</a></li>
                         <li>
                             <a href="#%e5%af%b9%e4%ba%8c%e7%bb%b4%e6%95%b0%e7%bb%84%e8%bf%9b%e8%a1%8c%e6%8e%92%e5%ba%8f" aria-label="对二维数组进行排序">对二维数组进行排序</a>
                         </li>
@@ -439,78 +383,78 @@ Go语言是一种静态、编译型、并发型的编程语言。它具有强类
             return rect.top + win.pageYOffset;
         }
     </script>
-  <div class="post-content"><h3 id="介绍">介绍<a hidden class="anchor" aria-hidden="true" href="#介绍">#</a></h3>
-<p>Go语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于C系语言的一种</p>
-<blockquote>
-<p>[!note] 编译型vs解释型</p>
+  <div class="post-content"><h4 id="介绍">介绍<a hidden class="anchor" aria-hidden="true" href="#介绍">#</a></h4>
+<p>Go 语言是一种静态、编译型、并发型的编程语言。它具有强类型、垃圾回收、快速编译等特性，属于 C 系语言的一种
+编译型 vs 解释型</p>
 <ol>
-<li>编译型语言<br>
-<strong>优点</strong>：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。<br>
-<strong>缺点</strong>：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。</li>
-<li>解释型语言<br>
-<strong>优点</strong>：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。
-<strong>缺点</strong>：每次运行的时候都要解释一遍，性能上不如编译型语言。</li>
-<li>混合型语言
-既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。</li>
+<li>
+<p>编译型语言</p>
+<p><strong>优点</strong>：编译器一般会有预编译的过程对代码进行优化。因为编译只做一次，运行时不需要编译，所以编译型语言的程序执行效率高。可以脱离语言环境独立运行。</p>
+<p><strong>缺点</strong>：编译之后如果需要修改就需要整个模块重新编译。编译的时候根据对应的运行环境生成机器码，不同的操作系统之间移植就会有问题，需要根据运行的操作系统环境编译不同的可执行文件。</p>
+</li>
+<li>
+<p>解释型语言</p>
+<p><strong>优点</strong>：有良好的平台兼容性，在任何环境中都可以运行，前提是安装了解释器（虚拟机）灵活，修改代码的时候直接修改就可以，可以快速部署，不用停机维护。</p>
+<p><strong>缺点</strong>：每次运行的时候都要解释一遍，性能上不如编译型语言。</p>
+</li>
+<li>
+<p>混合型语言</p>
+<p>既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如 C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET 平台提供了中间语言运行库运行中间码，中间语言运行库类似于 Java 虚拟机。.net 在编译成 IL 代码后，保存在 dll 中，首次运行时由 JIT 在编译成机器码缓存在内存中，下次直接执行。</p>
+</li>
 </ol>
-</blockquote>
-<h3 id="源码文件">源码文件<a hidden class="anchor" aria-hidden="true" href="#源码文件">#</a></h3>
+<h4 id="源码文件">源码文件<a hidden class="anchor" aria-hidden="true" href="#源码文件">#</a></h4>
 <p><img loading="lazy" src="https://cdn.jsdelivr.net/gh/mariosight/image/picture/20241230114315057.png" alt="image.png"  />
-
-<strong>1、命令源码文件：</strong>
-声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。
-<strong>2、库源码文件</strong>
-库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。
-库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。
-<strong>3、测试源码文件</strong>
-名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。</p>
-<h3 id="输入输出">输入输出<a hidden class="anchor" aria-hidden="true" href="#输入输出">#</a></h3>
-<p>fmt中输入函数Scanln</p>
+</p>
+<p><strong>1、命令源码文件：</strong></p>
+<p>声明自己属于 main 代码包、包含无参数声明和结果声明的 main 函数。命令源码文件被安装以后，GOPATH 如果只有一个工作区，那么相应的可执行文件会被存放当前工作区的 bin 文件夹下；如果有多个工作区，就会安装到 GOBIN 指向的目录下。</p>
+<p><strong>2、库源码文件</strong></p>
+<p>库源码文件就是不具备命令源码文件上述两个特征的源码文件。存在于某个代码包中的普通的源码文件。
+库源码文件被安装后，相应的归档文件（.a 文件）会被存放到当前工作区的 pkg 的平台相关目录下。</p>
+<p><strong>3、测试源码文件</strong></p>
+<p>名称以 test.go 为后缀的代码文件，并且必须包含 Test 或者 Benchmark 名称前缀的函数。</p>
+<h4 id="输入输出">输入输出<a hidden class="anchor" aria-hidden="true" href="#输入输出">#</a></h4>
+<p>fmt 中输入函数 Scanln</p>
 <pre tabindex="0"><code>1. 使用&#34;&amp;&#34;获取变量的内存地址(即取变量内存地址的运算符)，通过键盘输入为变量指向的内存地址赋初值。
 2. fmt.Scanln是一个阻塞的函数，如果它获取不到数据就会一直阻塞哟。
 3. fmt.Scanln可以接收多个参数，用户输入参数默认使用空格或者回车换行符分割输入设备传入的参数，直到接收所有的参数为止
-</code></pre><p>fmt中的输出函数Println（ln表示自动换行）</p>
+</code></pre><p>fmt 中的输出函数 Println（ln 表示自动换行）</p>
 <pre tabindex="0"><code>1. Println格式使用其操作数的默认格式，并写入标准输出。
 2. 始终在操作数之间添加空格，并追加换行符。
 3. 它返回写入的字节数和遇到的任何写入错误。
-</code></pre><p>注意，如果需要输出如%s,%T这种类型，则需要使用Printf，这个跟C是类似的</p>
+</code></pre><p>注意，如果需要输出如%s,%T 这种类型，则需要使用 Printf，这个跟 C 是类似的</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type: %T&#34;</span><span class="p">,</span><span class="nx">str</span><span class="p">)</span>
-</span></span></code></pre></div><h3 id="数据结构">数据结构<a hidden class="anchor" aria-hidden="true" href="#数据结构">#</a></h3>
-<h4 id="数据类型">数据类型<a hidden class="anchor" aria-hidden="true" href="#数据类型">#</a></h4>
-<p><strong>数类型</strong>
-uint8    无符号 8位整型 (0 到 255)
-uint16   无符号 16位整型 (0 到 65535)
-uint32   无符号 32位整型 (0 到 4294967295)
-uint64   无符号 64位整型 (0 到 18446744073709551615)
-int8     有符号 8位整型 (-128 到 127)
-int16    有符号 16位整型 (-32768 到 32767)
-int32    有符号 32位整型 (-2147483648 到 2147483647)
-int64    有符号 64位整型 (-9223372036854775808 到 9223372036854775807)
-float32和float64 范围分别为3.4e38和1.8e308<br>
-complex64和complex128<br>
-<strong>字符类型</strong>
-uint8类型，或者叫 byte 型，代表一个ASCII码字符。<br>
-rune类型，代表一个 UTF-8字符。
-<code>rune</code> 类型是 <code>int32</code> 的别名，用于表示一个Unicode码点（Unicode code point）。每个<code>rune</code>对应一个Unicode字符，可以表示任何语言的字符（包括中文、表情符号等）
-Go的字符串默认以UTF-8编码存储。当遍历字符串时，若用 <code>for range</code>，会自动按 <code>rune</code> 为单位迭代，而非字节：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;Hello 世界&#34;</span> 
+</span></span></code></pre></div><h4 id="数据结构">数据结构<a hidden class="anchor" aria-hidden="true" href="#数据结构">#</a></h4>
+<h5 id="数据类型">数据类型<a hidden class="anchor" aria-hidden="true" href="#数据类型">#</a></h5>
+<p><strong>数类型</strong></p>
+<p>uint8 无符号 8 位整型 (0 到 255)</p>
+<p>uint16 无符号 16 位整型 (0 到 65535)</p>
+<p>uint32 无符号 32 位整型 (0 到 4294967295)</p>
+<p>uint64 无符号 64 位整型 (0 到 18446744073709551615)</p>
+<p>int8 有符号 8 位整型 (-128 到 127)</p>
+<p>int16 有符号 16 位整型 (-32768 到 32767)</p>
+<p>int32 有符号 32 位整型 (-2147483648 到 2147483647)</p>
+<p>int64 有符号 64 位整型 (-9223372036854775808 到 9223372036854775807)</p>
+<p>float32 和 float64 范围分别为 3.4e38 和 1.8e308</p>
+<p>complex64 和 complex128</p>
+<p><strong>字符类型</strong></p>
+<p>uint8 类型，或者叫 byte 型，代表一个 ASCII 码字符。</p>
+<p>rune 类型，代表一个 UTF-8 字符。</p>
+<p><code>rune</code>  类型是  <code>int32</code>  的别名，用于表示一个 Unicode 码点（Unicode code point）。每个<code>rune</code>对应一个 Unicode 字符，可以表示任何语言的字符（包括中文、表情符号等）
+Go 的字符串默认以 UTF-8 编码存储。当遍历字符串时，若用  <code>for range</code>，会自动按  <code>rune</code>  为单位迭代，而非字节：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;Hello 世界&#34;</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">r</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1">// r 的类型是 rune
-</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%c &#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span> 
+</span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%c &#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1">// 输出: H e l l o 世 界
-</span></span></span></code></pre></div><p>这里是对于range的解释：<a href="https://www.cnblogs.com/Julypassed/p/18160280">golang中使用for range 遍历字符串时常遇到的bug，byte和rune类型，源码分析 - Harven - 博客园</a></p>
-<h4 id="数组和切片">数组和切片<a hidden class="anchor" aria-hidden="true" href="#数组和切片">#</a></h4>
+</span></span></span></code></pre></div><p>这里是对于 range 的解释：<a href="https://www.cnblogs.com/Julypassed/p/18160280">golang 中使用 for range 遍历字符串时常遇到的 bug，byte 和 rune 类型，源码分析 - Harven - 博客园</a></p>
+<h5 id="数组和切片">数组和切片<a hidden class="anchor" aria-hidden="true" href="#数组和切片">#</a></h5>
 <p>数组（Array）和切片（Slice）的区别其实是数组在定义的时候已经规定好了长度，而切片并没有规定长度
 数组是需要指定初始化长度（或者叫做容量）的序列，在定义时可以直接设置初始值，如果不设置，初始值为默认值
-切片是一个拥有相同类型元素的可变长度的序列，可以通过append函数添加元素</p>
-<ol>
-<li>两者的对比
-![[Pasted image 20240809083724.png]]</li>
-<li>代码书写
-切片可以用内置函数 <code>make</code> 来创建，这也是你创建动态数组的方式。
-<code>make</code> 函数会分配一个元素为零值的数组并返回一个引用了它的切片：</li>
-</ol>
+切片是一个拥有相同类型元素的可变长度的序列，可以通过 append 函数添加元素</p>
+<p>代码书写</p>
+<p>切片可以用内置函数 <code>make</code> 来创建，这也是你创建动态数组的方式。
+<code>make</code> 函数会分配一个元素为零值的数组并返回一个引用了它的切片：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">a</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>  <span class="c1">// len(a)=5
 </span></span></span></code></pre></div><p>要指定它的容量，需向 <code>make</code> 传入第三个参数</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">arr</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">}</span> <span class="c1">//创建一个数组
@@ -520,26 +464,30 @@ Go的字符串默认以UTF-8编码存储。当遍历字符串时，若用 <code
 </span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="nx">s2</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">//追加一个元素
 </span></span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="c1">//切片比较好的创建方式为make([]int,0,cap)
 </span></span></span></code></pre></div><ol start="3">
-<li>子切片
-通过[start:end]来获得子切片，arr[start:end]获取的是<code>[start,end)</code>之间的元素，左闭右开
+<li>
+<p>子切片</p>
+<p>通过[start:end]来获得子切片，arr[start:end]获取的是<code>[start,end)</code>之间的元素，左闭右开
 arr[:end]获得<code>[0,end)</code>之间的元素
 arr[start:]获得<code>[start,len(arr))</code>之间的元素
-子切片与原切片共享底层数组</li>
-<li>理解slice
-实际上是Go中特殊的ArrayList，但是没有插入和删除的操作，只有append操作，下面稍微写了一下对于slice的insert和delete，在这其中使用了copy函数：当我们在Go语言中需要将一个切片的内容复制到另一个切片时，可以使用内置的copy()函数，copy()函数用于将源切片中的元素复制到目标切片中。
-slice的零值是nil，通过[]int这种方式来创建切片时首先会创建一个对应的底层数组</li>
+子切片与原切片共享底层数组</p>
+</li>
+<li>
+<p>理解 slice</p>
+<p>实际上是 Go 中特殊的 ArrayList，但是没有插入和删除的操作，只有 append 操作，下面稍微写了一下对于 slice 的 insert 和 delete，在这其中使用了 copy 函数：当我们在 Go 语言中需要将一个切片的内容复制到另一个切片时，可以使用内置的 copy()函数，copy()函数用于将源切片中的元素复制到目标切片中。
+slice 的零值是 nil，通过[]int 这种方式来创建切片时首先会创建一个对应的底层数组</p>
+</li>
 </ol>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">//实现指定位置插入元素
-</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="nx">slice</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span><span class="nx">value</span> <span class="kt">int</span><span class="p">,</span><span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span> 
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="nx">slice</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">slice</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">//扩展一个空间
-</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span><span class="nb">copy</span><span class="p">(</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="p">:])</span> <span class="c1">//向后移动
-</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">=</span> <span class="nx">value</span> <span class="c1">//插入元素
-</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span><span class="k">return</span> <span class="nx">slice</span>
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">insert</span><span class="p">(</span><span class="nx">slice</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span><span class="nx">value</span> <span class="kt">int</span><span class="p">,</span><span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">	<span class="nx">slice</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">slice</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">//扩展一个空间
+</span></span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="c1"></span>	<span class="nb">copy</span><span class="p">(</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:],</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="p">:])</span> <span class="c1">//向后移动
+</span></span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1"></span>	<span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span> <span class="p">=</span> <span class="nx">value</span> <span class="c1">//插入元素
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">slice</span>
 </span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1">//实现指定位置删除元素
 </span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nb">delete</span><span class="p">(</span><span class="nx">slice</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span><span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="nb">copy</span><span class="p">(</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="p">:],</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span> <span class="c1">//向前移动
-</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span><span class="k">return</span> <span class="nx">slice</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">slice</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">//删除最后一个元素
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="nb">copy</span><span class="p">(</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="p">:],</span><span class="nx">slice</span><span class="p">[</span><span class="nx">index</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span> <span class="c1">//向前移动
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>	<span class="k">return</span> <span class="nx">slice</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">slice</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c1">//删除最后一个元素
 </span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></div><p>练习切片的一个小程序，通过灰度图展示公式</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
@@ -561,33 +509,33 @@ slice的零值是nil，通过[]int这种方式来创建切片时首先会创建�
 </span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="nx">pic</span><span class="p">.</span><span class="nf">Show</span><span class="p">(</span><span class="nx">Pic</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="字符串">字符串<a hidden class="anchor" aria-hidden="true" href="#字符串">#</a></h4>
+</span></span></code></pre></div><h5 id="字符串">字符串<a hidden class="anchor" aria-hidden="true" href="#字符串">#</a></h5>
 <p>字符串用<code>&quot;abc&quot;</code>表示，单个字符用<code>'a'</code>表示
 字符串可以通过索引访问字符</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </span></span></code></pre></div><p>字符串可以通过切片访问连续字符</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
 </span></span></code></pre></div><p>统计字符串的个数要用特殊的方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nx">utf8</span><span class="p">.</span><span class="nf">RuneCountInString</span><span class="p">(</span><span class="nx">s</span><span class="p">))}</span>
 </span></span></code></pre></div><p>将字符编码转换为字符</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;abcde&#34;</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
 </span></span></code></pre></div><p>遍历字符串的每一个字符</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;我爱你中国&#34;</span> 
-</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">cs</span><span class="o">:=</span><span class="p">[]</span><span class="nb">rune</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> 
-</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">for_</span><span class="p">,</span><span class="nx">ch</span><span class="o">:=</span><span class="k">range</span> <span class="nx">cs</span><span class="p">{</span> 
-</span></span><span class="line"><span class="ln">4</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">ch</span><span class="p">))</span> 
-</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="p">}</span> 
-</span></span></code></pre></div><p>使用buffer累加字符串</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">var</span> <span class="nx">bf</span> <span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span> 
-</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="p">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">{</span> 
-</span></span><span class="line"><span class="ln">3</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">bf</span><span class="p">,</span><span class="s">&#34;a%d&#34;</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span> 
-</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span> 
-</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="nx">bf</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span> 
-</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> 
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="s">&#34;我爱你中国&#34;</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">cs</span><span class="o">:=</span><span class="p">[]</span><span class="nb">rune</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">for_</span><span class="p">,</span><span class="nx">ch</span><span class="o">:=</span><span class="k">range</span> <span class="nx">cs</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">ch</span><span class="p">))</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>使用 buffer 累加字符串</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">var</span> <span class="nx">bf</span> <span class="nx">bytes</span><span class="p">.</span><span class="nx">Buffer</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="p">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Fprintf</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">bf</span><span class="p">,</span><span class="s">&#34;a%d&#34;</span><span class="p">,</span><span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nx">s</span><span class="o">:=</span><span class="nx">bf</span><span class="p">.</span><span class="nf">String</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
 </span></span></code></pre></div><h4 id="指针">指针<a hidden class="anchor" aria-hidden="true" href="#指针">#</a></h4>
 <ul>
 <li><code>&amp;</code>符号会【生成】一个指向其作用对象的指针。</li>
@@ -600,51 +548,48 @@ slice的零值是nil，通过[]int这种方式来创建切片时首先会创建�
 </span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="nx">p</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">i</span>         <span class="c1">// p为i的指针
 </span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="o">*</span><span class="nx">p</span><span class="p">)</span> <span class="c1">// 通过指针显示的是i的值
 </span></span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="c1"></span>	<span class="o">*</span><span class="nx">p</span> <span class="p">=</span> <span class="mi">21</span>         <span class="c1">// 通过指针修改的是i的值
-</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> 
+</span></span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="nx">p</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">j</span>         <span class="c1">// 将p改为j的指针
 </span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>	<span class="o">*</span><span class="nx">p</span> <span class="p">=</span> <span class="o">*</span><span class="nx">p</span> <span class="o">/</span> <span class="mi">37</span>   <span class="c1">// 通过指针操作的是j的值，除以37的结果重新通过指针赋给j
 </span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="结构体定义">结构体定义<a hidden class="anchor" aria-hidden="true" href="#结构体定义">#</a></h4>
-<h5 id="定义类型">定义类型<a hidden class="anchor" aria-hidden="true" href="#定义类型">#</a></h5>
+</span></span></code></pre></div><h5 id="结构体定义">结构体定义<a hidden class="anchor" aria-hidden="true" href="#结构体定义">#</a></h5>
+<h6 id="定义类型">定义类型<a hidden class="anchor" aria-hidden="true" href="#定义类型">#</a></h6>
 <p>定义类型的不同方式，使用也不相同</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">// BigServer type A=B
-</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">BigServer</span> <span class="p">=</span> <span class="nx">server</span>  
+</span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">BigServer</span> <span class="p">=</span> <span class="nx">server</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1">// SmellServer type A B
 </span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">SmellServer</span> <span class="nx">server</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl">
-</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="nx">service1</span> <span class="o">:=</span> <span class="nx">SmellServer</span><span class="p">{}</span>  
-</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="nx">service2</span> <span class="o">:=</span> <span class="nx">BigServer</span><span class="p">{}</span>  
-</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="nf">server</span><span class="p">(</span><span class="nx">service1</span><span class="p">).</span><span class="nf">open</span><span class="p">()</span>  
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="nx">service1</span> <span class="o">:=</span> <span class="nx">SmellServer</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="nx">service2</span> <span class="o">:=</span> <span class="nx">BigServer</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="nf">server</span><span class="p">(</span><span class="nx">service1</span><span class="p">).</span><span class="nf">open</span><span class="p">()</span>
 </span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="nx">service2</span><span class="p">.</span><span class="nf">open</span><span class="p">()</span>
-</span></span></code></pre></div><h5 id="初始化">初始化<a hidden class="anchor" aria-hidden="true" href="#初始化">#</a></h5>
-<p>Go没有构造函数，所以new直接分配内存然后把内存都置0</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">man1</span> <span class="o">:=</span> <span class="nx">Person</span><span class="p">{</span><span class="nx">name</span><span class="p">:</span> <span class="s">&#34;李四&#34;</span><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">man1</span><span class="p">.</span><span class="nf">Walk</span><span class="p">(</span><span class="nx">man1</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">man2</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Person</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="nx">man2</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&#34;王五&#34;</span>  
+</span></span></code></pre></div><h6 id="初始化">初始化<a hidden class="anchor" aria-hidden="true" href="#初始化">#</a></h6>
+<p>Go 没有构造函数，所以 new 直接分配内存然后把内存都置 0</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">man1</span> <span class="o">:=</span> <span class="nx">Person</span><span class="p">{</span><span class="nx">name</span><span class="p">:</span> <span class="s">&#34;李四&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">man1</span><span class="p">.</span><span class="nf">Walk</span><span class="p">(</span><span class="nx">man1</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">man2</span> <span class="o">:=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Person</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="nx">man2</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="s">&#34;王五&#34;</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nx">man2</span><span class="p">.</span><span class="nf">Walk</span><span class="p">(</span><span class="nx">man2</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
-</span></span></code></pre></div><h5 id="方法接收器">方法接收器<a hidden class="anchor" aria-hidden="true" href="#方法接收器">#</a></h5>
+</span></span></code></pre></div><h6 id="方法接收器">方法接收器<a hidden class="anchor" aria-hidden="true" href="#方法接收器">#</a></h6>
 <p>用于定义结构体对应的方法（也可以为非结构体类型声明方法）
 只能为在同一个包中定义的接收者类型声明方法，而不能为其它别的包中定义的类型（包括 <code>int</code> 之类的内置类型）声明方法</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// 结构体接收器  
-</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Person</span><span class="p">)</span> <span class="nf">ChangeName</span><span class="p">(</span><span class="nx">newName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl">   <span class="nx">p</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="nx">newName</span>  
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="p">}</span> 
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1">// 指针接收器  
-</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">Person</span><span class="p">)</span> <span class="nf">ChangeAge</span><span class="p">(</span><span class="nx">newAge</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl">   <span class="nx">p</span><span class="p">.</span><span class="nx">age</span> <span class="p">=</span> <span class="nx">newAge</span>  
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="c1">// 结构体接收器
+</span></span></span><span class="line"><span class="ln"> 2</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">Person</span><span class="p">)</span> <span class="nf">ChangeName</span><span class="p">(</span><span class="nx">newName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">   <span class="nx">p</span><span class="p">.</span><span class="nx">name</span> <span class="p">=</span> <span class="nx">newName</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="c1">// 指针接收器
+</span></span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">Person</span><span class="p">)</span> <span class="nf">ChangeAge</span><span class="p">(</span><span class="nx">newAge</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">   <span class="nx">p</span><span class="p">.</span><span class="nx">age</span> <span class="p">=</span> <span class="nx">newAge</span>
 </span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1">// 结构体接收器，内容不会改变  
-</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span><span class="nx">man1</span><span class="p">.</span><span class="nf">ChangeName</span><span class="p">(</span><span class="s">&#34;赵六&#34;</span><span class="p">)</span>  
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1">// 结构体接收器，内容不会改变
+</span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span><span class="nx">man1</span><span class="p">.</span><span class="nf">ChangeName</span><span class="p">(</span><span class="s">&#34;赵六&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1">// 指针接收器，内容会改变，我直接遇事不决用指针
-</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span><span class="nx">man1</span><span class="p">.</span><span class="nf">ChangeAge</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>  
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span><span class="nx">man1</span><span class="p">.</span><span class="nf">ChangeAge</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">man1</span><span class="p">)</span>
-</span></span></code></pre></div><h4 id="链表">链表<a hidden class="anchor" aria-hidden="true" href="#链表">#</a></h4>
-<h4 id="哈希表">哈希表<a hidden class="anchor" aria-hidden="true" href="#哈希表">#</a></h4>
-<p>[[哈希表（Hash-Table）]]
-![[哈希表（Hash-Table）#Go中如何使用HashTable]]</p>
-<p>Go之旅中的一个练习，用的是比较简单的map，实现 <code>WordCount</code>。它应当返回一个映射，其中包含字符串 <code>s</code> 中每个“单词”的个数。 函数 <code>wc.Test</code> 会为此函数执行一系列测试用例，并输出成功还是失败</p>
+</span></span></code></pre></div><h5 id="哈希表">哈希表<a hidden class="anchor" aria-hidden="true" href="#哈希表">#</a></h5>
+<p>Go 之旅中的一个练习，用的是比较简单的 map，实现 <code>WordCount</code>。它应当返回一个映射，其中包含字符串 <code>s</code> 中每个“单词”的个数。 函数 <code>wc.Test</code> 会为此函数执行一系列测试用例，并输出成功还是失败</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">
 </span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
@@ -664,10 +609,10 @@ slice的零值是nil，通过[]int这种方式来创建切片时首先会创建�
 </span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">18</span><span class="cl">	<span class="nx">wc</span><span class="p">.</span><span class="nf">Test</span><span class="p">(</span><span class="nx">WordCount</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="控制结构">控制结构<a hidden class="anchor" aria-hidden="true" href="#控制结构">#</a></h4>
+</span></span></code></pre></div><h5 id="控制结构">控制结构<a hidden class="anchor" aria-hidden="true" href="#控制结构">#</a></h5>
 <p>for 类似 while 的无限循环
 fori 一般的按照下标循环
-forr 最为特殊的 range 遍历，可以用于map遍历</p>
+forr 最为特殊的 range 遍历，可以用于 map 遍历</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">arr</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34; index = %d,number = %d \n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">arr</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="p">}</span>
@@ -675,7 +620,7 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 </span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34; index = %d,number = %d \n&#34;</span><span class="p">,</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>if-else：没什么可以记录的，跟其他的语言一样的</p>
-<h3 id="函数调用">函数调用<a hidden class="anchor" aria-hidden="true" href="#函数调用">#</a></h3>
+<h4 id="函数调用">函数调用<a hidden class="anchor" aria-hidden="true" href="#函数调用">#</a></h4>
 <p>Go 语言选择了传值的方式，<strong>无论是传递基本类型、结构体还是指针，都会对传递的参数进行拷贝</strong></p>
 <pre tabindex="0"><code>无需声明原型
 支持不定变参
@@ -685,8 +630,8 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 不支持嵌套（一个包不能有重名的函数）
 不支持重载
 不支持默认参数
-</code></pre><h4 id="整数与数组类型">整数与数组类型<a hidden class="anchor" aria-hidden="true" href="#整数与数组类型">#</a></h4>
-<p>如下所示的函数 <code>myFunction</code> 接收了两个参数，整型变量 <code>i</code> 和数组 <code>arr</code>，这个函数会将传入的两个参数的地址打印出来，在最外层的主函数也会在 <code>myFunction</code> 函数调用前后分别打印两个参数的地址，最后的结果main函数中的参数地址与myFunction中的地址完全不同，所以能够证明<strong>Go 语言的整型和数组类型都是值传递的</strong></p>
+</code></pre><h5 id="整数与数组类型">整数与数组类型<a hidden class="anchor" aria-hidden="true" href="#整数与数组类型">#</a></h5>
+<p>如下所示的函数 <code>myFunction</code> 接收了两个参数，整型变量 <code>i</code> 和数组 <code>arr</code>，这个函数会将传入的两个参数的地址打印出来，在最外层的主函数也会在 <code>myFunction</code> 函数调用前后分别打印两个参数的地址，最后的结果 main 函数中的参数地址与 myFunction 中的地址完全不同，所以能够证明<strong>Go 语言的整型和数组类型都是值传递的</strong></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">myFunction1</span><span class="p">(</span><span class="nx">i</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">arr</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;in my_funciton - i=(%d, %p) arr=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">i</span><span class="p">,</span> <span class="nx">arr</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">arr</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="p">}</span>
@@ -698,24 +643,24 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 </span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="nf">myFunction1</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">arr</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;after  calling - i=(%d, %p) arr=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">i</span><span class="p">,</span> <span class="nx">arr</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">arr</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="结构体与指针类型">结构体与指针类型<a hidden class="anchor" aria-hidden="true" href="#结构体与指针类型">#</a></h4>
+</span></span></code></pre></div><h5 id="结构体与指针类型">结构体与指针类型<a hidden class="anchor" aria-hidden="true" href="#结构体与指针类型">#</a></h5>
 <ul>
 <li>传递结构体时：会拷贝结构体中的全部内容</li>
 <li>传递结构体指针时：会拷贝结构体指针</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">myFunction2</span><span class="p">(</span><span class="nx">a</span> <span class="nx">MyStruct</span><span class="p">,</span> <span class="nx">b</span> <span class="o">*</span><span class="nx">MyStruct</span><span class="p">)</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nx">a</span><span class="p">.</span><span class="nx">i</span> <span class="p">=</span> <span class="mi">31</span>  
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="nx">b</span><span class="p">.</span><span class="nx">i</span> <span class="p">=</span> <span class="mi">41</span>  
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;in my_function - a=(%d, %p) b=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>  
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">myFunction2</span><span class="p">(</span><span class="nx">a</span> <span class="nx">MyStruct</span><span class="p">,</span> <span class="nx">b</span> <span class="o">*</span><span class="nx">MyStruct</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nx">a</span><span class="p">.</span><span class="nx">i</span> <span class="p">=</span> <span class="mi">31</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="nx">b</span><span class="p">.</span><span class="nx">i</span> <span class="p">=</span> <span class="mi">41</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;in my_function - a=(%d, %p) b=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="nx">a</span> <span class="o">:=</span> <span class="nx">MyStruct</span><span class="p">{</span><span class="nx">i</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>  
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="nx">b</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">MyStruct</span><span class="p">{</span><span class="nx">i</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;before calling - a=(%d, %p) b=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="nf">myFunction2</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;after calling  - a=(%d, %p) b=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">	<span class="nx">a</span> <span class="o">:=</span> <span class="nx">MyStruct</span><span class="p">{</span><span class="nx">i</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="nx">b</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">MyStruct</span><span class="p">{</span><span class="nx">i</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;before calling - a=(%d, %p) b=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">	<span class="nf">myFunction2</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">11</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;after calling  - a=(%d, %p) b=(%v, %p)\n&#34;</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">b</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="方法与函数">方法与函数<a hidden class="anchor" aria-hidden="true" href="#方法与函数">#</a></h4>
+</span></span></code></pre></div><h5 id="方法与函数">方法与函数<a hidden class="anchor" aria-hidden="true" href="#方法与函数">#</a></h5>
 <ul>
 <li><strong>方法</strong> (<code>func (c *Context) String</code>)：
 <ul>
@@ -734,7 +679,7 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 </ul>
 </li>
 </ul>
-<h5 id="方法与指针重定向">方法与指针重定向<a hidden class="anchor" aria-hidden="true" href="#方法与指针重定向">#</a></h5>
+<h6 id="方法与指针重定向">方法与指针重定向<a hidden class="anchor" aria-hidden="true" href="#方法与指针重定向">#</a></h6>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">v</span> <span class="o">*</span><span class="nx">Vertex</span><span class="p">)</span> <span class="nf">Scale</span><span class="p">(</span><span class="nx">f</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl">	<span class="nx">v</span><span class="p">.</span><span class="nx">X</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">X</span> <span class="o">*</span> <span class="nx">f</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl">	<span class="nx">v</span><span class="p">.</span><span class="nx">Y</span> <span class="p">=</span> <span class="nx">v</span><span class="p">.</span><span class="nx">Y</span> <span class="o">*</span> <span class="nx">f</span>
@@ -755,7 +700,7 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 </span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span><span class="p">(</span><span class="o">*</span><span class="nx">p</span><span class="p">).</span><span class="nf">Scale</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span> <span class="c1">//OK
 </span></span></span></code></pre></div><p>对于语句 <code>v.Scale(5)</code> 来说，即便 <code>v</code> 是一个值而非指针，带指针接收者的方法也能被直接调用。 也就是说，由于 <code>Scale</code> 方法有一个指针接收者，为方便起见，Go 会将语句 <code>v.Scale(5)</code> 解释为 <code>(&amp;v).Scale(5)</code>。
 反之同理，接受一个值作为参数的函数必须接受一个指定类型的值，而以值为接收者的方法被调用时，接收者既能为值又能为指针，这种情况下，方法调用 <code>p.Abs()</code> 会被解释为 <code>(*p).Abs()</code>，<strong>其实就是遇到不同情况自动转换</strong>。</p>
-<h4 id="接口">接口<a hidden class="anchor" aria-hidden="true" href="#接口">#</a></h4>
+<h5 id="接口">接口<a hidden class="anchor" aria-hidden="true" href="#接口">#</a></h5>
 <p><strong>接口</strong>是计算机系统中多个组件共享的边界，不同的组件能够在边界上交换信息。如下图所示，接口的本质是引入一个新的中间层，调用方可以通过接口与具体实现分离，解除上下游的耦合，上层的模块不再需要依赖下层的具体模块，只需要依赖一个约定好的接口。
 <img loading="lazy" src="https://img.draveness.me/golang-interface.png" alt="golang-interface"  />
 </p>
@@ -781,8 +726,8 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 </span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">RPCError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln"> 9</span><span class="cl">	<span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%s, code=%d&#34;</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Message</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">Code</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>Java中的类必须显式地声明实现的接口，与Java不同的是Go语言中<strong>接口的实现都是隐式的</strong>，我们只需要实现 <code>Error() string</code> 方法就实现了 <code>error</code> 接口</p>
-<h5 id="接口方法">接口方法<a hidden class="anchor" aria-hidden="true" href="#接口方法">#</a></h5>
+</span></span></code></pre></div><p>Java 中的类必须显式地声明实现的接口，与 Java 不同的是 Go 语言中<strong>接口的实现都是隐式的</strong>，我们只需要实现 <code>Error() string</code> 方法就实现了 <code>error</code> 接口</p>
+<h6 id="接口方法">接口方法<a hidden class="anchor" aria-hidden="true" href="#接口方法">#</a></h6>
 <p>接口就是规定了一个<strong>需要实现的方法列表</strong>，在 Go 语言中一个类型只要实现了接口中规定的所有方法，那么我们就称它实现了这个接口
 我们定义的 <code>Singer</code> 接口类型，它包含一个 <code>Sing</code> 方法。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">type</span> <span class="nx">Singer</span> <span class="kd">interface</span> <span class="p">{</span>
@@ -796,35 +741,35 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 </span></span><span class="line"><span class="ln">3</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;汪汪汪&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>为什么要用接口呢，因为有时不止一个类型需要实现这个方法，可能有多个结构体需要 <code>Sing()</code> 这个方法，这时就可以使用接口类型，把所有会叫的动物当成 <code>Singer</code> 类型来处理</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>  
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl">  
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>  
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl">  
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="kd">type</span> <span class="nx">Sayer</span> <span class="kd">interface</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="nf">Say</span><span class="p">()</span>  
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">}</span>  
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">type</span> <span class="nx">Cat</span> <span class="kd">struct</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">10</span><span class="cl">  
-</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="kd">type</span> <span class="nx">Dog</span> <span class="kd">struct</span><span class="p">{}</span>  
-</span></span><span class="line"><span class="ln">12</span><span class="cl">  
-</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cat</span><span class="p">)</span> <span class="nf">Say</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;cat miao&#34;</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Dog</span><span class="p">)</span> <span class="nf">Say</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;dog woof&#34;</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="kd">func</span> <span class="nf">Hungry</span><span class="p">(</span><span class="nx">s</span> <span class="nx">Sayer</span><span class="p">)</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nf">Say</span><span class="p">()</span>  
-</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">22</span><span class="cl">  
-</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="kd">var</span> <span class="nx">c</span> <span class="nx">Cat</span>  
-</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="kd">var</span> <span class="nx">d</span> <span class="nx">Dog</span>  
-</span></span><span class="line"><span class="ln">26</span><span class="cl">    <span class="nf">Hungry</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">c</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">27</span><span class="cl">    <span class="nf">Hungry</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">d</span><span class="p">)</span>  
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="kd">type</span> <span class="nx">Sayer</span> <span class="kd">interface</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">    <span class="nf">Say</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">type</span> <span class="nx">Cat</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl">
+</span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="kd">type</span> <span class="nx">Dog</span> <span class="kd">struct</span><span class="p">{}</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cat</span><span class="p">)</span> <span class="nf">Say</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;cat miao&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Dog</span><span class="p">)</span> <span class="nf">Say</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">17</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;dog woof&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="kd">func</span> <span class="nf">Hungry</span><span class="p">(</span><span class="nx">s</span> <span class="nx">Sayer</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">20</span><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nf">Say</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">21</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">22</span><span class="cl">
+</span></span><span class="line"><span class="ln">23</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">24</span><span class="cl">    <span class="kd">var</span> <span class="nx">c</span> <span class="nx">Cat</span>
+</span></span><span class="line"><span class="ln">25</span><span class="cl">    <span class="kd">var</span> <span class="nx">d</span> <span class="nx">Dog</span>
+</span></span><span class="line"><span class="ln">26</span><span class="cl">    <span class="nf">Hungry</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">27</span><span class="cl">    <span class="nf">Hungry</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">d</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">28</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>Stringer是 <code>fmt</code> 包中定义的 <code>Stringer</code> 是最普遍的接口之一，是一个可以用字符串描述自己的类型，任何实现了 <code>String() string</code> 方法的类型都隐式满足该接口。<code>fmt</code> 包（还有很多包）都通过此接口来打印值，可以规范化对应值的输出</p>
+</span></span></code></pre></div><p>Stringer 是 <code>fmt</code> 包中定义的 <code>Stringer</code> 是最普遍的接口之一，是一个可以用字符串描述自己的类型，任何实现了  <code>String() string</code>  方法的类型都隐式满足该接口。<code>fmt</code> 包（还有很多包）都通过此接口来打印值，可以规范化对应值的输出</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">
 </span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
@@ -848,8 +793,8 @@ forr 最为特殊的 range 遍历，可以用于map遍历</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">type</span> <span class="kt">error</span> <span class="kd">interface</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">2</span><span class="cl">    <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>类似的还有，sort接口，json序列化，io读写，以及http的请求处理
-rot13Reader的实现，一个接口组合的实现</p>
+</span></span></code></pre></div><p>类似的还有，sort 接口，json 序列化，io 读写，以及 http 的请求处理
+rot13Reader 的实现，一个接口组合的实现</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">
 </span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
@@ -920,7 +865,7 @@ rot13Reader的实现，一个接口组合的实现</p>
 </span></span><span class="line"><span class="ln">30</span><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="nx">Image</span><span class="p">{</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">}</span>
 </span></span><span class="line"><span class="ln">31</span><span class="cl">	<span class="nx">pic</span><span class="p">.</span><span class="nf">ShowImage</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">32</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="错误error">错误（error）<a hidden class="anchor" aria-hidden="true" href="#错误error">#</a></h4>
+</span></span></code></pre></div><h5 id="错误error">错误（error）<a hidden class="anchor" aria-hidden="true" href="#错误error">#</a></h5>
 <p>Go 程序使用 <code>error</code> 值来表示错误状态。通常函数会返回一个 <code>error</code> 值，调用它的代码应当判断这个错误是否等于 <code>nil</code> 来进行错误处理。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
 </span></span><span class="line"><span class="ln"> 2</span><span class="cl">
@@ -929,8 +874,8 @@ rot13Reader的实现，一个接口组合的实现</p>
 </span></span><span class="line"><span class="ln"> 5</span><span class="cl">	<span class="s">&#34;math&#34;</span>
 </span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
 </span></span><span class="line"><span class="ln"> 7</span><span class="cl"><span class="kd">type</span> <span class="nx">ErrNegativeSqrt</span> <span class="kd">struct</span><span class="p">{</span>
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="nx">Value</span> <span class="kt">float64</span>		
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="p">}</span> 
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">	<span class="nx">Value</span> <span class="kt">float64</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="ln">10</span><span class="cl">
 </span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="kd">func</span> <span class="nf">Sqrt</span><span class="p">(</span><span class="nx">x</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">(</span><span class="kt">float64</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">12</span><span class="cl">	<span class="k">if</span> <span class="nx">x</span><span class="p">&lt;</span><span class="mi">0</span> <span class="p">{</span>
@@ -948,7 +893,7 @@ rot13Reader的实现，一个接口组合的实现</p>
 </span></span><span class="line"><span class="ln">24</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">Sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 </span></span><span class="line"><span class="ln">25</span><span class="cl">	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">Sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
 </span></span><span class="line"><span class="ln">26</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h5 id="接口值">接口值<a hidden class="anchor" aria-hidden="true" href="#接口值">#</a></h5>
+</span></span></code></pre></div><h6 id="接口值">接口值<a hidden class="anchor" aria-hidden="true" href="#接口值">#</a></h6>
 <p>接口类型的值可以是任意一个实现了该接口的类型值，所以接口值除了需要记录具体<strong>值</strong>之外，还需要记录这个值属于的<strong>类型</strong>。也就是说接口值由“类型”和“值”组成。
 <img loading="lazy" src="https://cdn.jsdelivr.net/gh/mariosight/image/picture/interface01.png" alt="interface01.png"  />
 </p>
@@ -957,7 +902,7 @@ rot13Reader的实现，一个接口组合的实现</p>
 指定了零个方法的接口值被称为<strong>空接口</strong>，空接口可保存任何类型的值，空接口被用来处理未知类型的值</p>
 <h6 id="类型断言">类型断言<a hidden class="anchor" aria-hidden="true" href="#类型断言">#</a></h6>
 <p><strong>类型断言</strong>是一种可以从接口值中提取其动态类型具体值的方法，<strong>给一个什么值，他就变成对应的类型</strong>
-该语句断言接口值 <code>i</code> 保存了具体类型 <code>Type</code>，并将其底层类型为 <code>Type</code> 的值赋予变量 <code>t</code>，如果未保存，那么该语句就会触发panic</p>
+该语句断言接口值 <code>i</code> 保存了具体类型 <code>Type</code>，并将其底层类型为 <code>Type</code> 的值赋予变量 <code>t</code>，如果未保存，那么该语句就会触发 panic</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl">	<span class="nx">t</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">.(</span><span class="nx">T</span><span class="p">)</span>
 </span></span></code></pre></div><p>为了 <strong>判断</strong> 一个接口值是否保存了一个特定的类型，类型断言可返回两个值：其底层值以及一个报告断言是否成功的布尔值。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl">	<span class="nx">t</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">.(</span><span class="nx">T</span><span class="p">)</span>
@@ -980,61 +925,61 @@ rot13Reader的实现，一个接口组合的实现</p>
 </span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="nf">Describe</span><span class="p">(</span><span class="nx">Circle</span><span class="p">{</span><span class="nx">Radius</span><span class="p">:</span> <span class="mi">3</span><span class="p">})</span>    <span class="c1">// 输出：圆形，半径: 3
 </span></span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="c1"></span>    <span class="nf">Describe</span><span class="p">(</span><span class="nx">Rectangle</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">})</span>      <span class="c1">// 输出：矩形，长: 4, 宽: 5
 </span></span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></div><h4 id="闭包closure">闭包（closure）<a hidden class="anchor" aria-hidden="true" href="#闭包closure">#</a></h4>
+</span></span></code></pre></div><h5 id="闭包closure">闭包（closure）<a hidden class="anchor" aria-hidden="true" href="#闭包closure">#</a></h5>
 <p>闭包（closure）是指<strong>一个函数可以捕获并引用其外部作用域中的变量</strong>，即使在这些变量的作用域已经结束之后，换句话说，<strong>该函数被“绑定”到了这些变量</strong>。闭包的实现依赖于函数本身以及它所引用的环境</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">i</span> <span class="o">:=</span> <span class="mi">13</span>  
-</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">a</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i = &#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>  
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="nx">i</span> <span class="o">:=</span> <span class="mi">13</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="nx">a</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i = &#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="nf">a</span><span class="p">()</span>
 </span></span></code></pre></div><p><strong>延迟绑定</strong>：闭包捕获的是变量的引用，而不是它在循环中每次迭代的值</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">Delay</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nx">fns</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">func</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl">       <span class="nx">fns</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">fns</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl">          <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i = &#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln"> 6</span><span class="cl">       <span class="p">})</span>  
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="p">}</span>  
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="c1">//执行的时候i = 10，因为闭包捕获的是变量i的引用,而不是值  
-</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span>    <span class="c1">//因此在循环中使用闭包时需要小心处理  
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kd">func</span> <span class="nf">Delay</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">    <span class="nx">fns</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kd">func</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl">       <span class="nx">fns</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">fns</span><span class="p">,</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl">          <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;i = &#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl">       <span class="p">})</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl">    <span class="c1">//执行的时候i = 10，因为闭包捕获的是变量i的引用,而不是值
+</span></span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="c1"></span>    <span class="c1">//因此在循环中使用闭包时需要小心处理
 </span></span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="c1"></span>    <span class="c1">//？？为什么我这里是i从0-9，好诡异啊
-</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">fn</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">fns</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">12</span><span class="cl">       <span class="nf">fn</span><span class="p">()</span>  
-</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="p">}</span>  
+</span></span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">fn</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">fns</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">12</span><span class="cl">       <span class="nf">fn</span><span class="p">()</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="杂项记录">杂项记录<a hidden class="anchor" aria-hidden="true" href="#杂项记录">#</a></h3>
-<h4 id="查看对应变量的类型">查看对应变量的类型<a hidden class="anchor" aria-hidden="true" href="#查看对应变量的类型">#</a></h4>
+</span></span></code></pre></div><h4 id="杂项记录">杂项记录<a hidden class="anchor" aria-hidden="true" href="#杂项记录">#</a></h4>
+<h5 id="查看对应变量的类型">查看对应变量的类型<a hidden class="anchor" aria-hidden="true" href="#查看对应变量的类型">#</a></h5>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="c1">//使用%T
 </span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;type: %T&#34;</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl">
 </span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1">//使用reflect下的Typeof，要引入reflect包
 </span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">reflect</span><span class="p">.</span><span class="nf">Typeof</span><span class="p">(</span><span class="nx">value</span><span class="p">))</span>
-</span></span></code></pre></div><h4 id="输出其命令行参数">输出其命令行参数<a hidden class="anchor" aria-hidden="true" href="#输出其命令行参数">#</a></h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>  
-</span></span><span class="line"><span class="ln"> 2</span><span class="cl">  
-</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>  
-</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="s">&#34;fmt&#34;</span>  
-</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="s">&#34;os&#34;</span>  
-</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>  
-</span></span><span class="line"><span class="ln"> 7</span><span class="cl">  
-</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello, World!&#34;</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="kd">var</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="kt">string</span>  
+</span></span></code></pre></div><h5 id="输出其命令行参数">输出其命令行参数<a hidden class="anchor" aria-hidden="true" href="#输出其命令行参数">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln"> 1</span><span class="cl"><span class="kn">package</span> <span class="nx">main</span>
+</span></span><span class="line"><span class="ln"> 2</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 3</span><span class="cl"><span class="kn">import</span> <span class="p">(</span>
+</span></span><span class="line"><span class="ln"> 4</span><span class="cl"><span class="s">&#34;fmt&#34;</span>
+</span></span><span class="line"><span class="ln"> 5</span><span class="cl"><span class="s">&#34;os&#34;</span>
+</span></span><span class="line"><span class="ln"> 6</span><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="ln"> 7</span><span class="cl">
+</span></span><span class="line"><span class="ln"> 8</span><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln"> 9</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Hello, World!&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">10</span><span class="cl"><span class="kd">var</span> <span class="nx">s</span><span class="p">,</span> <span class="nx">sep</span> <span class="kt">string</span>
 </span></span><span class="line"><span class="ln">11</span><span class="cl"><span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">arg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">0</span><span class="p">:]</span> <span class="p">{</span> <span class="c1">//输出目标文件命令的名字
-</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span><span class="nx">s</span> <span class="o">+=</span> <span class="nx">sep</span> <span class="o">+</span> <span class="nx">arg</span>  
-</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="nx">sep</span> <span class="p">=</span> <span class="s">&#34; &#34;</span> 
-</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="c1">//for i := 1; i &lt; len(os.Args); i++ {  
-</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1">// s += sep + os.Args[i]  
-</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1">// sep = &#34; &#34;  
-</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1">//} 
-</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>  
+</span></span></span><span class="line"><span class="ln">12</span><span class="cl"><span class="c1"></span><span class="nx">s</span> <span class="o">+=</span> <span class="nx">sep</span> <span class="o">+</span> <span class="nx">arg</span>
+</span></span><span class="line"><span class="ln">13</span><span class="cl"><span class="nx">sep</span> <span class="p">=</span> <span class="s">&#34; &#34;</span>
+</span></span><span class="line"><span class="ln">14</span><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="ln">15</span><span class="cl"><span class="c1">//for i := 1; i &lt; len(os.Args); i++ {
+</span></span></span><span class="line"><span class="ln">16</span><span class="cl"><span class="c1">// s += sep + os.Args[i]
+</span></span></span><span class="line"><span class="ln">17</span><span class="cl"><span class="c1">// sep = &#34; &#34;
+</span></span></span><span class="line"><span class="ln">18</span><span class="cl"><span class="c1">//}
+</span></span></span><span class="line"><span class="ln">19</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">20</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="ok的使用">OK的使用<a hidden class="anchor" aria-hidden="true" href="#ok的使用">#</a></h4>
-<p>在 Go 语言中，<code>ok</code> 通常与 <code>map</code> 结合使用，用于<strong>判断某个键（key）是否存在于 map 中</strong>，是 Go 中一种常见的“安全读取”模式。
-通过第二个返回值 <code>ok</code>（布尔类型）可以判断键是否存在：</p>
+</span></span></code></pre></div><h5 id="ok-的使用">OK 的使用<a hidden class="anchor" aria-hidden="true" href="#ok-的使用">#</a></h5>
+<p>在 Go 语言中，<code>ok</code>  通常与  <code>map</code>  结合使用，用于<strong>判断某个键（key）是否存在于 map 中</strong>，是 Go 中一种常见的“安全读取”模式。
+通过第二个返回值  <code>ok</code>（布尔类型）可以判断键是否存在：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl">    <span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="s">&#34;apple&#34;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s">&#34;banana&#34;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
-</span></span><span class="line"><span class="ln">2</span><span class="cl">    
+</span></span><span class="line"><span class="ln">2</span><span class="cl">
 </span></span><span class="line"><span class="ln">3</span><span class="cl">    <span class="c1">// 检查键是否存在
 </span></span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="c1"></span>    <span class="nx">value</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">[</span><span class="s">&#34;apple&#34;</span><span class="p">]</span>
 </span></span><span class="line"><span class="ln">5</span><span class="cl">    <span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
@@ -1042,33 +987,30 @@ rot13Reader的实现，一个接口组合的实现</p>
 </span></span><span class="line"><span class="ln">7</span><span class="cl">    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="ln">8</span><span class="cl">        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;apple 不存在&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="ln">9</span><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><p>在练习LeetCode的时候也看到有高级的语句记录了下来，对于ok在if中的使用含义，经常在map中使用：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">func</span> <span class="nf">learnErrorHandling</span><span class="p">()</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1">// &#34;, ok&#34;用来判断有没有正常工作  
-</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"></span><span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s">&#34;four&#34;</span><span class="p">}</span>  
-</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="k">if</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span> <span class="c1">// ok 为false，因为m中没有1  
-</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;no one there&#34;</span><span class="p">)</span>  
-</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>  
-</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="c1">// 如果x在map中的话，x就是那个值喽。  
-</span></span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="c1"></span><span class="p">}</span>  
+</span></span></code></pre></div><p>在练习 LeetCode 的时候也看到有高级的语句记录了下来，对于 ok 在 if 中的使用含义，经常在 map 中使用：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Go" data-lang="Go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">func</span> <span class="nf">learnErrorHandling</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1">// &#34;, ok&#34;用来判断有没有正常工作
+</span></span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="c1"></span><span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span><span class="mi">3</span><span class="p">:</span> <span class="s">&#34;three&#34;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s">&#34;four&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="ln">4</span><span class="cl"><span class="k">if</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span> <span class="c1">// ok 为false，因为m中没有1
+</span></span></span><span class="line"><span class="ln">5</span><span class="cl"><span class="c1"></span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;no one there&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="ln">6</span><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="ln">7</span><span class="cl"><span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="c1">// 如果x在map中的话，x就是那个值喽。
+</span></span></span><span class="line"><span class="ln">8</span><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="ln">9</span><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><blockquote>
-<p>[!note]
-上述代码中，在if语句中，<strong>ok</strong>这个bool变量的含义是，如果其中有<strong>1</strong>这个key，那么其value赋值给<strong>x</strong>然后令ok为true，如果没有则令ok为false</p>
-</blockquote>
-<h4 id="引用包时出错">引用包时出错<a hidden class="anchor" aria-hidden="true" href="#引用包时出错">#</a></h4>
+</span></span></code></pre></div><p>上述代码中，在 if 语句中，<strong>ok</strong>这个 bool 变量的含义是，如果其中有<strong>1</strong>这个 key，那么其 value 赋值给<strong>x</strong>然后令 ok 为 true，如果没有则令 ok 为 false</p>
+<h5 id="引用包时出错">引用包时出错<a hidden class="anchor" aria-hidden="true" href="#引用包时出错">#</a></h5>
 <p>包在之后的代码中并未引用，可以通过在包名前加<code>_</code>进行匿名引用</p>
-<h4 id="定义变量">定义变量<a hidden class="anchor" aria-hidden="true" href="#定义变量">#</a></h4>
-<p>var后面定义有默认类型，如果不想按照默认类型来的话，就需要自己写
-go是强类型语言，不做任何类型转换
+<h5 id="定义变量">定义变量<a hidden class="anchor" aria-hidden="true" href="#定义变量">#</a></h5>
+<p>var 后面定义有默认类型，如果不想按照默认类型来的话，就需要自己写
+go 是强类型语言，不做任何类型转换
 或者直接:=进行赋值</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="ln">1</span><span class="cl"><span class="kd">var</span> <span class="nx">a</span>  <span class="p">=</span> <span class="mi">13</span> <span class="c1">// 默认为int
 </span></span></span><span class="line"><span class="ln">2</span><span class="cl"><span class="c1"></span><span class="kd">var</span> <span class="nx">b</span> <span class="kt">uint</span> <span class="p">=</span><span class="mi">15</span>
 </span></span><span class="line"><span class="ln">3</span><span class="cl"><span class="nx">a</span> <span class="o">:=</span> <span class="mi">13</span>
-</span></span></code></pre></div><h4 id="求string的长度">求string的长度<a hidden class="anchor" aria-hidden="true" href="#求string的长度">#</a></h4>
+</span></span></code></pre></div><h5 id="求-string-的长度">求 string 的长度<a hidden class="anchor" aria-hidden="true" href="#求-string-的长度">#</a></h5>
 <p>len()函数求出来的是<strong>字节的长度</strong>，而不是字符长度
 应该用<code>utf8.RuneCountInString(&quot;你好&quot;)</code>进行求解</p>
-<h4 id="对二维数组进行排序">对二维数组进行排序<a hidden class="anchor" aria-hidden="true" href="#对二维数组进行排序">#</a></h4>
+<h5 id="对二维数组进行排序">对二维数组进行排序<a hidden class="anchor" aria-hidden="true" href="#对二维数组进行排序">#</a></h5>
 <p>这里的 <code>slices.SortFunc</code> 通过传入一个比较函数（<code>func(p, q []int) int</code>）来实现对 <code>intervals</code> 进行排序
 <strong>比较函数</strong>：<code>func(p, q []int) int</code>。它对两个元素 <code>p</code> 和 <code>q</code> 进行比较。</p>
 <ul>
