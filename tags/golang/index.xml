@@ -4,7 +4,7 @@
     <title>Golang on Mario&#39;s Blog</title>
     <link>https://mariosight.github.io/tags/golang/</link>
     <description>Recent content in Golang on Mario&#39;s Blog</description>
-    <generator>Hugo -- 0.145.0</generator>
+    <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Sun, 20 Oct 2024 16:20:05 +0000</lastBuildDate>
@@ -36,7 +36,8 @@
 &lt;strong&gt;缺点&lt;/strong&gt;：每次运行的时候都要解释一遍，性能上不如编译型语言。&lt;/li&gt;
 &lt;li&gt;混合型语言
 既然编译型和解释型各有缺点就会有人想到把两种类型整合起来，取其精华去其糟粕。就出现了半编译型语言。比如C#,C#在编译的时候不是直接编译成机器码而是中间码，.NET平台提供了中间语言运行库运行中间码，中间语言运行库类似于Java虚拟机。.net在编译成IL代码后，保存在dll中，首次运行时由JIT在编译成机器码缓存在内存中，下次直接执行。&lt;/li&gt;
-&lt;/ol&gt;&lt;/blockquote&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
 &lt;h3 id=&#34;源码文件&#34;&gt;源码文件&lt;/h3&gt;
 &lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://cdn.jsdelivr.net/gh/mariosight/image/picture/20241230114315057.png&#34; alt=&#34;image.png&#34;  /&gt;
 
