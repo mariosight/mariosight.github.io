@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>区块链 on Mario&#39;s Blog</title>
+    <link>https://mariosight.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/</link>
+    <description>Recent content in 区块链 on Mario&#39;s Blog</description>
+    <generator>Hugo -- 0.135.0</generator>
+    <language>zh</language>
+    <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
+    <lastBuildDate>Fri, 29 Sep 2023 20:14:33 +0000</lastBuildDate>
+    <atom:link href="https://mariosight.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Fabric基础环境搭建</title>
+      <link>https://mariosight.github.io/posts/fabric%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</link>
+      <pubDate>Fri, 29 Sep 2023 20:14:33 +0000</pubDate>
+      <guid>https://mariosight.github.io/posts/fabric%E5%9F%BA%E7%A1%80%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;遵循视频教程&lt;/strong&gt;： &lt;a href=&#34;https://www.bilibili.com/video/BV1g3411h71Z&#34;&gt;Fabric 环境搭建&lt;/a&gt;，感谢 UP 主年青_的教学，受益良多&lt;/p&gt;
+&lt;h3 id=&#34;一前言&#34;&gt;一、前言：&lt;/h3&gt;
+&lt;p&gt;本教程是协助大家在虚拟机中搭建 &lt;strong&gt;Fabric&lt;/strong&gt; 环境，参照 UP 主所给文件 &lt;strong&gt;fabric 宝典&lt;/strong&gt; 所写，并加入了一些自己在安装过程中碰到的一些问题以及解决办法
+本教程使用的系统为 Ubuntu 22.04.2 LTS，其他安装软件版本为
+fabric：hyperledger-fabric-linux-amd64-2.4.1
+fabric-ca：hyperledger-fabric-ca-linux-amd64-1.5.2
+go：go 1.20.6.linux-amd64&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>
