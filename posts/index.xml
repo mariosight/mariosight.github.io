@@ -7,8 +7,16 @@
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
-    <lastBuildDate>Sun, 20 Oct 2024 16:20:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mariosight.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>日本之行</title>
+      <link>https://mariosight.github.io/posts/%E6%97%A5%E6%9C%AC%E4%B9%8B%E8%A1%8C/</link>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://mariosight.github.io/posts/%E6%97%A5%E6%9C%AC%E4%B9%8B%E8%A1%8C/</guid>
+      <description>&lt;h2 id=&#34;日本之行&#34;&gt;日本之行&lt;/h2&gt;
+&lt;p&gt;原本打算作为毕业旅行的日本之行因为我的一拖再拖拖到了现在（毕业旅行给了新疆也是非常满足），也是趁着这个国庆完成了这次为期11天的旅行，东京+京都，现在来看，真是两个截然不同的地方&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Go语言之构造一个Web框架</title>
       <link>https://mariosight.github.io/posts/go%E8%AF%AD%E8%A8%80%E4%B9%8B%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AAweb%E6%A1%86%E6%9E%B6/</link>

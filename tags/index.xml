@@ -7,8 +7,22 @@
     <generator>Hugo -- 0.135.0</generator>
     <language>zh</language>
     <copyright>©2024 Mario&amp;rsquo;s Blog</copyright>
-    <lastBuildDate>Sun, 20 Oct 2024 16:20:05 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 19 Oct 2026 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://mariosight.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>旅行日记</title>
+      <link>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</link>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>日本</title>
+      <link>https://mariosight.github.io/tags/%E6%97%A5%E6%9C%AC/</link>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 +0000</pubDate>
+      <guid>https://mariosight.github.io/tags/%E6%97%A5%E6%9C%AC/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Golang</title>
       <link>https://mariosight.github.io/tags/golang/</link>
@@ -42,13 +56,6 @@
       <link>https://mariosight.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/</link>
       <pubDate>Fri, 29 Sep 2023 20:14:33 +0000</pubDate>
       <guid>https://mariosight.github.io/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>旅行日记</title>
-      <link>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</link>
-      <pubDate>Sun, 25 Jun 2023 06:34:42 +0000</pubDate>
-      <guid>https://mariosight.github.io/tags/%E6%97%85%E8%A1%8C%E6%97%A5%E8%AE%B0/</guid>
       <description></description>
     </item>
     <item>
